@@ -550,7 +550,7 @@ color: Colors.black26,
   }
  Widget choosePlanButton({VoidCallback? onPressed}) {
   final bool isEnabled =
-      selectedPlan != null || startDate != null || endDate != null || !isInvalidDateRange; // from your state
+      selectedPlan != null && startDate != null && endDate != null && !isInvalidDateRange; // from your state
 
   return Padding(
     padding: const EdgeInsets.only(top: 12.0,left: 12.0,right: 12.0),
