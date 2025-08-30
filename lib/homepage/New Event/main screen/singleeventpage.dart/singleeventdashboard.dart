@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:common_user/common/colors.dart';
+import 'package:common_user/common/webview.dart';
+import 'package:common_user/homepage/New%20Event/3rd%20screen/maineventpage.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/planningtoolspage.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/majorcont.dart';
 import 'package:common_user/homepage/dashboard%20page/mainpage.dart';
@@ -20,39 +22,65 @@ class _singleventdashboardState extends State<singleventdashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
        backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.boxlightcolor,
-        elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 12.0),
-            child: Icon(Icons.more_vert,color: Colors.black,),
-          )
-        ],
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
-             onPressed: () =>
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => MainPage()),
-            ),
-          ),
+        appBar: AppBar(
+      surfaceTintColor: AppColors.boxlightcolor,
+      toolbarHeight: MediaQuery.of(context).size.height * 0.06,
+      backgroundColor: AppColors.boxlightcolor,
+      elevation: 0,
+      leading: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black,size: 18.0,),
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => demopage())),
         ),
-        centerTitle: true,
-        title: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Event Schedule",
-            style: GoogleFonts.inter(
-              color: Colors.black,
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-            ),
+      ),
+      centerTitle: true,
+      title: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          "Event Schedhule",
+           style: GoogleFonts.inter(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.8,
+            color: Colors.black,
           ),
         ),
       ),
+    ),
+      // appBar: AppBar(
+      //   backgroundColor: AppColors.boxlightcolor,
+      //   elevation: 0,
+      //   actions: [
+      //     Padding(
+      //       padding: const EdgeInsets.only(right: 12.0),
+      //       child: Icon(Icons.more_vert,color: Colors.black,),
+      //     )
+      //   ],
+      //   leading: Padding(
+      //     padding: const EdgeInsets.all(8.0),
+      //     child: IconButton(
+      //       icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
+      //        onPressed: () =>
+      //       Navigator.push(
+      //         context,
+      //         MaterialPageRoute(builder: (_) => demopage()),
+      //       ),
+      //     ),
+      //   ),
+      //   centerTitle: true,
+      //   title: Padding(
+      //     padding: const EdgeInsets.all(8.0),
+      //     child: Text(
+      //       "Event Schedule",
+      //       style: GoogleFonts.inter(
+      //         color: Colors.black,
+      //         fontSize: 18,
+      //         fontWeight: FontWeight.w700,
+      //       ),
+      //     ),
+      //   ),
+      // ),
       body: SafeArea(child: SingleChildScrollView(
         child: Container(
           child: Column(
@@ -89,7 +117,7 @@ class _singleventdashboardState extends State<singleventdashboard> {
     return Stack(
       children: [
         Positioned(child: Container(
-        height: MediaQuery.of(context).size.height *0.4,
+        height: MediaQuery.of(context).size.height *0.350,
         width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -103,7 +131,7 @@ class _singleventdashboardState extends State<singleventdashboard> {
         ),
         )),
       Container(
-        height: MediaQuery.of(context).size.height *0.4,
+        height: MediaQuery.of(context).size.height *0.370,
         width: double.infinity,
         child: Column(
           children: [
@@ -163,7 +191,7 @@ Widget planning(){
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Container(
-        height: MediaQuery.of(context).size.height *0.250,
+        height: MediaQuery.of(context).size.height *0.225,
         width:  MediaQuery.of(context).size.width *0.350,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -191,14 +219,14 @@ Widget planning(){
              SizedBox(height: 6.0,),
              
                Text(uptohow,style: TextStyle(fontSize: 13.0,fontWeight: FontWeight.bold,color: Colors.black38),),
-            SizedBox(height: 6.0,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-               Icon(Icons.phone,size: 22.0,color: AppColors.buttoncolor,),
-               Icon(Icons.email,size: 22.0,color: AppColors.buttoncolor,)
-              ],
-            )
+            // SizedBox(height: 6.0,),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //    Icon(Icons.phone,size: 22.0,color: AppColors.buttoncolor,),
+            //    Icon(Icons.email,size: 22.0,color: AppColors.buttoncolor,)
+            //   ],
+            // ),
           ],
         ),
       ),
@@ -211,64 +239,85 @@ Widget additional(BuildContext context) {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          addFeature(path: "assets/pngimages/gift.png", words: "Gift Registry",bgColor:  AppColors.boxlightcolor.withOpacity(0.3)),
-          addFeature(path: "assets/pngimages/cohost.png", words: "Co-Hosts", bgColor: AppColors.boxlightcolor.withOpacity(0.3)),
-          addFeature(path: "assets/pngimages/invite.png", words: "Invitations", bgColor: AppColors.boxlightcolor.withOpacity(0.3)),
-          addFeature(path: "assets/pngimages/budget.png", words: "Expense Report", bgColor: AppColors.boxlightcolor.withOpacity(0.3)),
-          addFeature(path: "assets/pngimages/videoinvite.png", words: "Video Invite", bgColor: AppColors.boxlightcolor.withOpacity(0.3)),
-          addFeature(path: "assets/images/ewr.png", words: "Money Gift", bgColor: AppColors.boxlightcolor.withOpacity(0.3)),
+          addFeature(path: "assets/pngimages/gift.png", words: "Gift Registry",bgColor:  AppColors.boxlightcolor.withOpacity(0.3), onTapper: () {  }),
+          addFeature(path: "assets/pngimages/cohost.png", words: "Co-Hosts", bgColor: AppColors.boxlightcolor.withOpacity(0.3), onTapper: () {  }),
+          addFeature(path: "assets/pngimages/invite.png", words: "Invitations", bgColor: AppColors.boxlightcolor.withOpacity(0.3), onTapper: () {Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (_) => const SimpleWebView(
+      url: 'https://mangalmalldev.in/inviationcard',
+      title: 'Google',
+    ),
+  ),
+);
+ }),
+          addFeature(path: "assets/pngimages/budget.png", words: "Expense Report", bgColor: AppColors.boxlightcolor.withOpacity(0.3), onTapper: () {  }),
+          addFeature(path: "assets/pngimages/videoinvite.png", words: "Video Invite", bgColor: AppColors.boxlightcolor.withOpacity(0.3), onTapper: () { Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (_) => const SimpleWebView(
+      url: 'https://mangalmalldev.in/inviationcard',
+      title: 'Google',
+    ),
+  ),
+);
+ }),
+          addFeature(path: "assets/images/ewr.png", words: "Money Gift", bgColor: AppColors.boxlightcolor.withOpacity(0.3), onTapper: () {  }),
         ],
       ),
     ),
   );
 }
 
-Widget addFeature({required String path, required String words, required Color bgColor}) {
+Widget addFeature({required String path,required Function()? onTapper, required String words, required Color bgColor}) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 10.0),
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          height: 80,
-          width: 95,
-          decoration: BoxDecoration(
-            color: bgColor,
-            borderRadius: BorderRadius.circular(20.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                blurRadius: 6,
-                offset: const Offset(2, 4),
-              )
-            ],
-          ),
-          child:Column(
-            children: [
-              Center(
-            child: Image.asset(
-              path,
-              width: 50,
-              height: 50,
-              fit: BoxFit.contain,
+        GestureDetector(
+          onTap:onTapper ,
+          child: Container(
+            height: 80,
+            width: 95,
+            decoration: BoxDecoration(
+              color: bgColor,
+              borderRadius: BorderRadius.circular(20.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 6,
+                  offset: const Offset(2, 4),
+                )
+              ],
+            ),
+            child:Column(
+              children: [
+                Center(
+              child: Image.asset(
+                path,
+                width: 50,
+                height: 50,
+                fit: BoxFit.contain,
+              ),
+            ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6.0),
+            child: Text(
+              overflow: TextOverflow.ellipsis,
+              words,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.inter(
+                fontSize: 13,
+                
+                fontWeight: FontWeight.w600,
+                color: Colors.black87,
+              ),
             ),
           ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6.0),
-          child: Text(
-            overflow: TextOverflow.ellipsis,
-            words,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.inter(
-              fontSize: 13,
-              
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
-            ),
+              ],
+            ) 
           ),
-        ),
-            ],
-          ) 
         ),
         
       ],

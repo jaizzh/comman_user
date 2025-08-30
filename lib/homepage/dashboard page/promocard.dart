@@ -76,7 +76,7 @@ class _SixPromoCarouselState extends State<SixPromoCarousel> {
           onPanDown: (_) => _pauseAuto(), // pause while user drags
           onPanEnd: (_) => _startAuto(),  // resume when released
           child: SizedBox(
-            height:  MediaQuery.of(context).size.height * 0.225,
+            height:  MediaQuery.of(context).size.height * 0.19,
             child: PageView.builder(
               controller: _pageCtrl,
               itemCount: widget.images.length,
@@ -110,7 +110,7 @@ class _SixPromoCarouselState extends State<SixPromoCarousel> {
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeInOut,
         height: 6,
-        width: active ? 25.0 : 8.0,               // 👈 active bigger
+        width: active ? 20.0 : 6.0,               // 👈 active bigger
         margin: EdgeInsets.only(
           right: i == widget.images.length - 1 ? 0 : 6,
         ),

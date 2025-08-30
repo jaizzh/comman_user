@@ -203,26 +203,26 @@ class _timelineState extends State<timeline> {
             key: _formKey,
             child:Stack(
               children: [
-                   Positioned(child: Container(
-        height: MediaQuery.of(context).size.height *0.4,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              AppColors.boxlightcolor,
-              AppColors.boxboxlight,
-              Colors.white,
-          ])
-        ),
-        )),
+        //            Positioned(child: Container(
+        // height: MediaQuery.of(context).size.height *0.4,
+        // width: double.infinity,
+        // decoration: BoxDecoration(
+        //   gradient: LinearGradient(
+        //     begin: Alignment.topCenter,
+        //     end: Alignment.bottomCenter,
+        //     colors: [
+        //       AppColors.boxlightcolor,
+        //       AppColors.boxboxlight,
+        //       Colors.white,
+        //   ])
+        // ),
+        // )),
                 Container(
                 child: Column(
                    children: [
                   const SizedBox(height: 12),
-                  labell("Add Your Timelines"),
-                  const SizedBox(height: 10),
+               //   labell("Add Your Timelines"),
+               //   const SizedBox(height: 10),
                   timelineadd(),
                   const SizedBox(height: 12),
                   _savedList(),
@@ -288,9 +288,10 @@ class _timelineState extends State<timeline> {
         child: Column(
           children: [
             const SizedBox(height: 14),
-            // counter
-            kuttylabel("Event Name"),
-            const SizedBox(height: 6),
+              labell("Add Your Timelines"),
+                  const SizedBox(height: 10),
+   //         kuttylabel("Event Name"),
+  //          const SizedBox(height: 6),
             _textBox(
               hint: "Event name",
               maxLen: 28,
@@ -303,8 +304,8 @@ class _timelineState extends State<timeline> {
               },
             ),
             const SizedBox(height: 10),
-            kuttylabel("Date"),
-            const SizedBox(height: 6),
+    //        kuttylabel("Date"),
+    //        const SizedBox(height: 6),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: _dateField(
@@ -314,8 +315,8 @@ class _timelineState extends State<timeline> {
               ),
             ),
             const SizedBox(height: 10),
-            kuttylabel("Choose Timing"),
-            const SizedBox(height: 6),
+    //        kuttylabel("Choose Timing"),
+    //        const SizedBox(height: 6),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Row(
@@ -339,8 +340,8 @@ class _timelineState extends State<timeline> {
               ),
             ),
             const SizedBox(height: 12),
-            kuttylabel("Place"),
-            const SizedBox(height: 6),
+    //        kuttylabel("Place"),
+    //       const SizedBox(height: 6),
             _textBox(
               hint: "Place",
               maxLen: 35,
