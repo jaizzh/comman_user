@@ -1,12 +1,14 @@
-import 'package:common_user/common/colors.dart' show AppColors;
-import 'package:common_user/homepage/New%20Event/1st%20screen/eventlist.dart';
+import 'dart:ui';
+import 'package:common_user/common/colors.dart';
+import 'package:common_user/common/razorpay/razorpay.dart';
+import 'package:common_user/homepage/New Event/1st screen/eventlist.dart';
 import 'package:common_user/homepage/New%20Event/2nd%20screen/eventformpage.dart';
-import 'package:common_user/homepage/dashboard%20page/homepage.dart';
+import 'package:common_user/homepage/dashboard page/homepage.dart';
+import 'package:common_user/homepage/dashboard%20page/mainpage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-// ignore: camel_case_types
 class eventplan extends StatefulWidget {
   const eventplan({super.key});
 
@@ -107,7 +109,9 @@ class _eventplanState extends State<eventplan> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        surfaceTintColor: AppColors.boxlightcolor,
+        toolbarHeight: MediaQuery.of(context).size.height * 0.06,
+        backgroundColor: AppColors.boxlightcolor,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -115,11 +119,10 @@ class _eventplanState extends State<eventplan> {
             icon: const Icon(
               Icons.arrow_back_ios_new_rounded,
               color: Colors.black,
+              size: 18.0,
             ),
             onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const homepage()),
-            ),
+                context, MaterialPageRoute(builder: (_) => homepage())),
           ),
         ),
         centerTitle: true,
@@ -128,122 +131,131 @@ class _eventplanState extends State<eventplan> {
           child: Text(
             "Create Event",
             style: GoogleFonts.inter(
-              color: Colors.black,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.w700,
+              letterSpacing: 0.8,
+              color: Colors.black,
             ),
           ),
         ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(
-            16,
-            8,
-            16,
-            _fabHeight +
-                _fabBottomGap +
-                6, // ✅ reserve space for the floating button
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Stack(
             children: [
-              const SizedBox(height: 10.0),
-              label("Event Type"),
-              const SizedBox(height: 10.0),
-              dropdownField(),
-              const SizedBox(height: 10.0),
-              label("Event Name"),
-              const SizedBox(height: 10.0),
-              eventnameform1(
-                hint: "Eventname",
-                maxer: 30,
-                specifyname: false,
-                parteventname: eventnamecon,
-                iutyu: const Icon(Icons.event, color: Colors.black26),
-              ),
-              const SizedBox(height: 10.0),
-              Row(
-                children: [
-                  label("Date"),
-                  if (startDate != null && endDate != null) ...[
-                    const SizedBox(width: 8),
-                    Text(
-                      isInvalidDateRange
-                          ? "(Invalid date)"
-                          : "(Days = $diffDays)",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: isInvalidDateRange
-                            ? Colors.red
-                            : const Color(0xFF16A34A),
-                      ),
+              Positioned(
+                  child: Container(
+                height: MediaQuery.of(context).size.height * 0.3,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                      AppColors.boxlightcolor,
+                      Colors.white,
+                    ])),
+              )),
+              Container(
+                padding: EdgeInsets.fromLTRB(
+                  12, 8, 12,
+                  _fabHeight +
+                      _fabBottomGap +
+                      6, // ✅ reserve space for the floating button
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    label("Event Type"),
+                    const SizedBox(height: 4.0),
+                    dropdownField(),
+                    const SizedBox(height: 6.0),
+                    label("Event Name"),
+                    const SizedBox(height: 4.0),
+                    eventnameform1(
+                        hint: "Eventname",
+                        maxer: 30,
+                        specifyname: false,
+                        parteventname: eventnamecon),
+                    const SizedBox(height: 6.0),
+                    Row(
+                      children: [
+                        label("Date"),
+                        if (startDate != null && endDate != null) ...[
+                          const SizedBox(width: 8),
+                          Text(
+                            isInvalidDateRange
+                                ? "(Invalid date)"
+                                : "(Days = $diffDays)",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: isInvalidDateRange
+                                  ? Colors.red
+                                  : Color(0xFF16A34A),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                    const SizedBox(height: 4.0),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _dateField(
+                            title: "Start Date",
+                            value: _fmt(startDate),
+                            onTap: () => _pickDate(isStart: true),
+                          ),
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: _dateField(
+                            title: "End Date",
+                            value: _fmt(endDate),
+                            onTap: () => _pickDate(isStart: false),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    label("Plan"),
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: PlanCard(
+                                plan: "Free Plan",
+                                amount: "\$0",
+                                viewplan: "Current Plan")),
+                        const SizedBox(width: 12),
+                        Expanded(
+                            child: PlanCard(
+                                plan: "Basic Plan",
+                                amount: "\$10",
+                                viewplan: "Choose Plan")),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: PlanCard(
+                                plan: "Premium Plan",
+                                amount: "\$49",
+                                viewplan: "Choose Plan")),
+                        const SizedBox(width: 12),
+                        Expanded(
+                            child: PlanCard(
+                                plan: "Business Plan",
+                                amount: "\$99",
+                                viewplan: "Choose Plan")),
+                      ],
                     ),
                   ],
-                ],
-              ),
-              const SizedBox(height: 10.0),
-              Row(
-                children: [
-                  Expanded(
-                    child: _dateField(
-                      title: "Start Date",
-                      value: _fmt(startDate),
-                      onTap: () => _pickDate(isStart: true),
-                    ),
-                  ),
-                  const SizedBox(width: 14),
-                  Expanded(
-                    child: _dateField(
-                      title: "End Date",
-                      value: _fmt(endDate),
-                      onTap: () => _pickDate(isStart: false),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              label("Plan"),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: PlanCard(
-                      plan: "Free Plan",
-                      amount: "\$0",
-                      viewplan: "Current Plan",
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: PlanCard(
-                      plan: "Basic Plan",
-                      amount: "\$10",
-                      viewplan: "View Plan",
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: PlanCard(
-                      plan: "Premium Plan",
-                      amount: "\$49",
-                      viewplan: "View Plan",
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: PlanCard(
-                      plan: "Business Plan",
-                      amount: "\$99",
-                      viewplan: "View Plan",
-                    ),
-                  ),
-                ],
+                ),
               ),
             ],
           ),
@@ -252,9 +264,14 @@ class _eventplanState extends State<eventplan> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Builder(
         builder: (context) {
-          return ConstrainedBox(
-            constraints: const BoxConstraints.tightFor(),
-            child: choosePlanButton(onPressed: () {}),
+          return Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: ConstrainedBox(
+              constraints: BoxConstraints.tightFor(),
+              child: choosePlanButton(onPressed: () {
+                // TODO: next action
+              }),
+            ),
           );
         },
       ),
@@ -267,8 +284,8 @@ class _eventplanState extends State<eventplan> {
         text,
         style: GoogleFonts.inter(
           color: Colors.black,
-          fontSize: 14,
-          fontWeight: FontWeight.w700,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
         ),
       );
 
@@ -284,7 +301,7 @@ class _eventplanState extends State<eventplan> {
         borderRadius: BorderRadius.circular(12.0),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12),
-      height: 48,
+      height: MediaQuery.of(context).size.height * 0.05,
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: selectedType,
@@ -299,10 +316,8 @@ class _eventplanState extends State<eventplan> {
           icon: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(
-                Icons.keyboard_arrow_down_rounded,
-                color: Colors.black54,
-              ),
+              const Icon(Icons.keyboard_arrow_down_rounded,
+                  color: Colors.black54),
               if (showTick) ...[
                 const SizedBox(width: 8),
                 const Icon(
@@ -340,7 +355,6 @@ class _eventplanState extends State<eventplan> {
     required int maxer,
     required bool specifyname, // kept for signature; not needed for state
     required TextEditingController parteventname,
-    required Widget iutyu,
   }) {
     return StatefulBuilder(
       builder: (context, setState) {
@@ -348,7 +362,7 @@ class _eventplanState extends State<eventplan> {
         final bool isOk = parteventname.text.trim().length >= 3;
 
         return Container(
-          height: 48,
+          height: MediaQuery.of(context).size.height * 0.05,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12.0),
@@ -361,10 +375,10 @@ class _eventplanState extends State<eventplan> {
             maxLength: maxer,
             onChanged: (_) => setState(() {}), // rebuild to refresh suffix icon
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+            style: GoogleFonts.inter(
               color: Colors.black87,
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
             ),
             decoration: InputDecoration(
               // no borders from the field; only wrapper shows styling
@@ -373,21 +387,20 @@ class _eventplanState extends State<eventplan> {
               focusedBorder: InputBorder.none,
               counterText: '',
               isDense: true,
-              contentPadding: const EdgeInsets.symmetric(vertical: 14),
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 8, horizontal: 12.0),
               hintText: hint,
-              hintStyle: const TextStyle(color: Colors.black38),
-              prefixIcon: iutyu,
+              hintStyle: TextStyle(
+                  color: Colors.black38,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14.0),
               suffixIcon: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 220),
                 transitionBuilder: (child, anim) =>
                     ScaleTransition(scale: anim, child: child),
                 child: isOk
-                    ? const Icon(
-                        Icons.check_circle_rounded,
-                        key: ValueKey('ok'),
-                        color: Color(0xFF9A2143),
-                        size: 20,
-                      )
+                    ? const Icon(Icons.check_circle_rounded,
+                        key: ValueKey('ok'), color: Color(0xFF9A2143), size: 20)
                     : const SizedBox.shrink(key: ValueKey('empty')),
               ),
             ),
@@ -406,10 +419,14 @@ class _eventplanState extends State<eventplan> {
       onTap: onTap,
       borderRadius: BorderRadius.circular(12.0),
       child: Container(
-        height: 48,
+        height: MediaQuery.of(context).size.height * 0.05,
         decoration: BoxDecoration(
           boxShadow: const [
-            BoxShadow(spreadRadius: 1, blurRadius: 1, color: Colors.black38),
+            BoxShadow(
+              spreadRadius: 1,
+              blurRadius: 1,
+              color: Colors.black38,
+            ),
           ],
           color: Colors.white,
           borderRadius: BorderRadius.circular(12.0),
@@ -422,23 +439,19 @@ class _eventplanState extends State<eventplan> {
                 value.isEmpty ? title : value,
                 style: GoogleFonts.inter(
                   color: value.isEmpty ? Colors.black45 : Colors.black,
-                  fontSize: 14,
+                  fontSize: 13,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            const Icon(
-              Icons.calendar_today_rounded,
-              size: 18,
-              color: Colors.black45,
-            ),
+            const Icon(Icons.calendar_today_rounded,
+                size: 18, color: Colors.black38),
           ],
         ),
       ),
     );
   }
 
-  // ignore: non_constant_identifier_names
   Widget PlanCard({
     required String plan,
     required String amount,
@@ -456,7 +469,9 @@ class _eventplanState extends State<eventplan> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 220),
         curve: Curves.easeOut,
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8.0,
+        ),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
@@ -466,34 +481,33 @@ class _eventplanState extends State<eventplan> {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(selected ? 0.12 : 0.06),
-              blurRadius: selected ? 18 : 10,
-              offset: const Offset(0, 6),
+              blurRadius: 1,
+              spreadRadius: 1,
+              color: Colors.black26,
             ),
           ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title
+            SizedBox(
+              height: 6.0,
+            ),
             Text(
               plan,
               style: GoogleFonts.inter(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
                 color: const Color(0xFF111827),
               ),
             ),
-            const SizedBox(height: 8),
-
-            // Amount / month
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
                   amount,
                   style: GoogleFonts.inter(
-                    fontSize: 28,
+                    fontSize: 18,
                     fontWeight: FontWeight.w800,
                     color: AppColors.buttoncolor,
                     height: 1.0,
@@ -505,7 +519,7 @@ class _eventplanState extends State<eventplan> {
                   child: Text(
                     '/month',
                     style: GoogleFonts.inter(
-                      fontSize: 13,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: const Color(0xFF4B5563),
                       height: 1.0,
@@ -514,41 +528,70 @@ class _eventplanState extends State<eventplan> {
                 ),
               ],
             ),
-            const SizedBox(height: 14),
-
-            // Pill
+            const SizedBox(height: 4),
             Container(
               width: double.infinity,
               alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.symmetric(vertical: 4),
               decoration: BoxDecoration(
-                color: const Color(0xFFF1F5F9),
-                borderRadius: BorderRadius.circular(10),
+                color: Colors.black12,
+                borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
                 viewplan,
                 style: GoogleFonts.inter(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
                 ),
               ),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 6),
             checkRow(
-              text: "invite people = 100",
-              iconss: Icons.verified_rounded,
-              kalaru: Colors.greenAccent,
+                text: "Invite Guest",
+                iconss: Text("100",
+                    style: TextStyle(
+                        fontSize: 12.0,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold))),
+            SizedBox(
+              height: 2.0,
             ),
             checkRow(
-              text: "No Gift Registry",
-              iconss: Icons.verified_rounded,
-              kalaru: Colors.greenAccent,
+              text: "Gift Registry",
+              iconss: Icon(
+                Icons.verified_rounded,
+                color: Colors.greenAccent,
+                size: 15.0,
+              ),
+            ),
+            SizedBox(
+              height: 2.0,
             ),
             checkRow(
               text: "No Co-hosts",
-              iconss: Icons.close,
-              kalaru: Colors.red,
+              iconss: Icon(Icons.close, color: Colors.red, size: 15.0),
+            ),
+            SizedBox(
+              height: 2.0,
+            ),
+            checkRow(
+                text: "Budget Report",
+                iconss: Icon(Icons.close, color: Colors.red, size: 15.0)),
+            SizedBox(
+              height: 2.0,
+            ),
+            checkRow(
+                text: "Planning Tools",
+                iconss: Icon(Icons.close, color: Colors.red, size: 15.0)),
+            SizedBox(
+              height: 2.0,
+            ),
+            checkRow(
+                text: "Money Gift",
+                iconss: Icon(Icons.close, color: Colors.red, size: 15.0)),
+            SizedBox(
+              height: 8.0,
             ),
           ],
         ),
@@ -556,115 +599,110 @@ class _eventplanState extends State<eventplan> {
     );
   }
 
-  Widget checkRow({
-    required String text,
-    required IconData iconss,
-    required Color kalaru,
-  }) {
+  Widget checkRow({required String text, required Widget iconss}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const SizedBox(width: 4),
+        Expanded(
+          child: Text(
+            text,
+            style: GoogleFonts.inter(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: Colors.black87,
+            ),
+          ),
+        ),
+        iconss,
+      ],
+    );
+  }
+
+  Widget choosePlanButton({VoidCallback? onPressed}) {
+    final bool isEnabled = selectedPlan != null &&
+        startDate != null &&
+        endDate != null &&
+        !isInvalidDateRange; // from your state
+
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Icon(iconss, size: 16, color: kalaru),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              text,
-              style: GoogleFonts.inter(
-                fontSize: 13.5,
-                fontWeight: FontWeight.w600,
-                color: const Color(0xFF111827),
+          InkWell(
+            borderRadius: BorderRadius.circular(12),
+            onTap: () {
+              if (isEnabled == true) {
+                showEventScheduleDialog(
+                  context,
+                  eventName: eventName2,
+                  eventCategory: selectedType,
+                  startDate: startPretty,
+                  endDate: endPretty,
+                  eventDays: diffDays,
+                );
+                //  Navigator.push(context, MaterialPageRoute(builder: (_)=> eventformpage(eventname1: eventName2, eventcategory1: selectedType, startdate1: startPretty, enddate1: endPretty, eventdays: diffDays,)));
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Fill all the form first")),
+                );
+              }
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 220),
+              curve: Curves.easeOut,
+              height: MediaQuery.of(context).size.height * 0.045,
+              width: MediaQuery.of(context).size.width *
+                  0.35, // full width in a Column
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: isEnabled ? AppColors.buttoncolor : Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: isEnabled
+                      ? AppColors.buttoncolor
+                      : const Color(0xFFE5E7EB),
+                  width: isEnabled ? 2 : 1,
+                ),
+                boxShadow: [
+                  if (isEnabled)
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.12),
+                      blurRadius: 16,
+                      offset: const Offset(0, 6),
+                    ),
+                  if (!isEnabled)
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
+                    ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Continue",
+                    style: GoogleFonts.inter(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: isEnabled ? Colors.white : Colors.black54,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Icon(
+                    Icons.arrow_forward_rounded,
+                    size: 16,
+                    color: isEnabled ? Colors.white : Colors.black54,
+                  ),
+                ],
               ),
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget choosePlanButton({VoidCallback? onPressed}) {
-    final bool isEnabled = selectedPlan != null ||
-        startDate != null ||
-        endDate != null ||
-        !isInvalidDateRange; // from your state
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () {
-            if (isEnabled == true) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => eventformpage(
-                    eventname1: eventName2,
-                    eventcategory1: selectedType,
-                    startdate1: startPretty,
-                    enddate1: endPretty,
-                    eventdays: diffDays,
-                  ),
-                ),
-              );
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Fill all the form first")),
-              );
-            }
-          },
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 220),
-            curve: Curves.easeOut,
-            height: 50,
-            width: 175, // full width in a Column
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(
-              color: isEnabled ? AppColors.buttoncolor : Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color:
-                    isEnabled ? AppColors.buttoncolor : const Color(0xFFE5E7EB),
-                width: isEnabled ? 2 : 1,
-              ),
-              boxShadow: [
-                if (isEnabled)
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.12),
-                    blurRadius: 16,
-                    offset: const Offset(0, 6),
-                  ),
-                if (!isEnabled)
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 8,
-                    offset: const Offset(0, 3),
-                  ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Continue",
-                  style: GoogleFonts.inter(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    color: isEnabled ? Colors.white : Colors.black54,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Icon(
-                  Icons.arrow_forward_rounded,
-                  size: 20,
-                  color: isEnabled ? Colors.white : Colors.black54,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

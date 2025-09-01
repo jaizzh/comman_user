@@ -1,9 +1,11 @@
+import 'package:common_user/common/colors.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/grouping/grouping.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/images_upload/imageupload.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/ltinerary/ltinerary.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/timelinepage.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/singleeventdashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../../../common/colors.dart';
 
 class planningtools extends StatefulWidget {
   const planningtools({super.key});
@@ -13,13 +15,13 @@ class planningtools extends StatefulWidget {
 }
 
 class _planningtoolsState extends State<planningtools> {
-  int index = 0;
+  int index = 2;
   final pages = [
     timeline(),
     const Center(child: Text('Search')),
-    const Center(child: Text('Planner')),
-    const Center(child: Text('Profile')),
-    const Center(child: Text('Profile')),
+    ltinerarypage(),
+    grouping(),
+    ImagePage(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -31,10 +33,8 @@ class _planningtoolsState extends State<planningtools> {
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: Colors.black,
-            ),
+            icon: const Icon(Icons.arrow_back_ios_new_rounded,
+                color: Colors.black),
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => singleventdashboard()),
@@ -54,7 +54,10 @@ class _planningtoolsState extends State<planningtools> {
           ),
         ),
       ),
-      body: IndexedStack(index: index, children: pages),
+      body: IndexedStack(
+        index: index,
+        children: pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
         onTap: (i) => setState(() => index = i),
@@ -69,28 +72,19 @@ class _planningtoolsState extends State<planningtools> {
           fontWeight: FontWeight.bold,
           fontSize: 16,
         ),
-        unselectedLabelStyle: GoogleFonts.sahitya(
-          fontSize: 14.0,
-          fontWeight: FontWeight.bold,
-        ),
+        unselectedLabelStyle:
+            GoogleFonts.sahitya(fontSize: 14.0, fontWeight: FontWeight.bold),
 
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.timeline_rounded),
-            label: 'Timeline',
-          ),
+              icon: Icon(Icons.timeline_rounded), label: 'Timeline'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.view_list_rounded),
-            label: 'Tasklist',
-          ),
+              icon: Icon(Icons.view_list_rounded), label: 'Tasklist'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.playlist_add_circle_rounded),
-            label: 'Itinerary',
-          ),
+              icon: Icon(Icons.playlist_add_circle_rounded),
+              label: 'Itinerary'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.groups_2),
-            label: 'Grouping',
-          ),
+              icon: Icon(Icons.groups_2), label: 'Grouping'),
           BottomNavigationBarItem(
             icon: Icon(Icons.image),
             label: "Images Upload",

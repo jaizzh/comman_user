@@ -1,4 +1,5 @@
 // ignore_for_file: deprecated_member_use
+
 import 'package:common_user/common/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class _FancyBottomNavState extends State<FancyBottomNav> {
     return SafeArea(
       //  minimum: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: Container(
-        height: 84,
+        height: MediaQuery.of(context).size.height * 0.08,
         // color: AppColors.boxlightcolor,
         //padding: const EdgeInsets.symmetric(horizontal: 8),
         decoration: const BoxDecoration(
@@ -106,7 +107,7 @@ class _NavItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(18),
       onTap: () => onTap(index),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -114,19 +115,19 @@ class _NavItem extends StatelessWidget {
             AnimatedContainer(
               duration: const Duration(milliseconds: 220),
               curve: Curves.easeInOut,
-              width: 42,
-              height: 42,
+              width: MediaQuery.of(context).size.width * 0.1,
+              height: MediaQuery.of(context).size.height * 0.04,
               decoration: BoxDecoration(
                 color: isActive ? _accentLight : Colors.transparent,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
                 icon,
-                size: 24,
+                size: 22,
                 color: isActive ? _accent : _iconInactive,
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 2),
             AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 200),
               style: TextStyle(

@@ -3,19 +3,19 @@ List<Map<String, String>> vendorslister = [
     "vendorName": "catering services",
     "subVendorName": "Catering & Buffet",
     "about": "Veg/Non-Veg menus, buffet setups, live counters, serving staff.",
-    "vendorImage": "assets/images/catering.jpg",
+    "vendorImage": "assets/images/yer.png",
   },
   {
     "vendorName": "Decorators",
     "subVendorName": "Stage & Venue Decor",
     "about": "Mandap, floral backdrops, lighting, drapes, entrance arches.",
-    "vendorImage": "assets/images/decorator.jpg",
+    "vendorImage": "assets/images/wededing.png",
   },
   {
     "vendorName": "wedding Photography",
     "subVendorName": "Photography & Videography",
     "about": "Candid & traditional shoots, cinematic videos, drone, albums.",
-    "vendorImage": "assets/images/camera.jpg",
+    "vendorImage": "assets/images/weddingphoto.png",
   },
   {
     "vendorName": "Grand Music Band",
@@ -32,7 +32,8 @@ List<Map<String, String>> vendorslister = [
   {
     "vendorName": "Luxury Cars",
     "subVendorName": "Wedding Car Rentals",
-    "about": "Luxury sedans/SUVs, vintage cars, décor, professional chauffeurs.",
+    "about":
+        "Luxury sedans/SUVs, vintage cars, décor, professional chauffeurs.",
     "vendorImage": "assets/vendors/vendor6.jpg",
   },
   {
@@ -50,7 +51,8 @@ List<Map<String, String>> vendorslister = [
   {
     "vendorName": "Event Planners",
     "subVendorName": "Wedding Planning",
-    "about": "End-to-end planning, budgeting, vendor coordination, day-of management.",
+    "about":
+        "End-to-end planning, budgeting, vendor coordination, day-of management.",
     "vendorImage": "assets/vendors/vendor9.jpg",
   },
 ];

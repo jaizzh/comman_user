@@ -1,7 +1,6 @@
+import 'package:common_user/common/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
-
-import '../../../../common/colors.dart';
 
 class AmountDial extends StatefulWidget {
   const AmountDial({super.key});
@@ -44,10 +43,9 @@ class _AmountDialState extends State<AmountDial> {
             Text(
               " 234 / 500",
               style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w900,
-                color: AppColors.buttoncolor,
-              ),
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w900,
+                  color: AppColors.buttoncolor),
             ),
             // Text(money.format(value.round()), style: const TextStyle(fontSize: 20,fontWeight: FontWeight.w800)),
             const Text('Invite People', style: TextStyle(color: Colors.black)),

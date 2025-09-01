@@ -10,7 +10,7 @@ class SixPromoCarousel extends StatefulWidget {
     this.activeColor = const Color(0xFF2F80ED),
     this.inactiveColor = const Color(0xFFDDDDDD),
     this.cardHeightFactor = 0.375, // 37.5% of screen height
-    this.viewportFraction = 0.92,  // little peek left/right
+    this.viewportFraction = 0.92, // little peek left/right
     this.borderRadius = 12.0,
   });
 
@@ -65,18 +65,20 @@ class _SixPromoCarouselState extends State<SixPromoCarousel> {
     assert(widget.images.length == 6,
         'SixPromoCarousel expects exactly 6 images.');
 
-  //  final h = MediaQuery.of(context).size.height * widget.cardHeightFactor;
+    //  final h = MediaQuery.of(context).size.height * widget.cardHeightFactor;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(height: 10.0,),
+        SizedBox(
+          height: 10.0,
+        ),
         // Banner area
         GestureDetector(
           onPanDown: (_) => _pauseAuto(), // pause while user drags
-          onPanEnd: (_) => _startAuto(),  // resume when released
+          onPanEnd: (_) => _startAuto(), // resume when released
           child: SizedBox(
-            height:  MediaQuery.of(context).size.height * 0.225,
+            height: MediaQuery.of(context).size.height * 0.19,
             child: PageView.builder(
               controller: _pageCtrl,
               itemCount: widget.images.length,
@@ -89,41 +91,43 @@ class _SixPromoCarouselState extends State<SixPromoCarousel> {
             ),
           ),
         ),
-        SizedBox(height: 10.0,),
+        SizedBox(
+          height: 10.0,
+        ),
         // 6 tiny containers (indicators) — active one expands + changes color
-       Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: List.generate(widget.images.length, (i) {
-    final bool active = i == _current;
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(widget.images.length, (i) {
+            final bool active = i == _current;
 
-    return GestureDetector(
-      onTap: () {
-        _pauseAuto();
-        _pageCtrl.animateToPage(
-          i,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
-        _startAuto();
-      },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.easeInOut,
-        height: 6,
-        width: active ? 25.0 : 8.0,               // 👈 active bigger
-        margin: EdgeInsets.only(
-          right: i == widget.images.length - 1 ? 0 : 6,
-        ),
-        decoration: BoxDecoration(
-          color: active ? widget.activeColor      // 👈 active color
-                        : widget.inactiveColor,   // 👈 inactive color
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
-    );
-  }),
-)
-
+            return GestureDetector(
+              onTap: () {
+                _pauseAuto();
+                _pageCtrl.animateToPage(
+                  i,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+                _startAuto();
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeInOut,
+                height: 6,
+                width: active ? 20.0 : 6.0, // 👈 active bigger
+                margin: EdgeInsets.only(
+                  right: i == widget.images.length - 1 ? 0 : 6,
+                ),
+                decoration: BoxDecoration(
+                  color: active
+                      ? widget.activeColor // 👈 active color
+                      : widget.inactiveColor, // 👈 inactive color
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            );
+          }),
+        )
       ],
     );
   }
@@ -138,11 +142,12 @@ class _SixPromoCarouselState extends State<SixPromoCarousel> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(r),
             boxShadow: const [
-              BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2)),
+              BoxShadow(
+                  color: Colors.black12, blurRadius: 6, offset: Offset(0, 2)),
             ],
           ),
           clipBehavior: Clip.antiAlias,
-          child:  Image.asset(image, fit: BoxFit.cover),
+          child: Image.asset(image, fit: BoxFit.cover),
         ),
       ),
     );

@@ -1,7 +1,6 @@
+import 'package:common_user/common/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../../../common/colors.dart';
 
 class timeline extends StatefulWidget {
   const timeline({super.key});
@@ -134,8 +133,7 @@ class _timelineState extends State<timeline> {
         if (startTime != null && _toMinutes(picked) < _toMinutes(startTime!)) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text("End time can't be before start time"),
-            ),
+                content: Text("End time can't be before start time")),
           );
           return;
         }
@@ -147,9 +145,9 @@ class _timelineState extends State<timeline> {
   // ---------- Save current as Map and push to list ----------
   void _saveCurrentTimeline() {
     if (!_canSaveOne) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Fill the form correctly")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Fill the form correctly")),
+      );
       return;
     }
 
@@ -172,17 +170,15 @@ class _timelineState extends State<timeline> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        backgroundColor: Colors.green,
-        duration: Duration(seconds: 2),
-        content: Text(
-          "Your TimeLine Was Added Successfully",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 15.0,
-          ),
-        ),
-      ),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+          content: Text(
+            "Your TimeLine Was Added Successfully",
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 15.0),
+          )),
     );
   }
 
@@ -214,29 +210,26 @@ class _timelineState extends State<timeline> {
             key: _formKey,
             child: Stack(
               children: [
-                Positioned(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          AppColors.boxlightcolor,
-                          AppColors.boxboxlight,
-                          Colors.white,
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                //            Positioned(child: Container(
+                // height: MediaQuery.of(context).size.height *0.4,
+                // width: double.infinity,
+                // decoration: BoxDecoration(
+                //   gradient: LinearGradient(
+                //     begin: Alignment.topCenter,
+                //     end: Alignment.bottomCenter,
+                //     colors: [
+                //       AppColors.boxlightcolor,
+                //       AppColors.boxboxlight,
+                //       Colors.white,
+                //   ])
+                // ),
+                // )),
                 Container(
                   child: Column(
                     children: [
                       const SizedBox(height: 12),
-                      labell("Add Your Timelines"),
-                      const SizedBox(height: 10),
+                      //   labell("Add Your Timelines"),
+                      //   const SizedBox(height: 10),
                       timelineadd(),
                       const SizedBox(height: 12),
                       _savedList(),
@@ -302,9 +295,10 @@ class _timelineState extends State<timeline> {
         child: Column(
           children: [
             const SizedBox(height: 14),
-            // counter
-            kuttylabel("Event Name"),
-            const SizedBox(height: 6),
+            labell("Add Your Timelines"),
+            const SizedBox(height: 10),
+            //         kuttylabel("Event Name"),
+            //          const SizedBox(height: 6),
             _textBox(
               hint: "Event name",
               maxLen: 28,
@@ -317,8 +311,8 @@ class _timelineState extends State<timeline> {
               },
             ),
             const SizedBox(height: 10),
-            kuttylabel("Date"),
-            const SizedBox(height: 6),
+            //        kuttylabel("Date"),
+            //        const SizedBox(height: 6),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: _dateField(
@@ -328,8 +322,8 @@ class _timelineState extends State<timeline> {
               ),
             ),
             const SizedBox(height: 10),
-            kuttylabel("Choose Timing"),
-            const SizedBox(height: 6),
+            //        kuttylabel("Choose Timing"),
+            //        const SizedBox(height: 6),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Row(
@@ -353,8 +347,8 @@ class _timelineState extends State<timeline> {
               ),
             ),
             const SizedBox(height: 12),
-            kuttylabel("Place"),
-            const SizedBox(height: 6),
+            //        kuttylabel("Place"),
+            //       const SizedBox(height: 6),
             _textBox(
               hint: "Place",
               maxLen: 35,
@@ -369,7 +363,10 @@ class _timelineState extends State<timeline> {
             const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [clearbutton(), savebutton()],
+              children: [
+                clearbutton(),
+                savebutton(),
+              ],
             ),
             const SizedBox(height: 10),
           ],
@@ -450,11 +447,8 @@ class _timelineState extends State<timeline> {
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Row(
           children: [
-            const Icon(
-              Icons.access_time_filled,
-              size: 18,
-              color: Colors.black45,
-            ),
+            const Icon(Icons.access_time_filled,
+                size: 18, color: Colors.black45),
             const SizedBox(width: 20),
             Expanded(
               child: Text(
@@ -496,17 +490,14 @@ class _timelineState extends State<timeline> {
                   borderRadius: BorderRadius.circular(8.0),
                   color: AppColors.buttoncolor,
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 30.0,
-                  vertical: 8.0,
-                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
                 child: const Text(
                   "Save",
                   style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
               ),
             ),
@@ -529,17 +520,14 @@ class _timelineState extends State<timeline> {
                 borderRadius: BorderRadius.circular(8.0),
                 color: Colors.black26,
               ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 30.0,
-                vertical: 8.0,
-              ),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
               child: const Text(
                 "Clear",
                 style: TextStyle(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
             ),
           ),
@@ -583,10 +571,7 @@ class _timelineState extends State<timeline> {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: const [
                     BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 4,
-                      spreadRadius: 1,
-                    ),
+                        color: Colors.black26, blurRadius: 4, spreadRadius: 1),
                   ],
                 ),
                 child: Stack(
@@ -638,9 +623,7 @@ class _timelineState extends State<timeline> {
                                     const SizedBox(width: 8),
                                     Container(
                                       padding: const EdgeInsets.symmetric(
-                                        horizontal: 10,
-                                        vertical: 6,
-                                      ),
+                                          horizontal: 10, vertical: 6),
                                       decoration: BoxDecoration(
                                         color: AppColors.boxboxlight,
                                         borderRadius: BorderRadius.circular(20),
@@ -648,11 +631,8 @@ class _timelineState extends State<timeline> {
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          const Icon(
-                                            Icons.event,
-                                            size: 14,
-                                            color: Colors.black54,
-                                          ),
+                                          const Icon(Icons.event,
+                                              size: 14, color: Colors.black54),
                                           const SizedBox(width: 6),
                                           Text(
                                             m['date']!,
@@ -673,11 +653,8 @@ class _timelineState extends State<timeline> {
                                 // time row
                                 Row(
                                   children: [
-                                    const Icon(
-                                      Icons.schedule,
-                                      size: 16,
-                                      color: Colors.black54,
-                                    ),
+                                    const Icon(Icons.schedule,
+                                        size: 16, color: Colors.black54),
                                     const SizedBox(width: 6),
                                     Text(
                                       "${m['start']!}   –  ${m['end']!} ",
@@ -696,11 +673,8 @@ class _timelineState extends State<timeline> {
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Icon(
-                                      Icons.place,
-                                      size: 16,
-                                      color: Colors.black54,
-                                    ),
+                                    const Icon(Icons.place,
+                                        size: 16, color: Colors.black54),
                                     const SizedBox(width: 6),
                                     Expanded(
                                       child: Text(
@@ -726,10 +700,8 @@ class _timelineState extends State<timeline> {
                             onPressed: () {
                               _removeAt(i);
                             },
-                            icon: const Icon(
-                              Icons.delete_outline,
-                              color: Colors.red,
-                            ),
+                            icon: const Icon(Icons.delete_outline,
+                                color: Colors.red),
                           ),
                         ],
                       ),
