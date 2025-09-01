@@ -108,7 +108,7 @@ class _SplashScreenState extends State<SplashScreen>
           } else if (state is SplashToSignIn) {
             _navigateWithTransition(const ChooseAuth());
           } else if (state is SplashToHome) {
-            _navigateWithTransition(const MainPage());
+            _navigateWithTransition(MainPage());
           }
         },
         child: Scaffold(

@@ -467,7 +467,7 @@ class _ChooseAuthState extends State<ChooseAuth> {
           await prefs.setBool('isLoggedIn', true);
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) => const MainPage()),
+            MaterialPageRoute(builder: (_) => MainPage()),
           );
         }
       }

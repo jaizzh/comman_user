@@ -149,7 +149,7 @@ class _SignInState extends State<SignIn> {
           await prefs.setBool('isLoggedIn', true);
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) => const MainPage()),
+            MaterialPageRoute(builder: (_) => MainPage()),
           );
         }
       }
@@ -293,7 +293,7 @@ class _SignInState extends State<SignIn> {
           await prefs.setBool('isLoggedIn', true);
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) => const MainPage()),
+            MaterialPageRoute(builder: (_) => MainPage()),
           );
         }
       } else {
