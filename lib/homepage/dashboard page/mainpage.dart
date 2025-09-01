@@ -1,3 +1,4 @@
+import 'package:common_user/features/venue/presentation/pages/venue_home.dart';
 import 'package:common_user/homepage/dashboard%20page/homepage.dart';
 import 'package:common_user/homepage/dashboard%20page/bottomnavigation.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class _MainPageState extends State<MainPage> {
 
   final _pages = [
     homepage(),
-    // VenueTab(),       // 1
+    VenueHome() // 1
     // VendorTab(),      // 2
     // SendGiftTab(),    // 3
     // InvitationTab(),  // 4
