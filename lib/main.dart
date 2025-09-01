@@ -1,3 +1,4 @@
+import 'package:common_user/common/razorpay/razorpay.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'features/splash/presentation/pages/splash_screen.dart';
@@ -5,6 +6,7 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  RazorpayService.instance.init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
