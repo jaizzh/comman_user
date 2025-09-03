@@ -1,12 +1,16 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
 import 'package:common_user/app_colors.dart';
 import 'package:common_user/features/venue/presentation/model/category.dart';
 import 'package:common_user/features/venue/presentation/model/category_data.dart';
+import 'package:common_user/features/venue/presentation/model/location_provider.dart';
 import 'package:common_user/features/venue/presentation/model/venue.dart';
 import 'package:common_user/features/venue/presentation/model/venue_data.dart';
+import 'package:common_user/features/venue/presentation/pages/filter_page.dart';
+import 'package:common_user/features/venue/presentation/pages/location_search_page.dart';
 import 'package:common_user/features/venue/presentation/pages/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import 'venue_detailed_screen.dart';
 
@@ -284,7 +288,7 @@ class _VenueHomeState extends State<VenueHome> {
               ),
               child: Image.asset(
                 venue.image,
-                height: _isGridView ? 100 : 160, // Reduced height for grid
+                height: _isGridView ? 82 : 160, // Reduced height for grid
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
@@ -452,29 +456,60 @@ class _VenueHomeState extends State<VenueHome> {
     );
   }
 
+  String selectedLocation = "Madurai";
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.lightGold,
         surfaceTintColor: AppColors.lightGold,
         elevation: 0,
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Icon(Icons.location_on, color: AppColors.primary),
-            const SizedBox(width: 10),
-            Text(
-              "Madurai",
-              style: GoogleFonts.poppins(
-                fontSize: 15,
-                color: AppColors.primary,
-                fontWeight: FontWeight.w500,
+        title: GestureDetector(
+          onTap: () async {
+            final result = await Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    const LocationSearchPage(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  const begin = Offset(1.0, 0.0); // Right side
+                  const end = Offset.zero;
+                  const curve = Curves.ease;
+
+                  var tween = Tween(
+                    begin: begin,
+                    end: end,
+                  ).chain(CurveTween(curve: curve));
+                  var offsetAnimation = animation.drive(tween);
+
+                  return SlideTransition(
+                    position: offsetAnimation,
+                    child: child,
+                  );
+                },
               ),
-            ),
-          ],
+            );
+            if (result != null && result is String) {
+              context.read<LocationProvider>().updateLocation(result);
+            }
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(Icons.location_on, color: AppColors.primary),
+              const SizedBox(width: 10),
+              Text(
+                context.watch<LocationProvider>().selectedLocation,
+                style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
         ),
         actions: [
           GestureDetector(
@@ -563,15 +598,44 @@ class _VenueHomeState extends State<VenueHome> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    width: screenWidth * 0.11,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: AppColors.primary,
-                    ),
-                    child: const Center(
-                      child: Icon(Icons.tune, color: AppColors.white),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  const FilterPage(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            const begin = Offset(1.0, 0.0); // Right side
+                            const end = Offset.zero;
+                            const curve = Curves.ease;
+
+                            var tween = Tween(
+                              begin: begin,
+                              end: end,
+                            ).chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
+
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      width: screenWidth * 0.11,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: AppColors.primary,
+                      ),
+                      child: const Center(
+                        child: Icon(Icons.tune, color: AppColors.white),
+                      ),
                     ),
                   ),
                 ],

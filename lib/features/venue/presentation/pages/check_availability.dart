@@ -1,7 +1,8 @@
-// ignore_for_file: deprecated_member_use, avoid_print
-
 import 'package:common_user/app_colors.dart';
+import 'package:common_user/features/venue/presentation/pages/fill_details.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class CheckAvailability extends StatefulWidget {
   const CheckAvailability({super.key});
@@ -11,55 +12,132 @@ class CheckAvailability extends StatefulWidget {
 }
 
 class _CheckAvailabilityState extends State<CheckAvailability> {
-  final _formKey = GlobalKey<FormState>();
+  DateTime focusedDay = DateTime.now();
+  DateTime? rangeStart;
+  DateTime? rangeEnd;
+  RangeSelectionMode rangeSelectionMode = RangeSelectionMode.toggledOn;
 
-  // Form controllers
-  final _nameController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _eventTypeController = TextEditingController();
-  final _guestsController = TextEditingController();
-  final _requirementsController = TextEditingController();
-
-  DateTime? _selectedDate;
-  TimeOfDay? _startTime;
-  TimeOfDay? _endTime;
-  String _selectedEventType = 'Wedding';
-
-  final List<String> _eventTypes = [
-    'Wedding',
-    'Birthday Party',
-    'Corporate Event',
-    'Anniversary',
-    'Reception',
-    'Engagement',
-    'Conference',
-    'Other',
+  // Fully booked dates (no availability)
+  final List<DateTime> bookedDates = [
+    DateTime.utc(2025, 9, 5),
+    DateTime.utc(2025, 9, 10),
+    DateTime.utc(2025, 9, 16),
   ];
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _phoneController.dispose();
-    _emailController.dispose();
-    _eventTypeController.dispose();
-    _guestsController.dispose();
-    _requirementsController.dispose();
-    super.dispose();
+  // Partially booked dates (morning OR evening booked, one slot available)
+  final List<DateTime> offBookedDates = [
+    DateTime.utc(2025, 9, 6),
+    DateTime.utc(2025, 9, 11),
+    DateTime.utc(2025, 9, 17),
+  ];
+
+  bool isFullyBooked(DateTime day) {
+    return bookedDates.any((d) => isSameDay(d, day));
+  }
+
+  bool isPartiallyBooked(DateTime day) {
+    return offBookedDates.any((d) => isSameDay(d, day));
+  }
+
+  bool hasFullyBookedDatesInRange(DateTime start, DateTime end) {
+    DateTime currentDate = start;
+    while (currentDate.isBefore(end) || isSameDay(currentDate, end)) {
+      if (isFullyBooked(currentDate)) {
+        return true;
+      }
+      currentDate = currentDate.add(const Duration(days: 1));
+    }
+    return false;
+  }
+
+  List<DateTime> getFullyBookedDatesInRange(DateTime start, DateTime end) {
+    List<DateTime> fullyBookedInRange = [];
+    DateTime currentDate = start;
+    while (currentDate.isBefore(end) || isSameDay(currentDate, end)) {
+      if (isFullyBooked(currentDate)) {
+        fullyBookedInRange.add(currentDate);
+      }
+      currentDate = currentDate.add(const Duration(days: 1));
+    }
+    return fullyBookedInRange;
+  }
+
+  List<DateTime> getPartiallyBookedDatesInRange(DateTime start, DateTime end) {
+    List<DateTime> partiallyBookedInRange = [];
+    DateTime currentDate = start;
+    while (currentDate.isBefore(end) || isSameDay(currentDate, end)) {
+      if (isPartiallyBooked(currentDate)) {
+        partiallyBookedInRange.add(currentDate);
+      }
+      currentDate = currentDate.add(const Duration(days: 1));
+    }
+    return partiallyBookedInRange;
+  }
+
+  void showBookingInfoSnackBar(
+      List<DateTime> fullyBooked, List<DateTime> partiallyBooked) {
+    String message = "";
+
+    if (fullyBooked.isNotEmpty) {
+      String fullyBookedDates = fullyBooked
+          .map((date) => "${date.day}/${date.month}/${date.year}")
+          .join(", ");
+      message = 'These dates are fully booked: $fullyBookedDates';
+    }
+
+    if (partiallyBooked.isNotEmpty) {
+      String partiallyBookedDates = partiallyBooked
+          .map((date) => "${date.day}/${date.month}/${date.year}")
+          .join(", ");
+
+      if (message.isNotEmpty) {
+        message +=
+            '\n\nPartially available (morning or evening): $partiallyBookedDates';
+      } else {
+        message =
+            'These dates have partial availability (morning or evening): $partiallyBookedDates';
+      }
+    }
+
+    if (message.isNotEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            message,
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          backgroundColor:
+              fullyBooked.isNotEmpty ? Colors.redAccent : Colors.green,
+          duration: const Duration(seconds: 4),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      );
+    }
+  }
+
+  String formatDate(DateTime? date) {
+    if (date == null) return "Select Date";
+    return "${date.day}/${date.month}/${date.year}";
   }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isTablet = size.width > 600;
+
+    // Responsive values
+    final horizontalPadding = size.width * 0.04;
+    final verticalSpacing = size.height * 0.015;
+    final cardPadding = size.width * 0.03;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Check Availability',
-          style: TextStyle(fontWeight: FontWeight.w600, color: Colors.black87),
-        ),
-        backgroundColor: AppColors.lightGold,
-        surfaceTintColor: AppColors.lightGold,
-        elevation: 0,
-      ),
+      appBar: _buildAppBar(context, size),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -69,36 +147,27 @@ class _CheckAvailabilityState extends State<CheckAvailability> {
             stops: [0.0, 0.40],
           ),
         ),
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
-          child: Form(
-            key: _formKey,
+        child: SafeArea(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.symmetric(
+              horizontal: horizontalPadding,
+              vertical: verticalSpacing,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header Section
-                _buildHeaderSection(),
-                const SizedBox(height: 30),
-
-                // Personal Information Card
-                _buildPersonalInfoCard(),
-                const SizedBox(height: 20),
-
-                // Event Details Card
-                _buildEventDetailsCard(),
-                const SizedBox(height: 20),
-
-                // Date & Time Card
-                _buildDateTimeCard(),
-                const SizedBox(height: 20),
-
-                // Additional Requirements Card
-                _buildRequirementsCard(),
-                const SizedBox(height: 30),
-
-                // Submit Button
-                _buildSubmitButton(),
-                const SizedBox(height: 20),
+                _buildTitle(context, size),
+                SizedBox(height: verticalSpacing),
+                _buildLegendCard(context, size, cardPadding),
+                SizedBox(height: verticalSpacing),
+                _buildCalendar(context, size, isTablet),
+                SizedBox(height: verticalSpacing),
+                _buildDateSelection(
+                    context, size, cardPadding, verticalSpacing),
+                SizedBox(height: verticalSpacing * 1.5),
+                _buildContinueButton(context, size),
+                SizedBox(height: verticalSpacing),
               ],
             ),
           ),
@@ -107,323 +176,375 @@ class _CheckAvailabilityState extends State<CheckAvailability> {
     );
   }
 
-  Widget _buildHeaderSection() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.9),
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: const Column(
-        children: [
-          Icon(Icons.event_available, size: 50, color: AppColors.lightGold),
-          SizedBox(height: 15),
-          Text(
-            'Check Venue Availability',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 8),
-          Text(
-            'Fill in your event details to check if the venue is available',
-            style: TextStyle(fontSize: 16, color: Colors.grey),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPersonalInfoCard() {
-    return _buildCard(
-      title: 'Personal Information',
-      icon: Icons.person,
-      children: [
-        _buildTextField(
-          controller: _nameController,
-          label: 'Full Name',
-          icon: Icons.person_outline,
-          validator: (value) =>
-              value?.isEmpty ?? true ? 'Please enter your name' : null,
+  PreferredSizeWidget _buildAppBar(BuildContext context, Size size) {
+    return AppBar(
+      backgroundColor: AppColors.lightGold,
+      surfaceTintColor: AppColors.lightGold,
+      elevation: 0,
+      title: Text(
+        "Check Availability",
+        style: GoogleFonts.poppins(
+          fontSize: size.width > 600 ? 18 : 16,
+          fontWeight: FontWeight.w600,
+          color: AppColors.black,
         ),
-        const SizedBox(height: 15),
-        _buildTextField(
-          controller: _phoneController,
-          label: 'Phone Number',
-          icon: Icons.phone,
-          keyboardType: TextInputType.phone,
-          validator: (value) =>
-              value?.isEmpty ?? true ? 'Please enter your phone number' : null,
-        ),
-        const SizedBox(height: 15),
-        _buildTextField(
-          controller: _emailController,
-          label: 'Email Address',
-          icon: Icons.email,
-          keyboardType: TextInputType.emailAddress,
-          validator: (value) {
-            if (value?.isEmpty ?? true) return 'Please enter your email';
-            if (!value!.contains('@')) return 'Please enter a valid email';
-            return null;
-          },
+      ),
+      centerTitle: true,
+      actions: [
+        Padding(
+          padding: EdgeInsets.only(right: size.width * 0.04),
+          child: Icon(
+            Icons.calendar_month,
+            color: AppColors.primary,
+            size: size.width > 600 ? 28 : 24,
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildEventDetailsCard() {
-    return _buildCard(
-      title: 'Event Details',
-      icon: Icons.event,
-      children: [
-        _buildDropdown(),
-        const SizedBox(height: 15),
-        _buildTextField(
-          controller: _guestsController,
-          label: 'Expected Number of Guests',
-          icon: Icons.group,
-          keyboardType: TextInputType.number,
-          validator: (value) =>
-              value?.isEmpty ?? true ? 'Please enter number of guests' : null,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDateTimeCard() {
-    return _buildCard(
-      title: 'Date & Time',
-      icon: Icons.schedule,
-      children: [
-        _buildDatePicker(),
-        const SizedBox(height: 15),
-        Row(
-          children: [
-            Expanded(child: _buildTimePicker(isStartTime: true)),
-            const SizedBox(width: 15),
-            Expanded(child: _buildTimePicker(isStartTime: false)),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildRequirementsCard() {
-    return _buildCard(
-      title: 'Additional Requirements',
-      icon: Icons.note_add,
-      children: [
-        _buildTextField(
-          controller: _requirementsController,
-          label: 'Special Requirements (Optional)',
-          icon: Icons.notes,
-          maxLines: 4,
-          hint: 'Decoration, catering, music system, etc.',
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCard({
-    required String title,
-    required IconData icon,
-    required List<Widget> children,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(icon, color: AppColors.lightGold, size: 24),
-              const SizedBox(width: 10),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          ...children,
-        ],
+  Widget _buildTitle(BuildContext context, Size size) {
+    return Text(
+      "Choose Your Dates",
+      style: GoogleFonts.poppins(
+        fontSize: size.width > 600 ? 18 : 16,
+        fontWeight: FontWeight.w600,
+        color: AppColors.black,
       ),
     );
   }
 
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required IconData icon,
-    TextInputType? keyboardType,
-    String? Function(String?)? validator,
-    int maxLines = 1,
-    String? hint,
-  }) {
-    return TextFormField(
-      controller: controller,
-      keyboardType: keyboardType,
-      validator: validator,
-      maxLines: maxLines,
-      decoration: InputDecoration(
-        labelText: label,
-        hintText: hint,
-        prefixIcon: Icon(icon, color: AppColors.lightGold),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: AppColors.lightGold, width: 2),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
-        filled: true,
-        fillColor: Colors.grey[50],
+  Widget _buildLegendCard(BuildContext context, Size size, double cardPadding) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
       ),
-    );
-  }
-
-  Widget _buildDropdown() {
-    return DropdownButtonFormField<String>(
-      value: _selectedEventType,
-      decoration: InputDecoration(
-        labelText: 'Event Type',
-        prefixIcon: const Icon(Icons.celebration, color: AppColors.lightGold),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: AppColors.lightGold, width: 2),
-        ),
-        filled: true,
-        fillColor: Colors.grey[50],
-      ),
-      items: _eventTypes.map((String eventType) {
-        return DropdownMenuItem<String>(
-          value: eventType,
-          child: Text(eventType),
-        );
-      }).toList(),
-      onChanged: (String? newValue) {
-        if (newValue != null) {
-          setState(() {
-            _selectedEventType = newValue;
-          });
-        }
-      },
-      validator: (value) =>
-          value == null ? 'Please select an event type' : null,
-    );
-  }
-
-  Widget _buildDatePicker() {
-    return InkWell(
-      onTap: () async {
-        final DateTime? picked = await showDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime.now(),
-          lastDate: DateTime.now().add(const Duration(days: 365)),
-        );
-        if (picked != null) {
-          setState(() {
-            _selectedDate = picked;
-          });
-        }
-      },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.grey[50],
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(
+          horizontal: cardPadding,
+          vertical: size.height * 0.02,
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const Icon(Icons.calendar_today, color: AppColors.lightGold),
-            const SizedBox(width: 12),
-            Text(
-              _selectedDate == null
-                  ? 'Select Event Date'
-                  : '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}',
-              style: TextStyle(
-                fontSize: 16,
-                color: _selectedDate == null ? Colors.grey : Colors.black87,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTimePicker({required bool isStartTime}) {
-    final time = isStartTime ? _startTime : _endTime;
-    final label = isStartTime ? 'Start Time' : 'End Time';
-
-    return InkWell(
-      onTap: () async {
-        final TimeOfDay? picked = await showTimePicker(
-          context: context,
-          initialTime: TimeOfDay.now(),
-        );
-        if (picked != null) {
-          setState(() {
-            if (isStartTime) {
-              _startTime = picked;
-            } else {
-              _endTime = picked;
-            }
-          });
-        }
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.grey[50],
-        ),
-        child: Row(
-          children: [
-            const Icon(Icons.access_time, color: AppColors.lightGold),
-            const SizedBox(width: 8),
             Expanded(
-              child: Text(
-                time == null ? label : time.format(context),
-                style: TextStyle(
-                  fontSize: 14,
-                  color: time == null ? Colors.grey : Colors.black87,
-                ),
+                child:
+                    _buildLegendItem("Available", LegendType.available, size)),
+            Expanded(
+                child: _buildLegendItem("Partial", LegendType.partial, size)),
+            Expanded(
+                child: _buildLegendItem("Booked", LegendType.booked, size)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLegendItem(String label, LegendType type, Size size) {
+    final iconSize = size.width > 600 ? 20.0 : 16.0;
+    final fontSize = size.width > 600 ? 14.0 : 12.0;
+
+    Widget icon;
+    switch (type) {
+      case LegendType.available:
+        icon = Container(
+          width: iconSize,
+          height: iconSize,
+          decoration: BoxDecoration(
+            color: Colors.green,
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.green, width: 2),
+          ),
+        );
+        break;
+      case LegendType.partial:
+        icon = Container(
+          width: iconSize,
+          height: iconSize,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.orange, width: 2),
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [AppColors.white, Colors.orange],
+              stops: [0.50, 0.60],
+            ),
+          ),
+        );
+        break;
+      case LegendType.booked:
+        icon = Container(
+          width: iconSize + 4,
+          height: iconSize + 4,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/png/closed.png"),
+              fit: BoxFit.contain,
+            ),
+          ),
+        );
+        break;
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        icon,
+        SizedBox(width: size.width * 0.02),
+        Flexible(
+          child: Text(
+            label,
+            style: GoogleFonts.poppins(
+              fontSize: fontSize,
+              fontWeight: FontWeight.w400,
+              color: AppColors.black,
+            ),
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCalendar(BuildContext context, Size size, bool isTablet) {
+    return Card(
+      elevation: 6,
+      shadowColor: AppColors.lightGold.withOpacity(0.3),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(size.width * 0.03),
+        child: TableCalendar(
+          firstDay: DateTime.utc(2020, 1, 1),
+          lastDay: DateTime.utc(2030, 12, 31),
+          focusedDay: focusedDay,
+          rangeSelectionMode: rangeSelectionMode,
+          rangeStartDay: rangeStart,
+          rangeEndDay: rangeEnd,
+          onRangeSelected: _handleRangeSelection,
+          onDaySelected: _handleDaySelection,
+          startingDayOfWeek: StartingDayOfWeek.monday,
+          headerStyle: HeaderStyle(
+            titleCentered: true,
+            titleTextStyle: GoogleFonts.poppins(
+              color: AppColors.primary,
+              fontSize: isTablet ? 18 : 16,
+              fontWeight: FontWeight.bold,
+            ),
+            formatButtonVisible: false,
+            leftChevronIcon: Icon(
+              Icons.chevron_left,
+              color: AppColors.primary,
+              size: isTablet ? 28 : 24,
+            ),
+            rightChevronIcon: Icon(
+              Icons.chevron_right,
+              color: AppColors.primary,
+              size: isTablet ? 28 : 24,
+            ),
+          ),
+          daysOfWeekStyle: DaysOfWeekStyle(
+            weekdayStyle: GoogleFonts.poppins(
+              color: Colors.grey[600],
+              fontSize: isTablet ? 14 : 12,
+              fontWeight: FontWeight.w500,
+            ),
+            weekendStyle: GoogleFonts.poppins(
+              color: Colors.grey[600],
+              fontSize: isTablet ? 14 : 12,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          calendarStyle: CalendarStyle(
+            cellMargin: EdgeInsets.all(size.width * 0.005),
+            defaultTextStyle: GoogleFonts.poppins(
+              color: Colors.black,
+              fontSize: isTablet ? 16 : 14,
+            ),
+            weekendTextStyle: GoogleFonts.poppins(
+              color: Colors.black,
+              fontSize: isTablet ? 16 : 14,
+            ),
+            outsideTextStyle: GoogleFonts.poppins(
+              color: Colors.grey[400],
+              fontSize: isTablet ? 16 : 14,
+            ),
+            todayTextStyle: GoogleFonts.poppins(
+              color: Colors.black,
+              fontSize: isTablet ? 16 : 14,
+              fontWeight: FontWeight.w600,
+            ),
+            todayDecoration: const BoxDecoration(
+              color: Color.fromARGB(255, 239, 165, 186),
+              shape: BoxShape.circle,
+            ),
+            selectedTextStyle: GoogleFonts.poppins(
+              color: Colors.white,
+              fontSize: isTablet ? 16 : 14,
+              fontWeight: FontWeight.w600,
+            ),
+            selectedDecoration: const BoxDecoration(
+              color: AppColors.primary,
+              shape: BoxShape.circle,
+            ),
+            rangeStartDecoration: const BoxDecoration(
+              color: AppColors.primary,
+              shape: BoxShape.circle,
+            ),
+            rangeEndDecoration: const BoxDecoration(
+              color: AppColors.primary,
+              shape: BoxShape.circle,
+            ),
+            rangeStartTextStyle: GoogleFonts.poppins(
+              color: Colors.white,
+              fontSize: isTablet ? 16 : 14,
+              fontWeight: FontWeight.w600,
+            ),
+            rangeEndTextStyle: GoogleFonts.poppins(
+              color: Colors.white,
+              fontSize: isTablet ? 16 : 14,
+              fontWeight: FontWeight.w600,
+            ),
+            withinRangeDecoration: const BoxDecoration(
+              color: Color.fromARGB(100, 239, 165, 186),
+              shape: BoxShape.rectangle,
+            ),
+            withinRangeTextStyle: GoogleFonts.poppins(
+              color: Colors.black,
+              fontSize: isTablet ? 16 : 14,
+            ),
+          ),
+          calendarBuilders: CalendarBuilders(
+            defaultBuilder: (context, day, focusedDay) =>
+                _buildCustomDayCell(day, size),
+            rangeStartBuilder: (context, day, focusedDay) =>
+                _buildCustomDayCell(day, size),
+            rangeEndBuilder: (context, day, focusedDay) =>
+                _buildCustomDayCell(day, size),
+            withinRangeBuilder: (context, day, focusedDay) =>
+                _buildCustomDayCell(day, size),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget? _buildCustomDayCell(DateTime day, Size size) {
+    final cellSize = size.width > 600 ? 45.0 : 40.0;
+    final fontSize = size.width > 600 ? 16.0 : 14.0;
+
+    if (isFullyBooked(day)) {
+      return _buildFullyBookedDayCell(day, cellSize, fontSize);
+    } else if (isPartiallyBooked(day)) {
+      return _buildPartiallyBookedDayCell(day, cellSize, fontSize);
+    }
+    return null;
+  }
+
+  Widget _buildFullyBookedDayCell(DateTime day, double size, double fontSize) {
+    return Center(
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/png/closed.png"),
+            fit: BoxFit.contain,
+          ),
+        ),
+        width: size,
+        height: size,
+        child: Center(
+          child: Text(
+            '${day.day}',
+            style: GoogleFonts.poppins(
+              color: Colors.black,
+              fontSize: fontSize,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPartiallyBookedDayCell(
+      DateTime day, double size, double fontSize) {
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.orange, width: 2),
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [AppColors.white, Colors.orange],
+            stops: [0.50, 0.60],
+          ),
+        ),
+        width: size,
+        height: size,
+        child: Center(
+          child: Text(
+            '${day.day}',
+            style: GoogleFonts.poppins(
+              color: Colors.black,
+              fontSize: fontSize,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDateSelection(BuildContext context, Size size,
+      double cardPadding, double verticalSpacing) {
+    return Column(
+      children: [
+        _buildDateCard("Start Date", rangeStart, size, cardPadding),
+        SizedBox(height: verticalSpacing),
+        _buildDateCard("End Date", rangeEnd, size, cardPadding),
+      ],
+    );
+  }
+
+  Widget _buildDateCard(
+      String label, DateTime? date, Size size, double cardPadding) {
+    return Card(
+      elevation: 6,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Container(
+        padding: EdgeInsets.all(cardPadding),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: AppColors.paper,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: GoogleFonts.poppins(
+                fontSize: size.width > 600 ? 14 : 12,
+                fontWeight: FontWeight.w500,
+                color: AppColors.primary,
+              ),
+            ),
+            SizedBox(height: size.height * 0.005),
+            Text(
+              formatDate(date),
+              style: GoogleFonts.poppins(
+                fontSize: size.width > 600 ? 18 : 16,
+                fontWeight: FontWeight.w600,
+                color: AppColors.black,
               ),
             ),
           ],
@@ -432,96 +553,129 @@ class _CheckAvailabilityState extends State<CheckAvailability> {
     );
   }
 
-  Widget _buildSubmitButton() {
-    return SizedBox(
-      width: double.infinity,
-      height: 55,
-      child: ElevatedButton(
-        onPressed: _submitForm,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.lightGold,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          elevation: 3,
-        ),
-        child: const Text(
-          'Check Availability',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
+  Widget _buildContinueButton(BuildContext context, Size size) {
+    return Material(
+      elevation: 4,
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        onTap: rangeStart != null && rangeEnd != null
+            ? () {
+                // Handle continue action
+                print(
+                    'Continue with dates: ${formatDate(rangeStart)} to ${formatDate(rangeEnd)}');
+              }
+            : null,
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          onTap: () {
+            if (rangeStart != null && rangeEnd != null) {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      const FillDetails(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    const begin = Offset(1.0, 0.0); // Right side
+                    const end = Offset.zero;
+                    const curve = Curves.ease;
+
+                    var tween = Tween(
+                      begin: begin,
+                      end: end,
+                    ).chain(CurveTween(curve: curve));
+                    var offsetAnimation = animation.drive(tween);
+
+                    return SlideTransition(
+                      position: offsetAnimation,
+                      child: child,
+                    );
+                  },
+                ),
+              );
+            }
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: rangeStart != null && rangeEnd != null
+                  ? AppColors.primary
+                  : AppColors.primary.withOpacity(0.6),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Continue",
+                  style: GoogleFonts.poppins(
+                    fontSize: size.width > 600 ? 18 : 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.white,
+                  ),
+                ),
+                SizedBox(width: size.width * 0.03),
+                Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white,
+                  size: size.width > 600 ? 24 : 20,
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      if (_selectedDate == null) {
-        _showSnackBar('Please select an event date');
-        return;
-      }
-      if (_startTime == null || _endTime == null) {
-        _showSnackBar('Please select start and end times');
+  void _handleRangeSelection(
+      DateTime? start, DateTime? end, DateTime focusedDay) {
+    if (start != null && end != null) {
+      if (hasFullyBookedDatesInRange(start, end)) {
+        List<DateTime> fullyBooked = getFullyBookedDatesInRange(start, end);
+        showBookingInfoSnackBar(fullyBooked, []);
         return;
       }
 
-      // Create the availability check data
-      final availabilityData = {
-        'name': _nameController.text,
-        'phone': _phoneController.text,
-        'email': _emailController.text,
-        'eventType': _selectedEventType,
-        'guests': int.tryParse(_guestsController.text) ?? 0,
-        'date': _selectedDate!.toIso8601String(),
-        'startTime': '${_startTime!.hour}:${_startTime!.minute}',
-        'endTime': '${_endTime!.hour}:${_endTime!.minute}',
-        'requirements': _requirementsController.text,
-      };
-      print('Availability check data: $availabilityData');
+      List<DateTime> partiallyBooked =
+          getPartiallyBookedDatesInRange(start, end);
+      if (partiallyBooked.isNotEmpty) {
+        showBookingInfoSnackBar([], partiallyBooked);
+      }
 
-      _showSuccessDialog();
+      setState(() {
+        rangeStart = start;
+        rangeEnd = end;
+        this.focusedDay = focusedDay;
+      });
+    } else if (start != null && end == null) {
+      if (isFullyBooked(start)) {
+        showBookingInfoSnackBar([start], []);
+        return;
+      }
+
+      List<DateTime> partiallyBooked = [];
+      if (isPartiallyBooked(start)) {
+        partiallyBooked.add(start);
+        showBookingInfoSnackBar([], partiallyBooked);
+      }
+
+      setState(() {
+        rangeStart = start;
+        rangeEnd = start;
+        this.focusedDay = focusedDay;
+      });
     }
   }
 
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: Colors.red),
-    );
-  }
-
-  void _showSuccessDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          title: const Row(
-            children: [
-              Icon(Icons.check_circle, color: Colors.green, size: 30),
-              SizedBox(width: 10),
-              Text('Request Sent!'),
-            ],
-          ),
-          content: const Text(
-            'Your availability check request has been sent to the vendor. You will receive a confirmation shortly.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop(); // Go back to previous screen
-              },
-              child: const Text('OK',
-                  style: TextStyle(color: AppColors.lightGold)),
-            ),
-          ],
-        );
-      },
-    );
+  void _handleDaySelection(DateTime selectedDay, DateTime focusedDay) {
+    if (rangeSelectionMode == RangeSelectionMode.toggledOff) {
+      setState(() {
+        this.focusedDay = focusedDay;
+      });
+    }
   }
 }
+
+enum LegendType { available, partial, booked }

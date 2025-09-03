@@ -3,11 +3,13 @@
 import 'dart:math';
 
 import 'package:common_user/app_colors.dart';
+import 'package:common_user/features/venue/presentation/model/location_provider.dart';
 import 'package:common_user/features/venue/presentation/model/venue.dart';
 import 'package:common_user/features/venue/presentation/model/venue_data.dart';
 import 'package:common_user/features/venue/presentation/pages/venue_detailed_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -68,7 +70,7 @@ class _SearchPageState extends State<SearchPage> {
             const Icon(Icons.location_on, color: AppColors.primary),
             const SizedBox(width: 10),
             Text(
-              "Madurai",
+              context.watch<LocationProvider>().selectedLocation,
               style: GoogleFonts.poppins(
                 fontSize: 15,
                 color: AppColors.primary,
