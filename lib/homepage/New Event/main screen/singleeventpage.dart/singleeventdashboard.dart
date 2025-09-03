@@ -1,11 +1,9 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:common_user/common/colors.dart';
-import 'package:common_user/common/webview.dart';
 import 'package:common_user/homepage/New%20Event/3rd%20screen/maineventpage.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/planningtoolspage.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/fisrthalfpage.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/majorcont.dart';
-import 'package:common_user/homepage/dashboard%20page/mainpage.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -39,68 +37,59 @@ class _singleventdashboardState extends State<singleventdashboard> {
                 context, MaterialPageRoute(builder: (_) => demopage())),
           ),
         ),
-        centerTitle: true,
-        title: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Event Schedhule",
-            style: GoogleFonts.inter(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0.8,
-              color: Colors.black,
-            ),
-          ),
-        ),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.card_giftcard_rounded,
+                color: Colors.black,
+                size: 18.0,
+              )),
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.edit,
+                color: Colors.black,
+                size: 18.0,
+              ))
+        ],
       ),
-      // appBar: AppBar(
-      //   backgroundColor: AppColors.boxlightcolor,
-      //   elevation: 0,
-      //   actions: [
-      //     Padding(
-      //       padding: const EdgeInsets.only(right: 12.0),
-      //       child: Icon(Icons.more_vert,color: Colors.black,),
-      //     )
-      //   ],
-      //   leading: Padding(
-      //     padding: const EdgeInsets.all(8.0),
-      //     child: IconButton(
-      //       icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
-      //        onPressed: () =>
-      //       Navigator.push(
-      //         context,
-      //         MaterialPageRoute(builder: (_) => demopage()),
-      //       ),
-      //     ),
-      //   ),
-      //   centerTitle: true,
-      //   title: Padding(
-      //     padding: const EdgeInsets.all(8.0),
-      //     child: Text(
-      //       "Event Schedule",
-      //       style: GoogleFonts.inter(
-      //         color: Colors.black,
-      //         fontSize: 18,
-      //         fontWeight: FontWeight.w700,
-      //       ),
-      //     ),
-      //   ),
-      // ),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Container(
           child: Column(
             children: [
-              mainconter(),
-              additional(context),
+              singledashhalf(),
               SizedBox(
-                height: 14.0,
+                height: 12.0,
+              ),
+              majorcont(),
+              SizedBox(
+                height: 20.0,
+              ),
+              commontools(),
+              SizedBox(
+                height: 20.0,
+              ),
+              labell("Event Features"),
+              SizedBox(
+                height: 8.0,
               ),
               planning(),
               SizedBox(
-                height: 14.0,
+                height: 10.0,
               ),
-              majorcont(),
+              threefiles(),
+              SizedBox(
+                height: 15.0,
+              ),
+              //  Container(
+              // height: MediaQuery.of(context).size.height * 0.2,
+              // width: double.infinity,
+              // child: Image.asset(
+              //   fit: BoxFit.cover,
+              //   "assets/images/temp.jpg"),
+              // ),
             ],
           ),
         ),
@@ -117,64 +106,130 @@ class _singleventdashboardState extends State<singleventdashboard> {
               text,
               style: GoogleFonts.inter(
                 color: AppColors.buttoncolor,
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],
         ),
       );
-  Widget mainconter() {
-    return Stack(
-      children: [
-        Positioned(
-            child: Container(
-          height: MediaQuery.of(context).size.height * 0.350,
-          width: double.infinity,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                AppColors.boxlightcolor,
-                AppColors.boxboxlight,
-                Colors.white,
-              ])),
-        )),
-        Container(
-          height: MediaQuery.of(context).size.height * 0.370,
-          width: double.infinity,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 16.0,
-              ),
-              labell("Venue / Vendors"),
-              SizedBox(
-                height: 20.0,
-              ),
-              Row(
+
+  Widget commontools() {
+    return SizedBox(
+        child: SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          commmontoolcontainer(
+              toolname: "Gift Registry",
+              toolvalue: 0.2,
+              colodf: Colors.amberAccent.shade400,
+              Subtoolname: 'Add Some Gift Registry',
+              valuesstring: '1/5'),
+          commmontoolcontainer(
+              toolname: "Invitation",
+              toolvalue: 0.4,
+              colodf: Colors.cyanAccent,
+              Subtoolname: 'Make invitation for your event',
+              valuesstring: '1/4'),
+          commmontoolcontainer(
+              toolname: "Video Invitation",
+              toolvalue: 0.1,
+              colodf: Colors.greenAccent,
+              Subtoolname: 'Video invitation for your gustes',
+              valuesstring: '1/10'),
+          commmontoolcontainer(
+              toolname: "Money Gifts Report",
+              toolvalue: 0.542,
+              colodf: Colors.tealAccent,
+              Subtoolname: 'Receive your money gift',
+              valuesstring: '4/6'),
+          commmontoolcontainer(
+              toolname: "Co-Hosts",
+              toolvalue: 0.651,
+              colodf: Colors.amberAccent.shade100,
+              Subtoolname: 'Collab with your friends & family',
+              valuesstring: '2/3'),
+        ],
+      ),
+    ));
+  }
+
+  Widget commmontoolcontainer({
+    required String toolname,
+    required double toolvalue,
+    required Color colodf,
+    required String Subtoolname,
+    required String valuesstring,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.085,
+        width: MediaQuery.of(context).size.width * 0.440,
+        decoration: BoxDecoration(
+          color: colodf,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 12.0),
+              child: Stack(
+                alignment: Alignment.center,
                 children: [
-                  venuevendor(
-                      pathds: "assets/images/venueor.png",
-                      namevenue: "Venue",
-                      uptohow: "upto 100+ Venues",
-                      stars: '⭐⭐⭐⭐⭐'),
-                  venuevendor(
-                      pathds: "assets/images/vendoror.png",
-                      namevenue: "Vendors",
-                      uptohow: "upto 500+ Vendors",
-                      stars: '⭐⭐⭐⭐')
+                  SizedBox(
+                    height: 40,
+                    width: 40,
+                    child: CircularProgressIndicator(
+                      value: toolvalue,
+                      strokeWidth: 5,
+                      backgroundColor: Colors.grey.shade300,
+                      valueColor:
+                          const AlwaysStoppedAnimation(Color(0xFF9A2143)),
+                    ),
+                  ),
+                  Text(
+                    valuesstring,
+                    style: const TextStyle(
+                        fontSize: 11.0,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ],
               ),
-              SizedBox(
-                height: 16.0,
+            ),
+            const SizedBox(width: 10.0),
+
+            // 👇 Expanded gives text enough width to wrap into 2 lines
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    toolname,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontSize: 12.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    Subtoolname,
+                    maxLines: 2, // allow 2 lines
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontSize: 11.0,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              labell("Additional Features"),
-            ],
-          ),
+            )
+          ],
         ),
-      ],
+      ),
     );
   }
 
@@ -189,23 +244,23 @@ class _singleventdashboardState extends State<singleventdashboard> {
         child: Container(
           decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(6.0),
               boxShadow: [
                 BoxShadow(
                   spreadRadius: 1,
                   blurRadius: 1,
-                  color: Colors.black38,
+                  color: Colors.black26,
                 )
               ]),
           child: Padding(
             padding:
-                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 6.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("Planning Tools",
                     style: TextStyle(
-                        fontSize: 14.0,
+                        fontSize: 12.0,
                         fontWeight: FontWeight.bold,
                         color: AppColors.buttoncolor)),
                 SizedBox(
@@ -214,6 +269,7 @@ class _singleventdashboardState extends State<singleventdashboard> {
                 Icon(
                   Icons.construction,
                   color: AppColors.buttoncolor,
+                  size: 16.0,
                 ),
               ],
             ),
@@ -223,240 +279,311 @@ class _singleventdashboardState extends State<singleventdashboard> {
     );
   }
 
-  Widget venuevendor(
-      {required String pathds,
-      required String stars,
-      required String namevenue,
-      required String uptohow}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.225,
-        width: MediaQuery.of(context).size.width * 0.350,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(25.0),
-          boxShadow: [
-            BoxShadow(
-              spreadRadius: 1,
-              blurRadius: 1,
-              color: Colors.black38,
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 14.0,
-            ),
-            Container(
-              height: 90,
-              width: 90,
-              decoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage(pathds))),
-            ),
-            Text(
-              stars,
-              style: TextStyle(
-                fontSize: 10.0,
-              ),
-            ),
-            SizedBox(
-              height: 6.0,
-            ),
-
-            Text(
-              uptohow,
-              style: TextStyle(
-                  fontSize: 13.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black38),
-            ),
-            // SizedBox(height: 6.0,),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   children: [
-            //    Icon(Icons.phone,size: 22.0,color: AppColors.buttoncolor,),
-            //    Icon(Icons.email,size: 22.0,color: AppColors.buttoncolor,)
-            //   ],
-            // ),
-          ],
-        ),
+  Widget invitecontainer() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
       ),
     );
   }
 
-  Widget additional(BuildContext context) {
-    return SizedBox(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            addFeature(
-                path: "assets/pngimages/gift.png",
-                words: "Gift Registry",
-                bgColor: AppColors.boxlightcolor.withOpacity(0.3),
-                onTapper: () {}),
-            addFeature(
-                path: "assets/pngimages/cohost.png",
-                words: "Co-Hosts",
-                bgColor: AppColors.boxlightcolor.withOpacity(0.3),
-                onTapper: () {}),
-            addFeature(
-                path: "assets/pngimages/invite.png",
-                words: "Invitations",
-                bgColor: AppColors.boxlightcolor.withOpacity(0.3),
-                onTapper: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const SimpleWebView(
-                        url: 'https://mangalmalldev.in/inviationcard',
-                        title: 'Google',
-                      ),
-                    ),
-                  );
-                }),
-            addFeature(
-                path: "assets/pngimages/budget.png",
-                words: "Expense Report",
-                bgColor: AppColors.boxlightcolor.withOpacity(0.3),
-                onTapper: () {}),
-            addFeature(
-                path: "assets/pngimages/videoinvite.png",
-                words: "Video Invite",
-                bgColor: AppColors.boxlightcolor.withOpacity(0.3),
-                onTapper: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const SimpleWebView(
-                        url: 'https://mangalmalldev.in/inviationcard',
-                        title: 'Google',
-                      ),
-                    ),
-                  );
-                }),
-            addFeature(
-                path: "assets/images/ewr.png",
-                words: "Money Gift",
-                bgColor: AppColors.boxlightcolor.withOpacity(0.3),
-                onTapper: () {}),
-          ],
-        ),
+  Widget threefiles() {
+    // PDF (Layout Docs)
+    const layoutDocs = FileBadge(
+      title: 'Live Stream Link',
+      fileType: 'PDF',
+      sizeLabel: '10MB',
+      bgColor: const Color(0xFFF8D9DC), // pastel blush
+      iconBg: const Color(0xFFF2A7B2), // deeper pink
+      icon: Icons.picture_as_pdf, // close match to Acrobat glyph
+    );
+
+// MOV (Presentation)
+    const presentation = FileBadge(
+      title: 'Invitation Upload',
+      fileType: 'MOV',
+      sizeLabel: '10MB',
+      bgColor: const Color(0xFFDCEBFF), // pastel blue
+      iconBg: const Color(0xFF78B6FF), // deeper blue
+      icon: Icons.movie_creation_rounded,
+    );
+
+    const comingsoon = FileBadge(
+      title: 'Add Google Map',
+      fileType: 'MOV',
+      sizeLabel: '10MB',
+      bgColor: const Color(0xFFDCEBFF), // pastel blue
+      iconBg: Color.fromARGB(255, 255, 146, 107), // deeper blue
+      icon: Icons.location_on_rounded,
+    );
+
+// ZIP (All Assets)
+    const allAssets = FileBadge(
+      title: 'Expense Report',
+      fileType: 'ZIP',
+      sizeLabel: '10MB',
+      bgColor: const Color(0xFFFBE7CC), // pastel sand
+      iconBg: const Color(0xFFF0B85A), // deeper amber
+      icon: Icons.folder_zip_rounded, // or Icons.archive_rounded
+    );
+
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          layoutDocs,
+          presentation,
+          comingsoon,
+          allAssets,
+        ],
       ),
     );
   }
+}
 
-  Widget addFeature(
-      {required String path,
-      required Function()? onTapper,
-      required String words,
-      required Color bgColor}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+class FileBadge extends StatelessWidget {
+  const FileBadge({
+    super.key,
+    required this.title,
+    required this.fileType, // e.g., "PDF"
+    required this.sizeLabel, // e.g., "10MB"
+    required this.bgColor, // pastel square (outer)
+    required this.iconBg, // deeper inner tile
+    required this.icon, // use a close-looking icon
+    this.onTap,
+    this.squareSize = 72, // outer square size
+  });
+
+  final String title;
+  final String fileType;
+  final String sizeLabel;
+  final Color bgColor;
+  final Color iconBg;
+  final IconData icon;
+  final double squareSize;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          GestureDetector(
-            onTap: onTapper,
-            child: Container(
-                height: 80,
-                width: 95,
-                decoration: BoxDecoration(
-                  color: bgColor,
-                  borderRadius: BorderRadius.circular(20.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 6,
-                      offset: const Offset(2, 4),
-                    )
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Center(
-                      child: Image.asset(
-                        path,
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.contain,
-                      ),
+          // Pastel rounded square with subtle shadow
+          Container(
+            width: MediaQuery.of(context).size.width * 0.190,
+            height: MediaQuery.of(context).size.height * 0.085,
+            // decoration: BoxDecoration(
+            //   color: bgColor,
+            //   borderRadius: BorderRadius.circular(8),
+            //   boxShadow: [
+            //     BoxShadow(
+            //       color: Colors.black.withOpacity(0.06),
+            //       blurRadius: 10,
+            //       offset: const Offset(0, 4),
+            //     ),
+            //   ],
+            // ),
+            child: Center(
+              // inner rounded tile
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: squareSize * 0.4,
+                    height: squareSize * 0.4,
+                    decoration: BoxDecoration(
+                      color: iconBg,
+                      borderRadius: BorderRadius.circular(14),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                      child: Text(
-                        overflow: TextOverflow.ellipsis,
-                        words,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.inter(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
+                    child: Icon(icon,
+                        color: Colors.white, size: squareSize * 0.30),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    title,
+                    style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        height: 1.0),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
     );
   }
-// Widget planningtools(){
-//   return Padding(
-//     padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 10.0),
-//     child: Container(
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(6.0),
-//         boxShadow: [
-//           BoxShadow(
-//             spreadRadius: 1,
-//             blurRadius: 1,
-//             color: Colors.black38,
-//           )
-//         ]
-//       ),
-//       child: Column(
-//         children: [
-//           expandtools(planningtoolname: "Timeline"),
-//           expandtools(planningtoolname: "Task List"),
-//           expandtools(planningtoolname: "itinerary"),
-//           expandtools(planningtoolname: "Grouping"),
-//           expandtools(planningtoolname: "Money Gift"),
+}
 
+// Widget addFeature({required String path,required Function()? onTapper, required String words, required Color bgColor}) {
+//   return Padding(
+//     padding: const EdgeInsets.symmetric(horizontal: 10.0),
+//     child: Column(
+//       mainAxisSize: MainAxisSize.min,
+//       children: [
+//         GestureDetector(
+//           onTap:onTapper ,
+//           child: Container(
+//             height: 80,
+//             width: 95,
+//             decoration: BoxDecoration(
+//               color: Colors.white,
+//               borderRadius: BorderRadius.circular(20.0),
+//               boxShadow: [
+//                 BoxShadow(
+//                   color: Colors.black38,
+//                   blurRadius: 1,
+//                   spreadRadius: 1,
+//                 )
+//               ],
+//             ),
+//             child:Column(
+//               children: [
+//                 Center(
+//               child: Image.asset(
+//                 path,
+//                 width: 50,
+//                 height: 50,
+//                 fit: BoxFit.contain,
+//               ),
+//             ),
+//           Padding(
+//             padding: const EdgeInsets.symmetric(horizontal: 6.0),
+//             child: Text(
+//               overflow: TextOverflow.ellipsis,
+//               words,
+//               textAlign: TextAlign.center,
+//               style: GoogleFonts.inter(
+//                 fontSize: 13,
+                
+//                 fontWeight: FontWeight.w600,
+//                 color: Colors.black87,
+//               ),
+//             ),
+//           ),
+//               ],
+//             ) 
+//           ),
+//         ),
+        
+//       ],
+//     ),
+//   );
+// }
+  // Widget expandtools({required String planningtoolname}){
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 12.0),
+  //     child: Container(
+
+  //     width: double.infinity,
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         children: [
+  //           Text(planningtoolname,style: TextStyle(fontSize: 16.0,color: AppColors.buttoncolor,fontWeight: FontWeight.bold),),
+  //           IconButton(onPressed: (){}, icon:Icon(Icons.keyboard_arrow_down_rounded,size: 24.0,color: Colors.black54,))
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
+
+  
+// Widget additional(BuildContext context) {
+//   return SizedBox(
+//     child: SingleChildScrollView(
+//       scrollDirection: Axis.horizontal,
+//       child: Row(
+//         children: [
+//           addFeature(path: "assets/pngimages/gift.png", words: "Gift Registry",bgColor:  AppColors.boxlightcolor.withOpacity(0.3), onTapper: () {  }),
+//           addFeature(path: "assets/pngimages/cohost.png", words: "Co-Hosts", bgColor: AppColors.boxlightcolor.withOpacity(0.3), onTapper: () {  }),
+//           addFeature(path: "assets/pngimages/invite.png", words: "Invitations", bgColor: AppColors.boxlightcolor.withOpacity(0.3), onTapper: () {Navigator.push(
+//   context,
+//   MaterialPageRoute(
+//     builder: (_) => const SimpleWebView(
+//       url: 'https://mangalmalldev.in/inviationcard',
+//       title: 'Google',
+//     ),
+//   ),
+// );
+//  }),
+//           addFeature(path: "assets/pngimages/budget.png", words: "Expense Report", bgColor: AppColors.boxlightcolor.withOpacity(0.3), onTapper: () {  }),
+//           addFeature(path: "assets/pngimages/videoinvite.png", words: "Video Invite", bgColor: AppColors.boxlightcolor.withOpacity(0.3), onTapper: () { Navigator.push(
+//   context,
+//   MaterialPageRoute(
+//     builder: (_) => const SimpleWebView(
+//       url: 'https://mangalmalldev.in/inviationcard',
+//       title: 'Google',
+//     ),
+//   ),
+// );
+//  }),
+//           addFeature(path: "assets/images/ewr.png", words: "Money Gift", bgColor: AppColors.boxlightcolor.withOpacity(0.3), onTapper: () {  }),
 //         ],
 //       ),
 //     ),
 //   );
 // }
-  Widget expandtools({required String planningtoolname}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-      child: Container(
-        width: double.infinity,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              planningtoolname,
-              style: TextStyle(
-                  fontSize: 16.0,
-                  color: AppColors.buttoncolor,
-                  fontWeight: FontWeight.bold),
-            ),
-            IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  size: 24.0,
-                  color: Colors.black54,
-                ))
-          ],
-        ),
-      ),
-    );
-  }
-}
+
+
+
+
+// Widget commmontoolcontainer({required String toolname,required double toolvalue,required Color colodf,required String Subtoolname}){
+//   return Padding(
+//     padding: const EdgeInsets.only(left: 12.0),
+//     child: Container(
+//       height: MediaQuery.of(context).size.height * 0.1,
+//       width: MediaQuery.of(context).size.width * 0.4,
+//       decoration: BoxDecoration(
+//         color: colodf,
+//         borderRadius: BorderRadius.circular(8.0)
+//       ),
+//       child: Row(
+//         children: [
+//           Padding(
+//             padding: const EdgeInsets.only(left: 12.0),
+//             child: Stack(
+//               children: [
+//                  SizedBox(
+//                 height: 40,
+//                 width: 40,
+//                 child: CircularProgressIndicator(
+//                  value: toolvalue, // 43% like your UI
+//                       strokeWidth: 5,
+//                       backgroundColor: Colors.grey.shade300,
+//                       valueColor: const AlwaysStoppedAnimation(Color(0xFF9A2143)),
+//                 ),
+//               ),
+//               Positioned(
+//                 left: MediaQuery.of(context).size.height * 0.015,
+//                 top: MediaQuery.of(context).size.width * 0.03,
+//                 child:Text("1/3",style: TextStyle(fontSize: 11.0,color:Colors.black54,fontWeight: FontWeight.bold),),),
+               
+//               ],
+              
+//             ),
+//           ),
+//           SizedBox(width: 10.0,),
+//           Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//                 Text(toolname,style: TextStyle(fontSize: 12.0,color:Colors.black,fontWeight: FontWeight.bold),),
+//                 Text(
+//                   maxLines: 2,
+//                   overflow: TextOverflow.ellipsis,
+//                   Subtoolname,style: TextStyle(fontSize: 11.0,color:Colors.black54,fontWeight: FontWeight.bold),),
+//             ],
+//           )
+//         ],
+//       ),
+//     ),
+//   );
+// }

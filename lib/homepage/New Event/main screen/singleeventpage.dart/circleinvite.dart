@@ -15,19 +15,20 @@ class _AmountDialState extends State<AmountDial> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.225,
-      width: MediaQuery.of(context).size.width * 0.425,
+      height: MediaQuery.of(context).size.height * 0.15,
+      width: MediaQuery.of(context).size.width * 0.295,
       child: SleekCircularSlider(
         min: 0,
         max: 500,
         initialValue: value,
         appearance: CircularSliderAppearance(
           size: 170,
-          startAngle: 0, // where the arc starts
-          angleRange: 345, // arc length (creates the "gap")
+          spinnerMode: false,
+          startAngle: 0,
+          angleRange: 345,
           customWidths: CustomSliderWidths(
-            trackWidth: 14,
-            progressBarWidth: 14,
+            trackWidth: 10,
+            progressBarWidth: 10,
             handlerSize: 10,
           ),
           customColors: CustomSliderColors(
@@ -43,12 +44,13 @@ class _AmountDialState extends State<AmountDial> {
             Text(
               " 234 / 500",
               style: TextStyle(
-                  fontSize: 20.0,
+                  fontSize: 15.0,
                   fontWeight: FontWeight.w900,
                   color: AppColors.buttoncolor),
             ),
             // Text(money.format(value.round()), style: const TextStyle(fontSize: 20,fontWeight: FontWeight.w800)),
-            const Text('Invite People', style: TextStyle(color: Colors.black)),
+            const Text('Invite People',
+                style: TextStyle(color: Colors.black, fontSize: 11.0)),
           ],
         ),
         onChange: (v) => setState(() => value = v),

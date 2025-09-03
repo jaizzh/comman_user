@@ -311,19 +311,19 @@ class _StatsWrap extends StatelessWidget {
         children: [
           _StatCard(
               value: '7',
-              label: 'Total Events',
-              iconColor: Colors.blueAccent,
+              label: 'Events Completed',
+              iconColor: Colors.green,
               iconData: Icons.event),
           _StatCard(
               value: '1',
-              label: 'Current Events',
-              iconColor: Colors.green,
+              label: 'Total Events',
+              iconColor: Colors.pink,
               iconData: Icons.trending_up_sharp),
           _StatCard(
-              value: '340 Days',
-              label: 'Plan Validity',
-              iconColor: Colors.red,
-              iconData: Icons.playlist_add_check_circle_rounded),
+              value: '6',
+              label: 'Pending Events',
+              iconColor: Colors.deepPurple,
+              iconData: Icons.pending_actions_outlined),
         ],
       ),
     );
