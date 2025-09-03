@@ -1,7 +1,7 @@
 import 'package:common_user/common/colors.dart';
-import 'package:common_user/homepage/New%20Event/main%20screen/grouping/grouping.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/images_upload/imageupload.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/ltinerary/ltinerary.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/grouping/grouping.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/timelinepage.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/singleeventdashboard.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +15,12 @@ class planningtools extends StatefulWidget {
 }
 
 class _planningtoolsState extends State<planningtools> {
-  int index = 2;
+  int index = 3;
   final pages = [
     timeline(),
-    const Center(child: Text('Search')),
+     Center(child: Text('Search')),
     ltinerarypage(),
-    grouping(),
+    ContactPickerApp(),
     ImagePage(),
   ];
   @override

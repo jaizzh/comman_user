@@ -9,6 +9,7 @@ import 'package:common_user/homepage/dashboard%20page/venuelist.dart';
 import 'package:common_user/homepage/profilepage/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 class homepage extends StatefulWidget {
   const homepage({super.key,});
@@ -115,62 +116,99 @@ class _homepageState extends State<homepage> {
 ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Container(
-        child: Column(
+        child: Stack(
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.230,
-              decoration: const BoxDecoration(
-                      gradient: const LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Color(0xFFEDD498),Colors.white,],
-                      ),
-                      ),
-              child:const Column(
-                  children: [
-                  SixPromoCarousel(
-                    images: [
-                      "assets/images/promo1.png",
-                      "assets/images/temp2.png",
-                      "assets/images/temp.jpg",
-                      "assets/images/promo1.png",
-                      "assets/images/temp.jpg",
-                      "assets/images/temp2.png",
-                    ],
-                    interval: Duration(seconds: 6), // auto slide every 6s
-                    activeColor: Colors.blue,            // expanded active indicator color
-                    inactiveColor: Colors.grey,          // small inactive color
-                    viewportFraction: 0.92,
-                    cardHeightFactor: 0.3,
-                  ),
-                ],
+    //           Positioned.fill(
+    //   child: IgnorePointer(
+    //     // so it won't block scroll/taps
+    //     ignoring: true,
+    //     child: Lottie.asset(
+    //       "assets/images/cong.json",
+    //       repeat: true,
+    //       fit: BoxFit.cover, // cover the whole area
+    //     ),
+    //   ),
+    // ),
+              // Positioned(child: Lottie.asset(
+              // repeat: true,
+              // height: double.infinity,
+              // width: double.infinity,
+              // "assets/images/congragu.json")),
+             Container(
+          child: Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.230,
+                decoration: const BoxDecoration(
+                        gradient: const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Color(0xFFEDD498),Colors.white,],
+                        ),
+                        ),
+                child:const Column(
+                    children: [
+                    SixPromoCarousel(
+                      images: [
+                        "assets/images/promo1.png",
+                        "assets/images/temp2.png",
+                        "assets/images/temp.jpg",
+                        "assets/images/promo1.png",
+                        "assets/images/temp.jpg",
+                        "assets/images/temp2.png",
+                      ],
+                      interval: Duration(seconds: 6), // auto slide every 6s
+                      activeColor: Colors.blue,            // expanded active indicator color
+                      inactiveColor: Colors.grey,          // small inactive color
+                      viewportFraction: 0.92,
+                      cardHeightFactor: 0.3,
+                    ),
+                  ],
+                ),
               ),
+              SizedBox(height: 6.0,),
+             choosecont(),
+             SizedBox(height: 10,),
+                ValueListenableBuilder<bool>(
+              valueListenable: EventGate.showEventSummary,
+              builder: (context, visible, _) {
+                if (!visible) return const SizedBox.shrink();
+                return  EventSummaryCard(
+           eventName: 'Akshaya & Virat Wedding',
+           eventType: 'Reception',
+           endsAt: DateTime.now().add(const Duration(days: 2, hours: 5, minutes: 30)),
+           invitedCount: 250,
+           totalGuests: 500,
+                  // your props...
+                );
+              },
+            ),     SizedBox(height: 10.0,),
+            venues(),
+             vendorlist(),
+             allvendors(),
+             
+            ],
+          ),
             ),
-            SizedBox(height: 6.0,),
-           choosecont(),
-           SizedBox(height: 10,),
-              ValueListenableBuilder<bool>(
-            valueListenable: EventGate.showEventSummary,
-            builder: (context, visible, _) {
-              if (!visible) return const SizedBox.shrink();
-              return  EventSummaryCard(
-         eventName: 'Akshaya & Virat Wedding',
-         eventType: 'Reception',
-         endsAt: DateTime.now().add(const Duration(days: 2, hours: 5, minutes: 30)),
-         invitedCount: 250,
-         totalGuests: 500,
-                // your props...
-              );
-            },
-          ), SizedBox(height: 10.0,),
-          venues(),
-           vendorlist(),
-           allvendors(),
-           
+            ValueListenableBuilder<bool>(
+              valueListenable: EventGate.showEventSummary,
+              builder: (context, visible, _) {
+                if (!visible) return const SizedBox.shrink();
+                return               Positioned.fill(
+      child: IgnorePointer( // avoid blocking taps/scrolls
+        child: Lottie.asset(
+          "assets/images/congragu.json",
+          repeat: false,
+          animate: true,
+          fit: BoxFit.cover, // covers whole screen
+        ),
+      ),
+    );
+              },
+            ),
+
           ],
         ),
-              ),
       ),
     );
   }

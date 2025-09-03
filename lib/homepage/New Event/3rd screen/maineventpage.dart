@@ -292,9 +292,9 @@ return Container(
   child: Row(
     mainAxisAlignment:MainAxisAlignment.spaceEvenly,
     children: [
-        _StatCard(value: '7', label: 'Total Events', iconColor: Colors.blueAccent, iconData: Icons.event),
-            _StatCard(value: '1', label: 'Current Events', iconColor: Colors.green, iconData: Icons.trending_up_sharp),
-            _StatCard(value: '340 Days', label: 'Plan Validity', iconColor: Colors.red, iconData: Icons.playlist_add_check_circle_rounded),
+        _StatCard(value: '7', label: 'Events Completed', iconColor: Colors.green, iconData: Icons.event),
+            _StatCard(value: '1', label: 'Total Events', iconColor: Colors.pink, iconData: Icons.trending_up_sharp),
+            _StatCard(value: '6', label: 'Pending Events', iconColor: Colors.deepPurple, iconData: Icons.pending_actions_outlined),
     ],
   ),
 );
