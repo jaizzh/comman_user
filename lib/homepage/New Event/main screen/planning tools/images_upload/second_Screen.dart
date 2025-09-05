@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
@@ -16,11 +17,9 @@ class ImageGridMultiSelect extends StatefulWidget {
 }
 
 class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
-    List<Contact> _allContacts = [];
+  List<Contact> _allContacts = [];
   List<Contact> _selectedContacts = [];
-  List<String> _groupingList = [
-    "family","friends","relatives"
-  ];
+  List<String> _groupingList = ["family", "friends", "relatives"];
 
   Future<void> _pickMultipleContacts() async {
     PermissionStatus status = await Permission.contacts.status;
@@ -32,7 +31,8 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
             context: context,
             builder: (_) => AlertDialog(
               title: const Text('Permission required'),
-              content: const Text('Please enable contacts permission in app settings to select contacts.'),
+              content: const Text(
+                  'Please enable contacts permission in app settings to select contacts.'),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -68,10 +68,11 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
       return;
     }
 
-    List<Contact> contacts = await FlutterContacts.getContacts(withProperties: true);
+    List<Contact> contacts =
+        await FlutterContacts.getContacts(withProperties: true);
     setState(() {
       _allContacts = contacts;
-    //  _selectedContacts.clear();
+      //  _selectedContacts.clear();
     });
 
     // Open selection page
@@ -96,6 +97,7 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
       }
     }
   }
+
   final List<String> pictures = [
     "assets/venue_images/v1.jpg",
     "assets/venue_images/v2.jpg",
@@ -124,8 +126,8 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
     "assets/venue_images/v5.jpg",
   ];
 
-  bool selectionMode = false;      // show checkboxes for ALL when true
-  final Set<int> selected = {};    // store selected indices
+  bool selectionMode = false; // show checkboxes for ALL when true
+  final Set<int> selected = {}; // store selected indices
 
   // --- helpers ---
   List<String> get selectedPaths => selected.map((i) => pictures[i]).toList();
@@ -158,7 +160,8 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
 
   void _deleteSelected() {
     if (selected.isEmpty) return;
-    final toDelete = selected.toList()..sort((a, b) => b.compareTo(a)); // delete from end
+    final toDelete = selected.toList()
+      ..sort((a, b) => b.compareTo(a)); // delete from end
     setState(() {
       for (final i in toDelete) {
         pictures.removeAt(i);
@@ -229,7 +232,8 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
   // ---------------------------------------------------------
   // BOTTOM SHEET
   // ---------------------------------------------------------
-  Future<void> _showShareBottomSheet(BuildContext context, List<String> pathscount) {
+  Future<void> _showShareBottomSheet(
+      BuildContext context, List<String> pathscount) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -240,7 +244,9 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-            boxShadow: [BoxShadow(spreadRadius: 1, blurRadius: 12, color: Colors.black26)],
+            boxShadow: [
+              BoxShadow(spreadRadius: 1, blurRadius: 12, color: Colors.black26)
+            ],
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -260,7 +266,8 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
                 children: [
                   Text(
                     "Selected (${pathscount.length}) Photos",
-                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 12, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -292,11 +299,21 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Row(
                   children: [
-                    Container(height: 1, width: MediaQuery.of(context).size.width * 0.4, color: Colors.black38),
+                    Container(
+                        height: 1,
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        color: Colors.black38),
                     const SizedBox(width: 10),
-                    const Text("OR", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w900, color: Colors.black54)),
+                    const Text("OR",
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.black54)),
                     const SizedBox(width: 10),
-                    Container(height: 1, width: MediaQuery.of(context).size.width * 0.4, color: Colors.black38),
+                    Container(
+                        height: 1,
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        color: Colors.black38),
                   ],
                 ),
               ),
@@ -311,7 +328,7 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
                   // Share the selected images as files (from assets -> temp)
                   await _shareSelectedAssetsAsFiles(pathscount);
 
-                 // (Optional) If you only want to share text/link instead:
+                  // (Optional) If you only want to share text/link instead:
                   // final box = context.findRenderObject() as RenderBox?;
                   // await Share.share(
                   //   "Hello! Check this out: https://example.com",
@@ -353,7 +370,9 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
             color: Colors.white,
-            boxShadow: const [BoxShadow(spreadRadius: 1, blurRadius: 1, color: Colors.black26)],
+            boxShadow: const [
+              BoxShadow(spreadRadius: 1, blurRadius: 1, color: Colors.black26)
+            ],
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -362,7 +381,10 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
               const SizedBox(width: 6.0),
               Text(
                 title,
-                style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold, color: Colors.black),
+                style: const TextStyle(
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
             ],
           ),
@@ -376,7 +398,8 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
   // ---------------------------------------------------------
   @override
   Widget build(BuildContext context) {
-    final title = selectionMode ? "${selected.length} selected" : "Event Images";
+    final title =
+        selectionMode ? "${selected.length} selected" : "Event Images";
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -395,7 +418,8 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
         centerTitle: false,
         title: Text(
           title,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black87),
+          style: const TextStyle(
+              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black87),
         ),
         actions: [
           if (selectionMode)
@@ -412,11 +436,12 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
             ),
         ],
       ),
-
       body: GridView.builder(
         padding: const EdgeInsets.all(10),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3, crossAxisSpacing: 8, mainAxisSpacing: 8,
+          crossAxisCount: 3,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
         ),
         itemCount: pictures.length,
         itemBuilder: (context, index) {
@@ -433,7 +458,6 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(img, fit: BoxFit.cover),
                 ),
-
                 if (selectionMode)
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 120),
@@ -446,7 +470,6 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
                       ),
                     ),
                   ),
-
                 if (selectionMode)
                   Positioned(
                     top: 10,
@@ -458,7 +481,9 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
                         color: Colors.white,
                         border: Border.all(color: Colors.black),
                         borderRadius: BorderRadius.circular(2),
-                        boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 4)],
+                        boxShadow: const [
+                          BoxShadow(color: Colors.black26, blurRadius: 4)
+                        ],
                       ),
                       child: Checkbox(
                         value: isChecked,
@@ -477,145 +502,168 @@ class _ImageGridMultiSelectState extends State<ImageGridMultiSelect> {
       ),
     );
   }
-Future<void> alertdialogueds() {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: true, // tap outside to close (optional)
-    builder: (ctx) {
-     // final maxH = MediaQuery.of(ctx).size.height * 0.9; // limit height
-      return Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-        child: StatefulBuilder(
-          builder: (ctx, setLocal) {
-            return Container(
-height: MediaQuery.of(context).size.height * 0.450,
-            //  constraints: BoxConstraints(maxHeight: maxH),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Header
-                    Row(
-                      children: [
-                        const Text(
-                          'Choose Group',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        const Spacer(),
-                        IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () => Navigator.pop(ctx),
-                        ),
-                      ],
-                    ),
 
-                    const SizedBox(height: 8),
+  Future<void> alertdialogueds() {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // tap outside to close (optional)
+      builder: (ctx) {
+        // final maxH = MediaQuery.of(ctx).size.height * 0.9; // limit height
+        return Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          insetPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: StatefulBuilder(
+            builder: (ctx, setLocal) {
+              return Container(
+                height: MediaQuery.of(context).size.height * 0.450,
+                //  constraints: BoxConstraints(maxHeight: maxH),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Header
+                      Row(
+                        children: [
+                          const Text(
+                            'Choose Group',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () => Navigator.pop(ctx),
+                          ),
+                        ],
+                      ),
 
-                    // The list — bounded height via SizedBox (NO Expanded needed)
-                    SingleChildScrollView(
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.250,
-                        child: ListView.builder(
-                          itemCount: _groupingList.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  // TODO: handle tap on a group
-                                  // showsheet(context);
-                                  Navigator.pop(ctx, _groupingList[index]); // return selection if needed
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    boxShadow: const [
-                                      BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 4),
-                                    ],
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      // Left: name
-                                      Text(
-                                        _groupingList[index],
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                        
-                                      // Right: count + delete
-                                      Row(
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.circular(12),
-                                              boxShadow: const [
-                                                BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 2),
-                                              ],
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                const Icon(Icons.person, color: Colors.black54, size: 18),
-                                                const SizedBox(width: 6),
-                                                Text(
-                                                  _selectedContacts.length.toString(),
-                                                  style: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w900,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                      const SizedBox(height: 8),
+
+                      // The list — bounded height via SizedBox (NO Expanded needed)
+                      SingleChildScrollView(
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.250,
+                          child: ListView.builder(
+                            itemCount: _groupingList.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 4.0, vertical: 6.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    // TODO: handle tap on a group
+                                    // showsheet(context);
+                                    Navigator.pop(
+                                        ctx,
+                                        _groupingList[
+                                            index]); // return selection if needed
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12.0, vertical: 8.0),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                            color: Colors.black12,
+                                            spreadRadius: 1,
+                                            blurRadius: 4),
+                                      ],
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        // Left: name
+                                        Text(
+                                          _groupingList[index],
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
                                           ),
-                                        ],
-                                      ),
-                                    ],
+                                        ),
+
+                                        // Right: count + delete
+                                        Row(
+                                          children: [
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 4),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                      color: Colors.black12,
+                                                      spreadRadius: 1,
+                                                      blurRadius: 2),
+                                                ],
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  const Icon(Icons.person,
+                                                      color: Colors.black54,
+                                                      size: 18),
+                                                  const SizedBox(width: 6),
+                                                  Text(
+                                                    _selectedContacts.length
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w900,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       ),
-                    ),
 
-                    // Footer actions (optional)
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(ctx),
-                          child: const Text('Close'),
-                        ),
-                        const Spacer(),
-                        FilledButton(
-                          onPressed: () {
-                            // confirm action
-                            Navigator.pop(ctx);
-                          },
-                          child: const Text('Done'),
-                        ),
-                      ],
-                    ),
-                  ],
+                      // Footer actions (optional)
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(ctx),
+                            child: const Text('Close'),
+                          ),
+                          const Spacer(),
+                          FilledButton(
+                            onPressed: () {
+                              // confirm action
+                              Navigator.pop(ctx);
+                            },
+                            child: const Text('Done'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
-        ),
-      );
-    },
-  );
-}
-
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
 }
