@@ -569,21 +569,25 @@ class _CheckAvailabilityState extends State<CheckAvailability> {
         child: InkWell(
           onTap: () {
             if (rangeStart != null && rangeEnd != null) {
+              // In the _buildContinueButton method, replace the Navigator.push section:
               Navigator.push(
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation, secondaryAnimation) =>
-                      const FillDetails(),
+                      FillDetails(
+                    startDate: rangeStart!,
+                    endDate: rangeEnd!,
+                    offBookedDates:
+                        offBookedDates, // Pass the partially booked dates
+                  ),
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
-                    const begin = Offset(1.0, 0.0); // Right side
+                    const begin = Offset(1.0, 0.0);
                     const end = Offset.zero;
                     const curve = Curves.ease;
 
-                    var tween = Tween(
-                      begin: begin,
-                      end: end,
-                    ).chain(CurveTween(curve: curve));
+                    var tween = Tween(begin: begin, end: end)
+                        .chain(CurveTween(curve: curve));
                     var offsetAnimation = animation.drive(tween);
 
                     return SlideTransition(

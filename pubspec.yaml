@@ -93,6 +93,11 @@ flutter:
     - assets/venue_images/
     - assets/pngimages/
     - assets/category/
+    - assets/vendor/
+    - assets/photo/
+    - assets/makeup/
+    - assets/products/
+    - assets/music/
 
 flutter_native_splash:
   android: true

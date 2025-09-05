@@ -21,63 +21,60 @@ class FancyBottomNav extends StatefulWidget {
 class _FancyBottomNavState extends State<FancyBottomNav> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      //  minimum: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.08,
-        // color: AppColors.boxlightcolor,
-        //padding: const EdgeInsets.symmetric(horizontal: 8),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          //    borderRadius: BorderRadius.circular(28),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 24,
-              offset: Offset(0, 10),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _NavItem(
-              label: 'Home',
-              icon: Icons.home_outlined,
-              index: 0,
-              isActive: widget.currentIndex == 0,
-              onTap: widget.onChanged,
-            ),
-            _NavItem(
-              label: 'Venue',
-              icon: Icons.place,
-              index: 1,
-              isActive: widget.currentIndex == 1,
-              onTap: widget.onChanged,
-            ),
-            _NavItem(
-              label: 'Vendor',
-              icon: Icons.assignment_ind_sharp,
-              index: 2,
-              isActive: widget.currentIndex == 2,
-              onTap: widget.onChanged,
-            ),
-            _NavItem(
-              label: 'Send_Gift',
-              icon: Icons.card_giftcard_outlined,
-              index: 3,
-              isActive: widget.currentIndex == 3,
-              onTap: widget.onChanged,
-            ),
-            _NavItem(
-              label: 'Invitation',
-              icon: Icons.insert_invitation_outlined,
-              index: 4,
-              isActive: widget.currentIndex == 4,
-              onTap: widget.onChanged,
-            ),
-          ],
-        ),
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.08,
+      // color: AppColors.boxlightcolor,
+      //padding: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        //    borderRadius: BorderRadius.circular(28),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black,
+            blurRadius: 24,
+            offset: Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _NavItem(
+            label: 'Home',
+            icon: Icons.home_outlined,
+            index: 0,
+            isActive: widget.currentIndex == 0,
+            onTap: widget.onChanged,
+          ),
+          _NavItem(
+            label: 'Venue',
+            icon: Icons.place,
+            index: 1,
+            isActive: widget.currentIndex == 1,
+            onTap: widget.onChanged,
+          ),
+          _NavItem(
+            label: 'Vendor',
+            icon: Icons.assignment_ind_sharp,
+            index: 2,
+            isActive: widget.currentIndex == 2,
+            onTap: widget.onChanged,
+          ),
+          _NavItem(
+            label: 'Send_Gift',
+            icon: Icons.card_giftcard_outlined,
+            index: 3,
+            isActive: widget.currentIndex == 3,
+            onTap: widget.onChanged,
+          ),
+          _NavItem(
+            label: 'Invitation',
+            icon: Icons.insert_invitation_outlined,
+            index: 4,
+            isActive: widget.currentIndex == 4,
+            onTap: widget.onChanged,
+          ),
+        ],
       ),
     );
   }
