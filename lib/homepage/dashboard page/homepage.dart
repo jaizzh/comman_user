@@ -118,27 +118,11 @@ class _homepageState extends State<homepage> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-    //           Positioned.fill(
-    //   child: IgnorePointer(
-    //     // so it won't block scroll/taps
-    //     ignoring: true,
-    //     child: Lottie.asset(
-    //       "assets/images/cong.json",
-    //       repeat: true,
-    //       fit: BoxFit.cover, // cover the whole area
-    //     ),
-    //   ),
-    // ),
-              // Positioned(child: Lottie.asset(
-              // repeat: true,
-              // height: double.infinity,
-              // width: double.infinity,
-              // "assets/images/congragu.json")),
              Container(
           child: Column(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.230,
+                height: MediaQuery.of(context).size.height * 0.240,
                 decoration: const BoxDecoration(
                         gradient: const LinearGradient(
                         begin: Alignment.topCenter,
@@ -148,6 +132,7 @@ class _homepageState extends State<homepage> {
                         ),
                 child:const Column(
                     children: [
+                       SizedBox(height: 10.0,),
                     SixPromoCarousel(
                       images: [
                         "assets/images/promo1.png",
@@ -166,9 +151,9 @@ class _homepageState extends State<homepage> {
                   ],
                 ),
               ),
-              SizedBox(height: 6.0,),
+              SizedBox(height: 16.0,),
              choosecont(),
-             SizedBox(height: 10,),
+             SizedBox(height: 16,),
                 ValueListenableBuilder<bool>(
               valueListenable: EventGate.showEventSummary,
               builder: (context, visible, _) {
@@ -182,8 +167,16 @@ class _homepageState extends State<homepage> {
                   // your props...
                 );
               },
-            ),     SizedBox(height: 10.0,),
+            ),
+             ValueListenableBuilder<bool>(
+              valueListenable: EventGate.showEventSummary,
+              builder: (context, visible, _) {
+                if (!visible) return const SizedBox.shrink();
+                return   SizedBox(height: 16.0,);
+              },
+            ),    
             venues(),
+            SizedBox(height: 16.0,),
              vendorlist(),
              allvendors(),
              
@@ -200,8 +193,10 @@ class _homepageState extends State<homepage> {
           "assets/images/congragu.json",
           repeat: false,
           animate: true,
-          fit: BoxFit.cover, // covers whole screen
+          fit: BoxFit.cover,
+           // covers whole screen
         ),
+        
       ),
     );
               },

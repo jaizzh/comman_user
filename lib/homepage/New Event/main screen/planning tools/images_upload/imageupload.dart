@@ -1,8 +1,8 @@
 import 'package:common_user/common/colors.dart';
-import 'package:common_user/homepage/New%20Event/main%20screen/images_upload/second_Screen.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/images_upload/second_Screen.dart';
 import 'package:flutter/material.dart';
 // your upload screen
-import 'package:common_user/homepage/New Event/main screen/images_upload/first_screen.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/images_upload/first_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 // ^ if the path has spaces, prefer renaming folders without spaces.
 
@@ -53,7 +53,7 @@ class _ImagePageState extends State<ImagePage> {
                 child: TabBarView(
                   children: [
                     uploadpagee(), 
-                    ViewScreenImage(),
+                    ImageGridMultiSelect(),
                   ],
                 ),
               ),
