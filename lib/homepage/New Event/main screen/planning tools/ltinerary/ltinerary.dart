@@ -193,22 +193,24 @@ class _ltinerarypageState extends State<ltinerarypage> {
    bool addbool = false;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(children: [
-        SizedBox(height: 16.0,),
-        iternaryheading(),
-         SizedBox(height: 8.0,),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Container(height: 1.0,width: double.infinity,color: AppColors.buttoncolor,),
-        ),
-        SizedBox(height: 8.0,),if(addbool == true) timelineadd(),
-        SizedBox(height: 12.0,),
-         _savedList(),
-
-
-
-      ],),
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(children: [
+          SizedBox(height: 16.0,),
+          iternaryheading(),
+           SizedBox(height: 8.0,),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Container(height: 1.0,width: double.infinity,color: AppColors.buttoncolor,),
+          ),
+          SizedBox(height: 8.0,),if(addbool == true) timelineadd(),
+          SizedBox(height: 12.0,),
+           _savedList(),
+      
+      
+      
+        ],),
+      ),
     );
   }
   Widget iternaryheading(){
