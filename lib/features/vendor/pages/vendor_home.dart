@@ -7,6 +7,8 @@ import 'package:common_user/features/vendor/data/photo_list.dart';
 import 'package:common_user/features/vendor/model/makeup_model.dart';
 import 'package:common_user/features/vendor/model/music_model.dart';
 import 'package:common_user/features/vendor/model/photo_model.dart';
+import 'package:common_user/features/vendor/pages/vendor_list.dart';
+import 'package:common_user/features/vendor/widgets/navigation.dart';
 import 'package:common_user/features/venue/presentation/model/location_provider.dart';
 import 'package:common_user/features/venue/presentation/pages/filter_page.dart';
 import 'package:common_user/features/venue/presentation/pages/location_search_page.dart';
@@ -33,29 +35,9 @@ class _VendorHomeState extends State<VendorHome> {
         surfaceTintColor: AppColors.paper,
         title: GestureDetector(
           onTap: () async {
-            final result = await Navigator.push(
+            final result = await navigateWithSlide(
               context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const LocationSearchPage(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  const begin = Offset(1.0, 0.0); // Right side
-                  const end = Offset.zero;
-                  const curve = Curves.ease;
-
-                  var tween = Tween(
-                    begin: begin,
-                    end: end,
-                  ).chain(CurveTween(curve: curve));
-                  var offsetAnimation = animation.drive(tween);
-
-                  return SlideTransition(
-                    position: offsetAnimation,
-                    child: child,
-                  );
-                },
-              ),
+              const LocationSearchPage(),
             );
             if (result != null && result is String) {
               context.read<LocationProvider>().updateLocation(result);
@@ -155,7 +137,19 @@ class _VendorHomeState extends State<VendorHome> {
               SizedBox(
                 height: screenHeight * 0.03,
               ),
-              categoryText("Top Pre Wedding Photographers"),
+              GestureDetector(
+                onTap: () {
+                  navigateWithSlide(
+                    context,
+                    VendorDetails(
+                      categoryTitle: "Top Pre Wedding Photographers",
+                      vendorData: photoList,
+                      vendorType: 'photo',
+                    ),
+                  );
+                },
+                child: categoryText("Top Pre Wedding Photographers"),
+              ),
               SizedBox(
                 height: screenHeight * 0.01,
               ),
@@ -167,7 +161,19 @@ class _VendorHomeState extends State<VendorHome> {
               SizedBox(
                 height: screenHeight * 0.02,
               ),
-              categoryText("Wedding Makeup Artists"),
+              GestureDetector(
+                onTap: () {
+                  navigateWithSlide(
+                    context,
+                    VendorDetails(
+                      categoryTitle: "Wedding Makeup Artists",
+                      vendorData: makeupArtists,
+                      vendorType: 'makeup',
+                    ),
+                  );
+                },
+                child: categoryText("Wedding Makeup Artists"),
+              ),
               SizedBox(
                 height: screenHeight * 0.01,
               ),
@@ -198,7 +204,19 @@ class _VendorHomeState extends State<VendorHome> {
               SizedBox(
                 height: screenHeight * 0.02,
               ),
-              categoryText("Trending Choreographers"),
+              GestureDetector(
+                onTap: () {
+                  navigateWithSlide(
+                    context,
+                    VendorDetails(
+                      categoryTitle: "Trending Choreographers",
+                      vendorData: musicDanceList,
+                      vendorType: 'music',
+                    ),
+                  );
+                },
+                child: categoryText("Trending Choreographers"),
+              ),
               SizedBox(
                 height: screenHeight * 0.02,
               ),
@@ -423,7 +441,7 @@ class _VendorHomeState extends State<VendorHome> {
                 child: Column(
                   children: [
                     Container(
-                      height: 100,
+                      height: screenHeight / 8,
                       decoration: BoxDecoration(
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(10),
@@ -562,7 +580,7 @@ class _VendorHomeState extends State<VendorHome> {
                 child: Column(
                   children: [
                     Container(
-                      height: 100,
+                      height: screenHeight / 8,
                       decoration: BoxDecoration(
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(10),
@@ -719,7 +737,7 @@ class _VendorHomeState extends State<VendorHome> {
                 child: Column(
                   children: [
                     Container(
-                      height: 90,
+                      height: screenHeight / 10,
                       decoration: BoxDecoration(
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(10),
