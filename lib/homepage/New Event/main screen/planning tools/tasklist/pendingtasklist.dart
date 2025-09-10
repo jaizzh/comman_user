@@ -1,23 +1,24 @@
+import 'package:common_user/common/provider/providervariable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class pendingtask extends StatefulWidget {
+class pendingtask extends ConsumerStatefulWidget {
   final List<String> taskNames;
   final List<String> taskTimes;
  pendingtask({super.key, required this.taskNames, required this.taskTimes});
 
   @override
-  State<pendingtask> createState() => _pendingtaskState();
+  ConsumerState<pendingtask> createState() => _pendingtaskState();
 }
 
-class _pendingtaskState extends State<pendingtask> {
-  late List<String> completetaskNames;
-  late List<String> completetaskTimes;
-  late final List<String> pendingtaskNames = widget.taskNames;
-   late final List<String> pendingtaskTimes = widget.taskTimes;
-
+class _pendingtaskState extends ConsumerState<pendingtask> {
   var pendtocomp = false;
   @override
   Widget build(BuildContext context) {
+      late final List<String> pendingtaskNames = widget.taskNames;
+   late final List<String> pendingtaskTimes = widget.taskTimes;
+     final completedtaskname = ref.watch( tasklistcompletename );
+  final completedtasktime = ref.watch(tasklistcompletetime);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -50,8 +51,8 @@ class _pendingtaskState extends State<pendingtask> {
                           setState(() {
                           pendingtaskNames.removeAt(index);
                           pendingtaskTimes.removeAt(index);
-                          completetaskNames.add(tasknameone);
-                          completetaskTimes.add(tasktimeone);
+                          completedtaskname.add(tasknameone);
+                          completedtasktime.add(tasktimeone);
 
                           });
                         }

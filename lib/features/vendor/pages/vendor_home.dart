@@ -7,6 +7,7 @@ import 'package:common_user/features/vendor/data/photo_list.dart';
 import 'package:common_user/features/vendor/model/makeup_model.dart';
 import 'package:common_user/features/vendor/model/music_model.dart';
 import 'package:common_user/features/vendor/model/photo_model.dart';
+import 'package:common_user/features/vendor/pages/vendor_details.dart';
 import 'package:common_user/features/vendor/pages/vendor_list.dart';
 import 'package:common_user/features/vendor/widgets/navigation.dart';
 import 'package:common_user/features/venue/presentation/model/location_provider.dart';
@@ -141,7 +142,7 @@ class _VendorHomeState extends State<VendorHome> {
                 onTap: () {
                   navigateWithSlide(
                     context,
-                    VendorDetails(
+                    VendorList(
                       categoryTitle: "Top Pre Wedding Photographers",
                       vendorData: photoList,
                       vendorType: 'photo',
@@ -165,7 +166,7 @@ class _VendorHomeState extends State<VendorHome> {
                 onTap: () {
                   navigateWithSlide(
                     context,
-                    VendorDetails(
+                    VendorList(
                       categoryTitle: "Wedding Makeup Artists",
                       vendorData: makeupArtists,
                       vendorType: 'makeup',
@@ -208,7 +209,7 @@ class _VendorHomeState extends State<VendorHome> {
                 onTap: () {
                   navigateWithSlide(
                     context,
-                    VendorDetails(
+                    VendorList(
                       categoryTitle: "Trending Choreographers",
                       vendorData: musicDanceList,
                       vendorType: 'music',
@@ -431,7 +432,15 @@ class _VendorHomeState extends State<VendorHome> {
         itemBuilder: (context, index) {
           PhotoModel photo = photoList[index];
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              navigateWithSlide(
+                  context,
+                  VendorDetails(
+                    vendorType: "photo",
+                    vendorData: photo,
+                    vendorDatas: photoList,
+                  ));
+            },
             child: Container(
               width: 140,
               margin: const EdgeInsets.only(right: 12),
@@ -570,7 +579,15 @@ class _VendorHomeState extends State<VendorHome> {
         itemBuilder: (context, index) {
           MakeupArtistModel makeup = makeupArtists[index];
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              navigateWithSlide(
+                  context,
+                  VendorDetails(
+                    vendorType: "makeup",
+                    vendorData: makeup,
+                    vendorDatas: makeupArtists,
+                  ));
+            },
             child: Container(
               width: screenWidth / 1.5,
               margin: const EdgeInsets.only(right: 12),
@@ -727,7 +744,15 @@ class _VendorHomeState extends State<VendorHome> {
           MusicDanceModel music = musicDanceList[index];
 
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              navigateWithSlide(
+                  context,
+                  VendorDetails(
+                    vendorType: "music",
+                    vendorData: music,
+                    vendorDatas: musicDanceList,
+                  ));
+            },
             child: Container(
               width: 140,
               margin: const EdgeInsets.only(right: 12),

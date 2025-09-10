@@ -8,15 +8,30 @@ List<MakeupArtistModel> makeupArtists = [
     location: "Chennai, India",
     price: "₹15,000",
     rating: 4.7,
+    services: [
+      "Candid",
+      "Traditional",
+      "Cinematic",
+      "Pre Wedding",
+      "Wedding",
+      "Video"
+    ],
   ),
   MakeupArtistModel(
-    id: 2,
-    name: "Glow & Glam",
-    image: "assets/makeup/makeup2.jpg",
-    location: "Bangalore, India",
-    price: "₹18,000",
-    rating: 4.8,
-  ),
+      id: 2,
+      name: "Glow & Glam",
+      image: "assets/makeup/makeup2.jpg",
+      location: "Bangalore, India",
+      price: "₹18,000",
+      rating: 4.8,
+      services: [
+        "Candid",
+        "Traditional",
+        "Cinematic",
+        "Pre Wedding",
+        "Wedding",
+        "Video"
+      ]),
   MakeupArtistModel(
     id: 3,
     name: "Bridal Touch",
@@ -24,6 +39,14 @@ List<MakeupArtistModel> makeupArtists = [
     location: "Hyderabad, India",
     price: "₹20,000",
     rating: 4.6,
+    services: [
+      "Candid",
+      "Traditional",
+      "Cinematic",
+      "Pre Wedding",
+      "Wedding",
+      "Video"
+    ],
   ),
   MakeupArtistModel(
     id: 4,
@@ -32,6 +55,14 @@ List<MakeupArtistModel> makeupArtists = [
     location: "Mumbai, India",
     price: "₹22,500",
     rating: 4.9,
+    services: [
+      "Candid",
+      "Traditional",
+      "Cinematic",
+      "Pre Wedding",
+      "Wedding",
+      "Video"
+    ],
   ),
   MakeupArtistModel(
     id: 5,
@@ -40,6 +71,14 @@ List<MakeupArtistModel> makeupArtists = [
     location: "Delhi, India",
     price: "₹17,000",
     rating: 4.5,
+    services: [
+      "Candid",
+      "Traditional",
+      "Cinematic",
+      "Pre Wedding",
+      "Wedding",
+      "Video"
+    ],
   ),
   MakeupArtistModel(
     id: 6,
@@ -48,6 +87,14 @@ List<MakeupArtistModel> makeupArtists = [
     location: "Coimbatore, India",
     price: "₹16,000",
     rating: 4.3,
+    services: [
+      "Candid",
+      "Traditional",
+      "Cinematic",
+      "Pre Wedding",
+      "Wedding",
+      "Video"
+    ],
   ),
   MakeupArtistModel(
     id: 7,
@@ -56,6 +103,14 @@ List<MakeupArtistModel> makeupArtists = [
     location: "Kolkata, India",
     price: "₹21,000",
     rating: 4.8,
+    services: [
+      "Candid",
+      "Traditional",
+      "Cinematic",
+      "Pre Wedding",
+      "Wedding",
+      "Video"
+    ],
   ),
   MakeupArtistModel(
     id: 8,
@@ -64,6 +119,14 @@ List<MakeupArtistModel> makeupArtists = [
     location: "Pune, India",
     price: "₹19,500",
     rating: 4.6,
+    services: [
+      "Candid",
+      "Traditional",
+      "Cinematic",
+      "Pre Wedding",
+      "Wedding",
+      "Video"
+    ],
   ),
   MakeupArtistModel(
     id: 9,
@@ -72,6 +135,14 @@ List<MakeupArtistModel> makeupArtists = [
     location: "Jaipur, India",
     price: "₹23,000",
     rating: 4.9,
+    services: [
+      "Candid",
+      "Traditional",
+      "Cinematic",
+      "Pre Wedding",
+      "Wedding",
+      "Video"
+    ],
   ),
   MakeupArtistModel(
     id: 10,
@@ -80,5 +151,13 @@ List<MakeupArtistModel> makeupArtists = [
     location: "Kochi, India",
     price: "₹14,000",
     rating: 4.4,
+    services: [
+      "Candid",
+      "Traditional",
+      "Cinematic",
+      "Pre Wedding",
+      "Wedding",
+      "Video"
+    ],
   ),
 ];
