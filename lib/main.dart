@@ -2,7 +2,8 @@ import 'package:common_user/common/razorpay/razorpay.dart';
 import 'package:common_user/features/venue/presentation/model/location_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart' as legacy;
 import 'features/splash/presentation/pages/splash_screen.dart';
 import 'firebase_options.dart';
 
@@ -10,8 +11,16 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   RazorpayService.instance.init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(ChangeNotifierProvider(
-      create: (_) => LocationProvider(), child: const MyApp()));
+  runApp(
+    legacy.MultiProvider(
+      providers: [
+        legacy.ChangeNotifierProvider(create: (_) => LocationProvider()),
+      ],
+      child: const ProviderScope(
+        child: MyApp(),
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

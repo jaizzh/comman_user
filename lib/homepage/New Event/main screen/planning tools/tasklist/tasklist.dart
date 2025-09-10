@@ -1,22 +1,20 @@
 import 'package:common_user/common/colors.dart';
-import 'package:common_user/homepage/New Event/main screen/planning tools/images_upload/first_screen.dart';
-import 'package:common_user/homepage/New Event/main screen/planning tools/images_upload/second_Screen.dart';
+import 'package:common_user/common/provider/providervariable.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/tasklist/alltask.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/tasklist/completetasklist.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/tasklist/pendingtasklist.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class tasklist extends StatefulWidget {
+class tasklist extends ConsumerStatefulWidget {
   const tasklist({super.key});
 
   @override
-  State<tasklist> createState() => _tasklistState();
+  ConsumerState<tasklist> createState() => _tasklistState();
 }
 
-class _tasklistState extends State<tasklist> {
-   final List<String> taskNameList = [];
-  final List<String> taskTimeList = [];
+class _tasklistState extends ConsumerState<tasklist> {
   final TextEditingController taskcont = TextEditingController();
 
   String selectedType = "Select option";
@@ -34,6 +32,10 @@ class _tasklistState extends State<tasklist> {
 
   @override
   Widget build(BuildContext context) {
+     final alllistname = ref.watch(tasklistprovidername);
+  final alllisttime = ref.watch(tasklistprovidertime);
+  final pendinglistname = ref.watch(tasklistpendingname);
+  final pendinglisttime = ref.watch(tasklistpendingtime);
     return DefaultTabController(
       length: 3,
       initialIndex: 0,
@@ -83,8 +85,10 @@ class _tasklistState extends State<tasklist> {
 
     // 2) add both together (pair)
     setState(() {
-      taskNameList.add(name);
-      taskTimeList.add(selectedType);
+      alllistname.add(name);
+      alllisttime.add(selectedType);
+      pendinglistname.add(name);
+      pendinglisttime.add(selectedType);
 
       // 3) reset inputs
       taskcont.clear();
@@ -127,9 +131,9 @@ class _tasklistState extends State<tasklist> {
                     fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.buttoncolor,
                   ),
                   tabs: const [
-                    Tab(text: "Pending",  ),// icon:Icon(Icons.cloud_upload_sharp, size: 20)),
-                    Tab(text: "All",      ),// icon: Icon(Icons.remove_red_eye_rounded, size: 20)),
-                    Tab(text: "Completed",),// icon: Icon(Icons.check_circle, size: 20)), // no Expanded
+                    Tab(text: "Pending",  ),
+                    Tab(text: "All",      ),
+                    Tab(text: "Completed",),
                   ],
                 ),
               ),
@@ -138,9 +142,9 @@ class _tasklistState extends State<tasklist> {
               Expanded(
                 child: TabBarView(
                   children:[
-                    pendingtask(taskNames: taskNameList, taskTimes: taskTimeList),
-                    alltasklist(taskNamesall: taskNameList, taskTimesall: taskTimeList),
-                    completetasklist(taskNamesall: taskNameList, taskTimesall: taskTimeList)
+                    pendingtask(taskNames: pendinglistname, taskTimes: pendinglisttime),
+                    alltasklist(taskNamesall: alllistname, taskTimesall:alllisttime),
+                    completetasklist(),
                   ],
                 ),
               ),

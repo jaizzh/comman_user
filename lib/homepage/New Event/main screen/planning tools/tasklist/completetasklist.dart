@@ -1,17 +1,21 @@
+import 'package:common_user/common/provider/providervariable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class completetasklist extends StatefulWidget {
-     final List<String> taskNamesall;
-  final List<String> taskTimesall;
-  const completetasklist({super.key, required this.taskNamesall, required this.taskTimesall});
+class completetasklist extends ConsumerStatefulWidget {
+ //    final List<String> taskNamesall;
+ // final List<String> taskTimesall;
+  const completetasklist({super.key,});
 
   @override
-  State<completetasklist> createState() => _completetasklistState();
+  ConsumerState<completetasklist> createState() => _completetasklistState();
 }
 
-class _completetasklistState extends State<completetasklist> {
+class _completetasklistState extends ConsumerState<completetasklist> {
   @override
   Widget build(BuildContext context) {
+     final completedtasknameor = ref.watch( tasklistcompletename );
+  final completedtasktimeor = ref.watch(tasklistcompletetime);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -31,10 +35,10 @@ class _completetasklistState extends State<completetasklist> {
           // SizedBox(height: 20.0,),
             Expanded(
               child: ListView.builder(
-                itemCount: widget.taskNamesall.length,
+                itemCount: completedtasknameor.length,
                 itemBuilder: (context,index){
-                  final tasknameone = widget.taskNamesall[index];
-                  final tasktimeone = widget.taskTimesall[index];
+                  final tasknameone = completedtasknameor[index];
+                  final tasktimeone = completedtasktimeor[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 10.0),
                     child: Container(
