@@ -27,7 +27,7 @@ class _EnquiryPageState extends State<EnquiryPage> {
     return const Card(
       elevation: 5,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 30),
         child: TextField(
           decoration: InputDecoration(
             border: InputBorder.none,
