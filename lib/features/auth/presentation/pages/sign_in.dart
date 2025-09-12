@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:common_user/app_colors.dart';
 import 'package:common_user/features/auth/presentation/pages/sign_up.dart';
+import 'package:common_user/features/auth/presentation/user_local_storage.dart';
 import 'package:common_user/homepage/dashboard%20page/mainpage.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -57,11 +58,13 @@ class _SignInState extends State<SignIn> {
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
-        return querySnapshot.docs.first.data() as Map<String, dynamic>;
+        var doc = querySnapshot.docs.first;
+        var data = doc.data() as Map<String, dynamic>;
+        data["uid"] = doc.id; // Add document ID as 'uid'
+        return data;
       }
       return null;
     } catch (e) {
-      // ignore: avoid_print
       print("Error checking phone number: $e");
       return null;
     }
@@ -151,6 +154,7 @@ class _SignInState extends State<SignIn> {
             context,
             MaterialPageRoute(builder: (_) => MainPage()),
           );
+          await UserLocalStorage.saveUserDataToLocal(user.uid);
         }
       }
     } catch (e) {
@@ -295,6 +299,7 @@ class _SignInState extends State<SignIn> {
             context,
             MaterialPageRoute(builder: (_) => MainPage()),
           );
+          await UserLocalStorage.saveUserDataToLocal(userData!["uid"]);
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

@@ -6,7 +6,6 @@ import 'package:common_user/features/vendor/model/music_model.dart';
 import 'package:common_user/features/vendor/model/photo_model.dart';
 import 'package:common_user/features/vendor/pages/enquiry_page.dart';
 import 'package:common_user/features/vendor/widgets/navigation.dart';
-import 'package:common_user/features/venue/presentation/pages/check_availability.dart';
 import 'package:common_user/features/venue/presentation/widgets/map_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -566,10 +565,8 @@ class _VendorDetailsState extends State<VendorDetails>
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const EnquiryPage()),
-                      );
+                      navigateWithSlide(
+                          context, EnquiryPage(name: name, image: image));
                     },
                     child: Card(
                       elevation: 5,

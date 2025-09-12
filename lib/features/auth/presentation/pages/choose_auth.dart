@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use, use_build_context_synchronously
 import 'package:common_user/app_colors.dart';
 import 'package:common_user/features/auth/presentation/pages/sign_up.dart';
+import 'package:common_user/features/auth/presentation/user_local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -469,6 +470,7 @@ class _ChooseAuthState extends State<ChooseAuth> {
             context,
             MaterialPageRoute(builder: (_) => MainPage()),
           );
+          await UserLocalStorage.saveUserDataToLocal(user.uid);
         }
       }
     } catch (e) {
