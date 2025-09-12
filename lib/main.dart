@@ -1,9 +1,9 @@
 import 'package:common_user/common/razorpay/razorpay.dart';
 import 'package:common_user/features/venue/presentation/model/location_provider.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/videoinvitation/videoform2.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'features/splash/presentation/pages/splash_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
-      home: SplashScreen(),
+      home: videoform2(),
     );
   }
 }

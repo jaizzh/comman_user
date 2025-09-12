@@ -1,0 +1,18 @@
+final Map<String, String> invitelist = {
+  "assets/images/inviter.jpg": "Tamil Wedding",
+  "assets/images/inviter2.jpg": "Reception",
+  "assets/images/inviter3.jpg": "Wedding",
+  "assets/images/inviter4.jpg": "Anniversary",
+  "assets/images/inviter5.jpg": "Birthday Party",
+  "assets/images/inviter6.jpg": "Hindi Wedding",
+  "assets/images/inviter7.jpg": "Reception",
+  // "assets/images/inviter4.jpg": "Hindi Wedding",
+  // "assets/images/inviter5.jpg": "Birthday Party",
+  // "assets/images/inviter6.jpg": "Farewell",
+  // "assets/images/inviter7.jpg": "Hindi Wedding",
+  // "assets/images/inviter2.jpg": "Hindi Wedding",
+  // "assets/images/inviter3.jpg": "Birthday Party",
+  // "assets/images/inviter4.jpg": "Hindi Wedding",
+  // "assets/images/inviter5.jpg": "Farewell",
+  // "assets/images/inviter6.jpg": "Reception",
+};
