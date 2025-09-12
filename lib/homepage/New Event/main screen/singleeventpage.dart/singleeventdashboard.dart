@@ -2,6 +2,7 @@ import 'package:common_user/common/colors.dart';
 import 'package:common_user/homepage/New%20Event/3rd%20screen/maineventpage.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/planningtoolspage.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/fisrthalfpage.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/invitationhome.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/majorcont.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/timer.dart';
 import 'package:flutter/material.dart';
@@ -83,13 +84,11 @@ class _singleventdashboardState extends State<singleventdashboard> {
               SizedBox(
                 height: 15.0,
               ),
-              //  Container(
-              // height: MediaQuery.of(context).size.height * 0.2,
-              // width: double.infinity,
-              // child: Image.asset(
-              //   fit: BoxFit.cover,
-              //   "assets/images/temp.jpg"),
-              // ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.2,
+                width: double.infinity,
+                child: Image.asset(fit: BoxFit.cover, "assets/images/temp.jpg"),
+              ),
             ],
           ),
         ),
@@ -299,8 +298,12 @@ class _singleventdashboardState extends State<singleventdashboard> {
     );
 
 // MOV (Presentation)
-    const presentation = FileBadge(
+    final presentation = FileBadge(
       title: 'Invitation Upload',
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => InvitationHome()));
+      },
       fileType: 'MOV',
       sizeLabel: '10MB',
       bgColor: const Color(0xFFDCEBFF), // pastel blue
@@ -421,169 +424,3 @@ class FileBadge extends StatelessWidget {
     );
   }
 }
-
-// Widget addFeature({required String path,required Function()? onTapper, required String words, required Color bgColor}) {
-//   return Padding(
-//     padding: const EdgeInsets.symmetric(horizontal: 10.0),
-//     child: Column(
-//       mainAxisSize: MainAxisSize.min,
-//       children: [
-//         GestureDetector(
-//           onTap:onTapper ,
-//           child: Container(
-//             height: 80,
-//             width: 95,
-//             decoration: BoxDecoration(
-//               color: Colors.white,
-//               borderRadius: BorderRadius.circular(20.0),
-//               boxShadow: [
-//                 BoxShadow(
-//                   color: Colors.black38,
-//                   blurRadius: 1,
-//                   spreadRadius: 1,
-//                 )
-//               ],
-//             ),
-//             child:Column(
-//               children: [
-//                 Center(
-//               child: Image.asset(
-//                 path,
-//                 width: 50,
-//                 height: 50,
-//                 fit: BoxFit.contain,
-//               ),
-//             ),
-//           Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 6.0),
-//             child: Text(
-//               overflow: TextOverflow.ellipsis,
-//               words,
-//               textAlign: TextAlign.center,
-//               style: GoogleFonts.inter(
-//                 fontSize: 13,
-                
-//                 fontWeight: FontWeight.w600,
-//                 color: Colors.black87,
-//               ),
-//             ),
-//           ),
-//               ],
-//             ) 
-//           ),
-//         ),
-        
-//       ],
-//     ),
-//   );
-// }
-  // Widget expandtools({required String planningtoolname}){
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(horizontal: 12.0),
-  //     child: Container(
-
-  //     width: double.infinity,
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //         children: [
-  //           Text(planningtoolname,style: TextStyle(fontSize: 16.0,color: AppColors.buttoncolor,fontWeight: FontWeight.bold),),
-  //           IconButton(onPressed: (){}, icon:Icon(Icons.keyboard_arrow_down_rounded,size: 24.0,color: Colors.black54,))
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
-
-  
-// Widget additional(BuildContext context) {
-//   return SizedBox(
-//     child: SingleChildScrollView(
-//       scrollDirection: Axis.horizontal,
-//       child: Row(
-//         children: [
-//           addFeature(path: "assets/pngimages/gift.png", words: "Gift Registry",bgColor:  AppColors.boxlightcolor.withOpacity(0.3), onTapper: () {  }),
-//           addFeature(path: "assets/pngimages/cohost.png", words: "Co-Hosts", bgColor: AppColors.boxlightcolor.withOpacity(0.3), onTapper: () {  }),
-//           addFeature(path: "assets/pngimages/invite.png", words: "Invitations", bgColor: AppColors.boxlightcolor.withOpacity(0.3), onTapper: () {Navigator.push(
-//   context,
-//   MaterialPageRoute(
-//     builder: (_) => const SimpleWebView(
-//       url: 'https://mangalmalldev.in/inviationcard',
-//       title: 'Google',
-//     ),
-//   ),
-// );
-//  }),
-//           addFeature(path: "assets/pngimages/budget.png", words: "Expense Report", bgColor: AppColors.boxlightcolor.withOpacity(0.3), onTapper: () {  }),
-//           addFeature(path: "assets/pngimages/videoinvite.png", words: "Video Invite", bgColor: AppColors.boxlightcolor.withOpacity(0.3), onTapper: () { Navigator.push(
-//   context,
-//   MaterialPageRoute(
-//     builder: (_) => const SimpleWebView(
-//       url: 'https://mangalmalldev.in/inviationcard',
-//       title: 'Google',
-//     ),
-//   ),
-// );
-//  }),
-//           addFeature(path: "assets/images/ewr.png", words: "Money Gift", bgColor: AppColors.boxlightcolor.withOpacity(0.3), onTapper: () {  }),
-//         ],
-//       ),
-//     ),
-//   );
-// }
-
-
-
-
-// Widget commmontoolcontainer({required String toolname,required double toolvalue,required Color colodf,required String Subtoolname}){
-//   return Padding(
-//     padding: const EdgeInsets.only(left: 12.0),
-//     child: Container(
-//       height: MediaQuery.of(context).size.height * 0.1,
-//       width: MediaQuery.of(context).size.width * 0.4,
-//       decoration: BoxDecoration(
-//         color: colodf,
-//         borderRadius: BorderRadius.circular(8.0)
-//       ),
-//       child: Row(
-//         children: [
-//           Padding(
-//             padding: const EdgeInsets.only(left: 12.0),
-//             child: Stack(
-//               children: [
-//                  SizedBox(
-//                 height: 40,
-//                 width: 40,
-//                 child: CircularProgressIndicator(
-//                  value: toolvalue, // 43% like your UI
-//                       strokeWidth: 5,
-//                       backgroundColor: Colors.grey.shade300,
-//                       valueColor: const AlwaysStoppedAnimation(Color(0xFF9A2143)),
-//                 ),
-//               ),
-//               Positioned(
-//                 left: MediaQuery.of(context).size.height * 0.015,
-//                 top: MediaQuery.of(context).size.width * 0.03,
-//                 child:Text("1/3",style: TextStyle(fontSize: 11.0,color:Colors.black54,fontWeight: FontWeight.bold),),),
-               
-//               ],
-              
-//             ),
-//           ),
-//           SizedBox(width: 10.0,),
-//           Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//                 Text(toolname,style: TextStyle(fontSize: 12.0,color:Colors.black,fontWeight: FontWeight.bold),),
-//                 Text(
-//                   maxLines: 2,
-//                   overflow: TextOverflow.ellipsis,
-//                   Subtoolname,style: TextStyle(fontSize: 11.0,color:Colors.black54,fontWeight: FontWeight.bold),),
-//             ],
-//           )
-//         ],
-//       ),
-//     ),
-//   );
-// }

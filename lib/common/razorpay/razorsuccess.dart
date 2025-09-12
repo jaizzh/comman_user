@@ -7,8 +7,8 @@ import 'package:lottie/lottie.dart';
 
 Future<void> showPaymentSuccessDialog(
   BuildContext context, {
-  required int amountPaise,                // e.g., 129900
-  String? orderId,                        // optional
+  required int amountPaise, // e.g., 129900
+  String? orderId, // optional
   String title = "Payment Successful",
   Duration autoCloseAfter = const Duration(milliseconds: 7500),
 }) async {
@@ -19,7 +19,7 @@ Future<void> showPaymentSuccessDialog(
     context: context,
     barrierLabel: 'Payment Success',
     barrierDismissible: true,
-   // barrierColor: Colors.black.withOpacity(0.35),
+    // barrierColor: Colors.black.withOpacity(0.35),
     transitionDuration: const Duration(milliseconds: 3000),
     pageBuilder: (_, __, ___) {
       return const SizedBox.shrink(); // required but unused
@@ -75,7 +75,7 @@ class _SuccessCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             // glass + border glow
             color: Colors.white.withOpacity(0.85),
-         //   border: Border.all(color: const Color(0xFFBFA054).withOpacity(.35), width: 1.5),
+            //   border: Border.all(color: const Color(0xFFBFA054).withOpacity(.35), width: 1.5),
             boxShadow: const [
               BoxShadow(
                 color: Color(0x33000000),
@@ -103,7 +103,7 @@ class _SuccessCard extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [ Color(0xFFEDD498), Color(0xFFBFA054) ],
+                    colors: [Color(0xFFEDD498), Color(0xFFBFA054)],
                   ),
                 ),
                 child: Stack(
@@ -126,8 +126,11 @@ class _SuccessCard extends StatelessWidget {
                       top: 8,
                       child: IconButton(
                         visualDensity: VisualDensity.compact,
-                        onPressed: () => Navigator.of(context, rootNavigator: true).maybePop(),
-                        icon: const Icon(Icons.close_rounded, size: 18, color: Colors.black87),
+                        onPressed: () =>
+                            Navigator.of(context, rootNavigator: true)
+                                .maybePop(),
+                        icon: const Icon(Icons.close_rounded,
+                            size: 18, color: Colors.black87),
                       ),
                     ),
                   ],
@@ -135,15 +138,22 @@ class _SuccessCard extends StatelessWidget {
               ),
 
               const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                    Text("New Event Created",style: GoogleFonts.sahitya(fontSize: 20.0,fontWeight: FontWeight.bold,color: AppColors.buttoncolor),)
-                  ],),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "New Event Created",
+                      style: GoogleFonts.sahitya(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.buttoncolor),
+                    )
+                  ],
                 ),
-                 const SizedBox(height: 10),
+              ),
+              const SizedBox(height: 10),
               // success animation
               Padding(
                 padding: const EdgeInsets.only(top: 6.0),
@@ -166,11 +176,17 @@ class _SuccessCard extends StatelessWidget {
                         children: [
                           const TextSpan(
                             text: "You paid ",
-                            style: TextStyle(color: Colors.black87, fontSize: 13, fontWeight: FontWeight.w600),
+                            style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600),
                           ),
                           TextSpan(
                             text: "₹$amountRupees",
-                            style: const TextStyle(color: Color(0xFF9A2143), fontSize: 18, fontWeight: FontWeight.w900),
+                            style: const TextStyle(
+                                color: Color(0xFF9A2143),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w900),
                           ),
                         ],
                       ),
@@ -178,11 +194,14 @@ class _SuccessCard extends StatelessWidget {
                     const SizedBox(height: 6),
                     if (orderId != null && orderId!.isNotEmpty)
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 6),
                         decoration: BoxDecoration(
                           color: const Color(0xFF111827).withOpacity(.06),
                           borderRadius: BorderRadius.circular(999),
-                          border: Border.all(color: const Color(0xFFBFA054).withOpacity(.5), width: 1),
+                          border: Border.all(
+                              color: const Color(0xFFBFA054).withOpacity(.5),
+                              width: 1),
                         ),
                         child: Text(
                           "Order: $orderId",
@@ -209,13 +228,19 @@ class _SuccessCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: OutlinedButton.icon(
-                        onPressed: () =>Navigator.push(context, MaterialPageRoute(builder: (_)=> MainPage())),     //Navigator.of(context, rootNavigator: true).maybePop(),
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) =>
+                                    MainPage())), //Navigator.of(context, rootNavigator: true).maybePop(),
                         icon: const Icon(Icons.close_rounded, size: 18),
                         label: const Text("Close"),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: const Color(0xFF111827),
-                          side: BorderSide(color: Colors.black.withOpacity(.15)),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          side:
+                              BorderSide(color: Colors.black.withOpacity(.15)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
                           padding: const EdgeInsets.symmetric(vertical: 12),
                         ),
                       ),
@@ -223,13 +248,19 @@ class _SuccessCard extends StatelessWidget {
                     const SizedBox(width: 10),
                     Expanded(
                       child: ElevatedButton.icon(
-                        onPressed: () =>Navigator.push(context, MaterialPageRoute(builder: (_)=> MainPage())),   //  => Navigator.of(context, rootNavigator: true).maybePop(),
-                        icon: const Icon(Icons.verified_rounded, size: 18, color: Colors.white),
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) =>
+                                    MainPage())), //  => Navigator.of(context, rootNavigator: true).maybePop(),
+                        icon: const Icon(Icons.verified_rounded,
+                            size: 18, color: Colors.white),
                         label: const Text("Great!"),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF9A2143),
                           foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
                           elevation: 0,
                           padding: const EdgeInsets.symmetric(vertical: 12),
                         ),
