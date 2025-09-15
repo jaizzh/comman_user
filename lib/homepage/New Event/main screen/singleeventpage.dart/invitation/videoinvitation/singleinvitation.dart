@@ -18,13 +18,13 @@ class _singlevideoinviteState extends State<singlevideoinvite> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 235, 232, 232),
+      backgroundColor: const Color.fromARGB(255, 235, 232, 232),
       body: SafeArea(
           child: Container(
               child: Column(
         children: [
           titlebar(),
-          SizedBox(
+          const SizedBox(
             height: 20.0,
           ),
           Expanded(child: listsofvideo()),
@@ -178,8 +178,8 @@ class _PremiumVideoCardState extends State<_PremiumVideoCard>
                             fit: BoxFit.cover,
                           ),
                         ),
-                        Positioned.fill(
-                          child: const DecoratedBox(
+                        const Positioned.fill(
+                          child: DecoratedBox(
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.topCenter,
@@ -194,9 +194,9 @@ class _PremiumVideoCardState extends State<_PremiumVideoCard>
                           right: MediaQuery.of(context).size.height * 0.06,
                           bottom: MediaQuery.of(context).size.width * 0.150,
                           child: _glassChip(
-                            child: Row(
+                            child: const Row(
                               mainAxisSize: MainAxisSize.min,
-                              children: const [
+                              children: [
                                 Icon(Icons.play_arrow_rounded, size: 18),
                                 SizedBox(width: 4),
                                 Text("Play"),
@@ -234,7 +234,7 @@ class _PremiumVideoCardState extends State<_PremiumVideoCard>
                                   height: 4,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(6),
-                                    gradient: LinearGradient(
+                                    gradient: const LinearGradient(
                                       colors: [
                                         AppColors.primary,
                                         AppColors.darkGold,

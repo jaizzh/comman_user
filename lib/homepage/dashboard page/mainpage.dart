@@ -1,3 +1,4 @@
+import 'package:common_user/features/product/pages/product_home_page.dart';
 import 'package:common_user/features/vendor/pages/vendor_home.dart';
 import 'package:common_user/features/venue/presentation/pages/venue_home.dart';
 import 'package:common_user/homepage/dashboard%20page/homepage.dart';
@@ -17,7 +18,7 @@ class _MainPageState extends State<MainPage> {
     homepage(),
     VenueHome(), // 1
     VendorHome(), // 2
-    // VendorHome(), // 3
+    ProductHomePage() // 3
     // VendorHome() // 4
   ];
 
