@@ -1,439 +1,542 @@
 import 'package:common_user/common/colors.dart';
-import 'package:common_user/common/razorpay/razorbool.dart';
-import 'package:common_user/homepage/dashboard%20page/mainpage.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/singleeventdashboard.dart';
+import 'package:common_user/homepage/summa.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class eventcard extends StatefulWidget {
-  const eventcard({super.key});
+class PremiumEventCard extends StatefulWidget {
+  const PremiumEventCard({super.key});
 
   @override
-  State<eventcard> createState() => _eventcardState();
+  State<PremiumEventCard> createState() => _PremiumEventCardState();
 }
 
-class _eventcardState extends State<eventcard> {
+class _PremiumEventCardState extends State<PremiumEventCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.98).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Stack(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.320,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+    // final size = MediaQuery.of(context).size;
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => singleventdashboard()));
+      },
+      child: ScaleTransition(
+        scale: _scaleAnimation,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFF4F46E5).withOpacity(0.15),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
+              ),
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(24),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                   colors: [
-                    AppColors.boxlightcolor,
                     Colors.white,
+                    const Color(0xFFFAFBFF),
                     Colors.white,
-                    Colors.white,
-                  ]),
-              //color: Colors.white,
-              boxShadow: const [
-                BoxShadow(
-                  spreadRadius: 1,
-                  blurRadius: 1,
-                  color: Colors.black38,
+                  ],
                 ),
-              ],
-              borderRadius: BorderRadius.circular(12.0),
+                border: Border.all(
+                  color: const Color(0xFFE2E8F0),
+                  width: 1,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildHeader(),
+                  _buildProgressSection(),
+                  _buildEventDetails(),
+                  _buildActionSection(),
+                ],
+              ),
             ),
-            child: Column(
-              children: [
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Row(
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.buttoncolor,
+            AppColors.buttoncolor.withOpacity(1.0),
+          ],
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 14.0,
+                    ),
+                    Text(
+                      "Vini Birthday Party",
+                      style: GoogleFonts.inter(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 6.0,
+                    ),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 8.0,
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: Colors.white.withOpacity(0.3),
+                              width: 1,
                             ),
-                            Text("Vini Birthday Party",
-                                style: GoogleFonts.sahitya(
-                                    color: AppColors.buttoncolor,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold)),
-                            SizedBox(
-                              height: 4.0,
+                          ),
+                          child: Text(
+                            "Wedding",
+                            style: GoogleFonts.inter(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
                             ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: Colors.black12,
-                                // color: const Color.fromARGB(255, 235, 228, 228),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Text("Wedding",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 11.0,
-                                    color: Colors.black87,
-                                  )),
-                            ),
-                          ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10.0,
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 4),
+                              horizontal: 16, vertical: 6),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF2E7D32),
-                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF10B981).withOpacity(0.3),
+                                blurRadius: 8,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(Icons.hourglass_bottom,
-                                  size: 16, color: Colors.white),
-                              const SizedBox(width: 4),
+                              const Icon(
+                                Icons.access_time,
+                                size: 16,
+                                color: Colors.black,
+                              ),
+                              const SizedBox(width: 6),
                               Text(
-                                "6d 13h 32m 42s",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 11.0),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Container(
-                    height: 1.0,
-                    width: double.infinity,
-                    color: Colors.black54,
-                  ),
-                ),
-                //idhoda code mudinji
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // LEFT: Checklist
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 10),
-                            const Row(
-                              children: [
-                                Icon(Icons.check_circle,
-                                    color: Color(0xFF2E7D32), size: 16),
-                                SizedBox(width: 4),
-                                Text(
-                                  "Checklist",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black54),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 4),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: SizedBox(
-                                height: 8,
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                child: const LinearProgressIndicator(
-                                  value: 0.25, // 25%
-                                  backgroundColor: Color(0xFFE9EEF2),
-                                  valueColor:
-                                      AlwaysStoppedAnimation(Color(0xFF2E7D32)),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            const Text(
-                              "25% completed",
-                              style: TextStyle(
+                                "6d 13h 32m",
+                                style: GoogleFonts.inter(
                                   fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black45),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      // RIGHT: (placeholder for Budget or anything else)
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16.0),
-                        child: Expanded(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.account_balance_wallet,
-                                    color: Color(0xFF0EA5E9),
-                                    size: 16.0,
-                                  ),
-                                  SizedBox(
-                                    width: 3.0,
-                                  ),
-                                  Text("Budget",
-                                      style: GoogleFonts.mPlus1(
-                                          color: Colors.black87,
-                                          fontSize: 13.0,
-                                          fontWeight: FontWeight.bold)),
-                                ],
-                              ),
-                              Text(
-                                "\$100 / \$100",
-                                style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.buttoncolor),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 4.0,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 14.0),
-                  child: Container(
-                    child: const Column(
-                      children: [
-                        Row(children: [
-                          Icon(
-                            Icons.people,
-                            size: 16.0,
-                            color: Colors.deepPurple,
-                          ),
-                          SizedBox(
-                            width: 4.0,
-                          ),
-                          Text(
-                            "Invited Guest : ",
-                            style: TextStyle(
-                                fontSize: 12.0,
-                                color: Colors.black45,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            width: 4.0,
-                          ),
-                          Text(
-                            "100 / 300",
-                            style: TextStyle(
-                                fontSize: 13.0,
-                                color: Colors.black87,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          //  Text(" / 300",style:TextStyle(fontSize:12.0,color: Colors.black87,fontWeight: FontWeight.bold ) ,),
-                        ]),
-                        SizedBox(
-                          height: 4.0,
-                        ),
-                        Row(children: [
-                          Icon(
-                            Icons.calendar_month_rounded,
-                            size: 16.0,
-                            color: Colors.deepPurple,
-                          ),
-                          SizedBox(
-                            width: 4.0,
-                          ),
-                          Text(
-                            "Date : ",
-                            style: TextStyle(
-                                fontSize: 12.0,
-                                color: Colors.black45,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            width: 4.0,
-                          ),
-                          Text(
-                            "30/06/2025 - 31/06/2025",
-                            style: TextStyle(
-                                fontSize: 13.0,
-                                color: Colors.black87,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          //  Text(" / 300",style:TextStyle(fontSize:12.0,color: Colors.black87,fontWeight: FontWeight.bold ) ,),
-                        ]),
-                        SizedBox(
-                          height: 4.0,
-                        ),
-                        Row(children: [
-                          Icon(
-                            Icons.place,
-                            size: 16.0,
-                            color: Colors.red,
-                          ),
-                          SizedBox(
-                            width: 4.0,
-                          ),
-                          Text(
-                            "Place : ",
-                            style: TextStyle(
-                                fontSize: 12.0,
-                                color: Colors.black45,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            width: 4.0,
-                          ),
-                          Text(
-                            "Sivakasi SSK Mahal",
-                            style: TextStyle(
-                                fontSize: 13.0,
-                                color: Colors.black87,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          //  Text(" / 300",style:TextStyle(fontSize:12.0,color: Colors.black87,fontWeight: FontWeight.bold ) ,),
-                        ]),
-                        SizedBox(
-                          height: 8.0,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Container(
-                    height: 1.0,
-                    width: double.infinity,
-                    color: Colors.black54,
-                  ),
-                ),
-                SizedBox(
-                  height: 6.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Padding(
-                          padding: const EdgeInsets.only(left: 2.0),
-                          child: Row(
-                            // mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.person_add_alt_sharp,
-                                size: 18.0,
-                                color: Colors.blueAccent,
-                              ),
-                              SizedBox(
-                                width: 6,
-                              ),
-                              Text(
-                                'Co-Hosts = 0',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFF2E3B4E), // Dark slate gray
-                                  letterSpacing: 0.35,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.end, // center align
-                          children: [
-                            // View
-                            _circleIcon(
-                              icon: Icons.remove_red_eye,
-                              iconColor: Colors.grey,
-                              onTap: () {
-                                // TODO: Handle View action
-                              },
-                            ),
-                            const SizedBox(width: 16),
-
-                            // Edit
-                            _circleIcon(
-                              icon: Icons.edit,
-                              iconColor: Colors.red.shade700,
-                              onTap: () {
-                                // TODO: Handle Edit action
-                              },
-                            ),
-                            const SizedBox(width: 16),
-
-                            // Delete
-                            _circleIcon(
-                              icon: Icons.delete,
-                              iconColor: Colors.red,
-                              onTap: () {
-                                EventGate.showEventSummary.value = false;
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => MainPage()));
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content:
-                                        Text("Your Event Has Been Deleted"),
-                                    duration: Duration(seconds: 3),
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
                       ],
                     ),
-                  ),
-                )
-                //
-                //
-              ],
-            ),
+                    const SizedBox(height: 12),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _circleIcon({
-    required IconData icon,
-    required Color iconColor,
-    required VoidCallback onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(50),
-      child: Container(
-        width: 25,
-        height: 25,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: Colors.grey.shade300),
-          color: Colors.white,
-        ),
-        child: Icon(icon, color: iconColor, size: 18.0),
+  Widget _buildProgressSection() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildCombinedProgressCard(),
+        ],
       ),
+    );
+  }
+
+  Widget _buildCombinedProgressCard() {
+    return Container(
+      child: Column(
+        children: [
+          _buildProgressSection1(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProgressSection1() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(14),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black38.withOpacity(0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Icon(
+                Icons.task_alt_rounded,
+                color: AppColors.buttoncolor,
+                size: 22,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Task Checklist",
+                    style: GoogleFonts.inter(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF1E293B),
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    "Keep track of your progress",
+                    style: GoogleFonts.inter(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(0xFF64748B),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: AppColors.buttoncolor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                "7/10",
+                style: GoogleFonts.inter(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.buttoncolor,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: LinearProgressIndicator(
+            value: 0.75, // 75% progress
+            backgroundColor: const Color(0xFFE2E8F0),
+            valueColor: AlwaysStoppedAnimation<Color>(
+              AppColors.buttoncolor,
+            ),
+            minHeight: 8,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEventDetails() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 6),
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: const Color(0xFFF8FAFC),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: const Color(0xFFE2E8F0),
+            width: 1,
+          ),
+        ),
+        child: Column(
+          children: [
+            _buildDetailRow(
+              Icons.people_outline,
+              "Invited Guests",
+              "100 / 300",
+              const Color(0xFF8B5CF6),
+            ),
+            const SizedBox(height: 12),
+            _buildDetailRow(
+              Icons.calendar_today_outlined,
+              "Event Date",
+              "30/06/2025 - 31/06/2025",
+              const Color(0xFF3B82F6),
+            ),
+            const SizedBox(height: 12),
+            _buildDetailRow(
+              Icons.location_on_outlined,
+              "Venue",
+              "Sivakasi SSK Mahal",
+              const Color(0xFFEF4444),
+            ),
+            const SizedBox(height: 12),
+            _buildDetailRow(
+              Icons.person_add_alt_outlined,
+              "Co-Hosts",
+              "0 added",
+              const Color(0xFF06B6D4),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(
+      IconData icon, String label, String value, Color color) {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(icon, color: color, size: 18),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: GoogleFonts.inter(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0xFF6B7280),
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                value,
+                style: GoogleFonts.inter(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFF1F2937),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildActionSection() {
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _buildActionButton(
+            Icons.visibility_outlined,
+            "View",
+            const Color(0xFF6B7280),
+            () {
+              // Handle view action
+            },
+          ),
+          _buildActionButton(
+            Icons.edit_outlined,
+            "Edit",
+            const Color(0xFF3B82F6),
+            () {
+              // Handle edit action
+            },
+          ),
+          _buildActionButton(
+            Icons.delete_outline,
+            "Delete",
+            const Color(0xFFEF4444),
+            () {
+              _showDeleteConfirmation();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionButton(
+      IconData icon, String label, Color color, VoidCallback onPressed) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: color.withOpacity(0.2),
+              width: 1,
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, color: color, size: 18),
+              const SizedBox(width: 6),
+              Text(
+                label,
+                style: GoogleFonts.inter(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: color,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showDeleteConfirmation() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: Text(
+            "Delete Event",
+            style: GoogleFonts.inter(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          content: Text(
+            "Are you sure you want to delete this event? This action cannot be undone.",
+            style: GoogleFonts.inter(
+              fontSize: 14,
+              color: const Color(0xFF6B7280),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                "Cancel",
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFF6B7280),
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      "Event deleted successfully",
+                      style: GoogleFonts.inter(fontWeight: FontWeight.w500),
+                    ),
+                    backgroundColor: const Color(0xFF10B981),
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFEF4444),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Text(
+                "Delete",
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
