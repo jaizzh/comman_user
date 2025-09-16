@@ -247,8 +247,8 @@ class _homepageState extends State<homepage> {
               name: 'Gift Purchases'),
           choosecreate(
               onTapper: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => demopage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => MinimalDemoPage()));
               },
               pather: 'assets/images/chat4.png',
               name: "My Events (Locked)"),

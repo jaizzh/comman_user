@@ -1,4 +1,5 @@
 import 'package:common_user/common/razorpay/razorpay.dart';
+import 'package:common_user/features/product/widgets/cart_provider.dart';
 import 'package:common_user/features/venue/presentation/model/location_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ void main() async {
     legacy.MultiProvider(
       providers: [
         legacy.ChangeNotifierProvider(create: (_) => LocationProvider()),
+        legacy.ChangeNotifierProvider(create: (_) => CartProvider()),
       ],
       child: const ProviderScope(
         child: MyApp(),

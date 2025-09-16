@@ -272,7 +272,12 @@ class _ProductHomePageState extends State<ProductHomePage> {
           final product = randomProducts[index];
           return GestureDetector(
             onTap: () {
-              navigateWithSlide(context, ProductDetails(product: product));
+              navigateWithSlide(
+                  context,
+                  ProductDetails(
+                    product: product,
+                    categories: productcategories[0],
+                  ));
             },
             child: Card(
               color: const Color.fromARGB(255, 247, 242, 232),
@@ -332,7 +337,12 @@ class _ProductHomePageState extends State<ProductHomePage> {
           final product = furnitures[index];
           return GestureDetector(
             onTap: () {
-              navigateWithSlide(context, ProductDetails(product: product));
+              navigateWithSlide(
+                  context,
+                  ProductDetails(
+                    product: product,
+                    categories: categories,
+                  ));
             },
             child: Container(
               width: 140,

@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:common_user/app_colors.dart';
 import 'package:common_user/homepage/New Event/main screen/singleeventpage.dart/singleeventdashboard.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/Einvitation/e-invitation.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/subdomain/sub_domain.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/videoinvitation/videoinvitation.dart';
+import 'package:common_user/homepage/summa.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -121,7 +123,7 @@ class _InvitationHomeState extends State<InvitationHome>
               imageAsset: 'assets/images/invit4.jpg',
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => videoinvitation()));
+                    MaterialPageRoute(builder: (_) => const videoinvitation()));
               },
               fade: _fadeAnimation,
               scale: _scaleAnimation,
@@ -135,7 +137,10 @@ class _InvitationHomeState extends State<InvitationHome>
               subheading:
                   'Sub-domains are websites that hold information about your event',
               imageAsset: 'assets/images/inviti.jpg',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => SubdomainCreationPage()));
+              },
               fade: _fadeAnimation,
               scale: _scaleAnimation,
               goldDark: AppColors.darkGold,

@@ -1,4 +1,5 @@
 import 'package:common_user/app_colors.dart';
+import 'package:common_user/features/product/pages/cart_page.dart';
 import 'package:common_user/features/vendor/widgets/navigation.dart';
 import 'package:common_user/features/venue/presentation/model/location_provider.dart';
 import 'package:common_user/features/venue/presentation/pages/location_search_page.dart';
@@ -65,15 +66,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         if (showNotification) const SizedBox(width: 5),
         if (showCart)
-          const Card(
-            color: AppColors.primary,
-            elevation: 3,
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.shopping_bag,
-                size: 20,
-                color: AppColors.white,
+          GestureDetector(
+            onTap: () {
+              navigateWithSlide(context, const CartPage());
+            },
+            child: const Card(
+              color: AppColors.primary,
+              elevation: 3,
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.shopping_bag,
+                  size: 20,
+                  color: AppColors.white,
+                ),
               ),
             ),
           ),

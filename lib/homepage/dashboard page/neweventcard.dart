@@ -7,10 +7,10 @@ import 'package:google_fonts/google_fonts.dart';
 class EventSummaryCard extends StatefulWidget {
   final String eventName;
   final String eventType;
-  final DateTime endsAt;        
-  final int invitedCount;       
-  final int totalGuests;   
-  
+  final DateTime endsAt;
+  final int invitedCount;
+  final int totalGuests;
+
   const EventSummaryCard({
     super.key,
     required this.eventName,
@@ -51,8 +51,8 @@ class _EventSummaryCardState extends State<EventSummaryCard> {
     final seconds = d.inSeconds % 60;
     final dd = days > 0 ? '$days d ' : '';
     return '$dd${hours.toString().padLeft(2, '0')}:'
-           '${minutes.toString().padLeft(2, '0')}:'
-           '${seconds.toString().padLeft(2, '0')}';
+        '${minutes.toString().padLeft(2, '0')}:'
+        '${seconds.toString().padLeft(2, '0')}';
   }
 
   @override
@@ -67,26 +67,30 @@ class _EventSummaryCardState extends State<EventSummaryCard> {
         ? 0.0
         : (widget.invitedCount / widget.totalGuests).clamp(0.0, 1.0);
 
-    final Color onBg      = const Color(0xFF2E2A22);     // Dark text on light bg
-    final Color subText   = onBg.withOpacity(0.75);      // Subtle text
-    final Color chipBg    = AppColors.boxboxlight;       // Soft chip bg
-    final Color chipBorder= AppColors.boxdarkcolor.withOpacity(0.55);
-    final Color iconColor = AppColors.buttoncolor;       // Accent for icons
-    final Color barTrack  = onBg.withOpacity(0.12);
+    final Color onBg = const Color(0xFF2E2A22); // Dark text on light bg
+    final Color subText = onBg.withOpacity(0.75); // Subtle text
+    final Color chipBg = AppColors.boxboxlight; // Soft chip bg
+    final Color chipBorder = AppColors.boxdarkcolor.withOpacity(0.55);
+    final Color iconColor = AppColors.buttoncolor; // Accent for icons
+    final Color barTrack = onBg.withOpacity(0.12);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: GestureDetector(
         onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=> demopage()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => MinimalDemoPage()));
         },
         child: Container(
           decoration: BoxDecoration(
-             gradient: const LinearGradient(
-               begin: Alignment.topLeft,
-                      end: Alignment.topRight,
-                          colors: [Color(0xFFEDD498),Colors.white,],
-                          ),
-            color: AppColors.boxboxlight, 
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.topRight,
+              colors: [
+                Color(0xFFEDD498),
+                Colors.white,
+              ],
+            ),
+            color: AppColors.boxboxlight,
             borderRadius: BorderRadius.circular(22),
             boxShadow: [
               BoxShadow(
@@ -95,7 +99,8 @@ class _EventSummaryCardState extends State<EventSummaryCard> {
                 offset: const Offset(0, 10),
               ),
             ],
-            border: Border.all(color: AppColors.boxboxlight.withOpacity(0.8), width: 1),
+            border: Border.all(
+                color: AppColors.boxboxlight.withOpacity(0.8), width: 1),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -107,7 +112,6 @@ class _EventSummaryCardState extends State<EventSummaryCard> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                   
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 15.0),
@@ -136,9 +140,9 @@ class _EventSummaryCardState extends State<EventSummaryCard> {
                     ),
                   ],
                 ),
-            
-              //  const SizedBox(height: 6),
-            
+
+                //  const SizedBox(height: 6),
+
                 // Time remaining
                 Row(
                   children: [
@@ -168,9 +172,9 @@ class _EventSummaryCardState extends State<EventSummaryCard> {
                     ),
                   ],
                 ),
-            
-               // const SizedBox(height: 6),
-            
+
+                // const SizedBox(height: 6),
+
                 // Guest invites + count
                 Row(
                   children: [
@@ -195,9 +199,9 @@ class _EventSummaryCardState extends State<EventSummaryCard> {
                     ),
                   ],
                 ),
-            
+
                 const SizedBox(height: 6),
-            
+
                 // Progress bar
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
@@ -216,7 +220,10 @@ class _EventSummaryCardState extends State<EventSummaryCard> {
                           width: c.maxWidth * ratio,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              colors: [AppColors.buttoncolor, AppColors.buttoncolor],
+                              colors: [
+                                AppColors.buttoncolor,
+                                AppColors.buttoncolor
+                              ],
                             ),
                           ),
                         ),
@@ -224,9 +231,9 @@ class _EventSummaryCardState extends State<EventSummaryCard> {
                     ),
                   ),
                 ),
-            
+
                 const SizedBox(height: 6),
-            
+
                 // Actions
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -242,16 +249,17 @@ class _EventSummaryCardState extends State<EventSummaryCard> {
                       },
                     ),
                     const SizedBox(width: 10),
-            
+
                     // My Events (solid primary)
                     MyEventsButton(
-                      
                       bg: AppColors.buttoncolor,
                       fg: Colors.white,
                     ),
                   ],
                 ),
-                SizedBox(height: 6.0,)
+                SizedBox(
+                  height: 6.0,
+                )
               ],
             ),
           ),
@@ -286,7 +294,7 @@ class _Badge extends StatelessWidget {
           color: fg,
           fontSize: 12,
           fontWeight: FontWeight.w900,
-         // letterSpacing: 0.2,
+          // letterSpacing: 0.2,
         ),
       ),
     );
@@ -348,8 +356,9 @@ class MyEventsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (_)=> demopage()));
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => MinimalDemoPage()));
       },
       borderRadius: BorderRadius.circular(14),
       child: Ink(

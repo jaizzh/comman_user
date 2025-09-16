@@ -451,7 +451,7 @@ class _VendorHomeState extends State<VendorHome> {
     double screenHeight,
   ) {
     return SizedBox(
-      height: screenHeight / 4.5,
+      height: screenHeight / 4,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: photoList.length > 5 ? 5 : photoList.length,
@@ -598,7 +598,7 @@ class _VendorHomeState extends State<VendorHome> {
     double screenHeight,
   ) {
     return SizedBox(
-      height: screenHeight / 4.5,
+      height: screenHeight / 4,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: makeupArtists.length > 5 ? 5 : makeupArtists.length,
