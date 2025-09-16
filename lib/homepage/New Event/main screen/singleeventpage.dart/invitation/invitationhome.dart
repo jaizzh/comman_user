@@ -1,7 +1,5 @@
 import 'package:common_user/app_colors.dart';
-import 'package:common_user/homepage/New Event/main screen/singleeventpage.dart/singleeventdashboard.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/Einvitation/e-invitation.dart';
-import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/subdomain/sub_domain.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/videoinvitation/videoinvitation.dart';
 import 'package:common_user/homepage/summa.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +28,7 @@ class _InvitationHomeState extends State<InvitationHome>
       createdDate: DateTime.now().subtract(const Duration(days: 3)),
       status: 'Completed',
       recipients: 150,
+      imagepath: 'assets/images/wedcat4.jpg',
     ),
     CompletedInvitation(
       id: '2',
@@ -38,6 +37,7 @@ class _InvitationHomeState extends State<InvitationHome>
       createdDate: DateTime.now().subtract(const Duration(days: 7)),
       status: 'Sent',
       recipients: 45,
+      imagepath: 'assets/images/wedcat3.jpg',
     ),
     CompletedInvitation(
       id: '3',
@@ -46,6 +46,7 @@ class _InvitationHomeState extends State<InvitationHome>
       createdDate: DateTime.now().subtract(const Duration(days: 1)),
       status: 'In Progress',
       recipients: 80,
+      imagepath: 'assets/images/wedcat5.jpg',
     ),
   ];
 
@@ -75,7 +76,7 @@ class _InvitationHomeState extends State<InvitationHome>
 
     return Scaffold(
       appBar: _buildPremiumAppBar(size),
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: Colors.white,
       body: FadeTransition(
         opacity: _fadeAnimation,
         child: SingleChildScrollView(
@@ -84,16 +85,16 @@ class _InvitationHomeState extends State<InvitationHome>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header Section
-              _buildHeaderSection(screenWidth),
 
               // Statistics Overview
+              _buildCompletedInvitationsSection(screenWidth),
+
               _buildStatisticsSection(screenWidth),
 
               // Create New Invitations Section
               _buildCreateInvitationsSection(screenWidth),
 
               // Completed Invitations Section
-              _buildCompletedInvitationsSection(screenWidth),
 
               const SizedBox(height: 32),
             ],
@@ -109,18 +110,6 @@ class _InvitationHomeState extends State<InvitationHome>
       toolbarHeight: size.height * 0.07,
       backgroundColor: Colors.white,
       elevation: 0,
-      flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.white,
-              AppColors.lightGold.withOpacity(0.05),
-            ],
-          ),
-        ),
-      ),
       leading: IconButton(
         icon: Container(
           padding: const EdgeInsets.all(8),
@@ -130,7 +119,7 @@ class _InvitationHomeState extends State<InvitationHome>
           ),
           child: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: AppColors.primary,
+            color: Colors.black,
             size: 18,
           ),
         ),
@@ -146,112 +135,11 @@ class _InvitationHomeState extends State<InvitationHome>
         style: GoogleFonts.inter(
           fontSize: size.width * 0.045,
           fontWeight: FontWeight.w700,
-          color: AppColors.primary,
+          color: Colors.black,
           letterSpacing: -0.2,
         ),
       ),
       centerTitle: true,
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: AppColors.lightGold.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(
-              Icons.inventory_outlined,
-              color: AppColors.primary,
-              size: 20,
-            ),
-          ),
-        ),
-        const SizedBox(width: 12),
-      ],
-    );
-  }
-
-  Widget _buildHeaderSection(double screenWidth) {
-    return Container(
-      margin: const EdgeInsets.all(18),
-      padding: EdgeInsets.all(screenWidth * 0.045),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColors.primary.withOpacity(0.08),
-            AppColors.lightGold.withOpacity(0.05),
-            Colors.white.withOpacity(0.9),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary.withOpacity(0.06),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [AppColors.primary, AppColors.darkGold],
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.primary.withOpacity(0.3),
-                      blurRadius: 12,
-                      offset: const Offset(0, 6),
-                    ),
-                  ],
-                ),
-                child: Icon(
-                  Icons.mail_outline_rounded,
-                  color: Colors.white,
-                  size: screenWidth * 0.06,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Invitation Management",
-                      style: GoogleFonts.inter(
-                        fontSize: screenWidth * 0.05,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.primary,
-                        letterSpacing: -0.3,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      "Create and manage your event invitations",
-                      style: GoogleFonts.inter(
-                        fontSize: screenWidth * 0.034,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey.shade700,
-                        height: 1.4,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 
@@ -449,23 +337,10 @@ class _InvitationHomeState extends State<InvitationHome>
               Text(
                 "Completed Invitations",
                 style: GoogleFonts.inter(
-                  fontSize: screenWidth * 0.048,
-                  fontWeight: FontWeight.w800,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
                   color: Colors.black87,
                   letterSpacing: -0.2,
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  // Navigate to view all completed invitations
-                },
-                child: Text(
-                  "View All",
-                  style: GoogleFonts.inter(
-                    fontSize: screenWidth * 0.034,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primary,
-                  ),
                 ),
               ),
             ],
@@ -478,14 +353,12 @@ class _InvitationHomeState extends State<InvitationHome>
             padding: const EdgeInsets.symmetric(horizontal: 18),
             itemCount: completedInvitations.length,
             itemBuilder: (context, index) {
+              final valuee = completedInvitations[index];
               return Container(
-                margin: EdgeInsets.only(
-                    right: index < completedInvitations.length - 1 ? 16 : 0),
-                child: _buildCompletedInvitationCard(
-                  completedInvitations[index],
-                  screenWidth,
-                ),
-              );
+                  // margin: EdgeInsets.only(
+                  //     right: index < completedInvitations.length - 1 ? 16 : 0),
+                  child: _buildCompletedInvitationCard(
+                      imagecomplete: valuee.imagepath));
             },
           ),
         ),
@@ -493,189 +366,208 @@ class _InvitationHomeState extends State<InvitationHome>
     );
   }
 
-  Widget _buildCompletedInvitationCard(
-      CompletedInvitation invitation, double screenWidth) {
-    final typeInfo = _getInvitationTypeInfo(invitation.type);
-
-    return Container(
-      width: screenWidth * 0.72,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: typeInfo['color'].withOpacity(0.1),
-          width: 1.5,
+  Widget _buildCompletedInvitationCard({required String imagecomplete}) {
+    return Card(
+      elevation: 2.0,
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.72,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10.0),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: typeInfo['color'].withOpacity(0.08),
-            blurRadius: 16,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header with status
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  typeInfo['color'].withOpacity(0.05),
-                  Colors.white.withOpacity(0.8),
-                ],
-              ),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: typeInfo['color'].withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Icon(
-                    typeInfo['icon'],
-                    color: typeInfo['color'],
-                    size: screenWidth * 0.05,
-                  ),
-                ),
-                _buildStatusBadge(invitation.status, screenWidth),
-              ],
-            ),
-          ),
-
-          // Content
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    invitation.title,
-                    style: GoogleFonts.inter(
-                      fontSize: screenWidth * 0.042,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black87,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  Text(
-                    typeInfo['label'],
-                    style: GoogleFonts.inter(
-                      fontSize: screenWidth * 0.032,
-                      fontWeight: FontWeight.w500,
-                      color: typeInfo['color'],
-                    ),
-                  ),
-
-                  const Spacer(),
-
-                  // Recipients and date info
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.people_outline_rounded,
-                        size: screenWidth * 0.04,
-                        color: Colors.grey.shade600,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        "${invitation.recipients} recipients",
-                        style: GoogleFonts.inter(
-                          fontSize: screenWidth * 0.03,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey.shade600,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 6),
-
-                  Text(
-                    _formatDate(invitation.createdDate),
-                    style: GoogleFonts.inter(
-                      fontSize: screenWidth * 0.028,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey.shade500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // Action buttons
-          Container(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: () {
-                      // View invitation details
-                    },
-                    style: OutlinedButton.styleFrom(
-                      side:
-                          BorderSide(color: typeInfo['color'].withOpacity(0.3)),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    child: Text(
-                      "View",
-                      style: GoogleFonts.inter(
-                        fontSize: screenWidth * 0.032,
-                        fontWeight: FontWeight.w600,
-                        color: typeInfo['color'],
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Share invitation
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: typeInfo['color'],
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    child: Text(
-                      "Share",
-                      style: GoogleFonts.inter(
-                        fontSize: screenWidth * 0.032,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+        child: Column(
+          children: [
+            //  Container(),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.1,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover, image: AssetImage(imagecomplete))),
+            )
+          ],
+        ),
       ),
     );
+    // return Container(
+    //   width: screenWidth * 0.72,
+    //   decoration: BoxDecoration(
+    //     color: Colors.white,
+    //     borderRadius: BorderRadius.circular(20),
+    //     border: Border.all(
+    //       color: typeInfo['color'].withOpacity(0.1),
+    //       width: 1.5,
+    //     ),
+    //     boxShadow: [
+    //       BoxShadow(
+    //         color: typeInfo['color'].withOpacity(0.08),
+    //         blurRadius: 16,
+    //         offset: const Offset(0, 8),
+    //       ),
+    //     ],
+    //   ),
+    //   child: Column(
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: [
+    //       // Header with status
+    //       Container(
+    //         padding: const EdgeInsets.all(16),
+    //         decoration: BoxDecoration(
+    //           gradient: LinearGradient(
+    //             colors: [
+    //               typeInfo['color'].withOpacity(0.05),
+    //               Colors.white.withOpacity(0.8),
+    //             ],
+    //           ),
+    //           borderRadius: const BorderRadius.only(
+    //             topLeft: Radius.circular(20),
+    //             topRight: Radius.circular(20),
+    //           ),
+    //         ),
+    //         child: Row(
+    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //           children: [
+    //             Container(
+    //               padding: const EdgeInsets.all(10),
+    //               decoration: BoxDecoration(
+    //                 color: typeInfo['color'].withOpacity(0.1),
+    //                 borderRadius: BorderRadius.circular(12),
+    //               ),
+    //               child: Icon(
+    //                 typeInfo['icon'],
+    //                 color: typeInfo['color'],
+    //                 size: screenWidth * 0.05,
+    //               ),
+    //             ),
+    //             _buildStatusBadge(invitation.status, screenWidth),
+    //           ],
+    //         ),
+    //       ),
+
+    //       // Content
+    //       Expanded(
+    //         child: Padding(
+    //           padding: const EdgeInsets.all(16),
+    //           child: Column(
+    //             crossAxisAlignment: CrossAxisAlignment.start,
+    //             children: [
+    //               Text(
+    //                 invitation.title,
+    //                 style: GoogleFonts.inter(
+    //                   fontSize: screenWidth * 0.042,
+    //                   fontWeight: FontWeight.w700,
+    //                   color: Colors.black87,
+    //                 ),
+    //                 maxLines: 2,
+    //                 overflow: TextOverflow.ellipsis,
+    //               ),
+
+    //               const SizedBox(height: 8),
+
+    //               Text(
+    //                 typeInfo['label'],
+    //                 style: GoogleFonts.inter(
+    //                   fontSize: screenWidth * 0.032,
+    //                   fontWeight: FontWeight.w500,
+    //                   color: typeInfo['color'],
+    //                 ),
+    //               ),
+
+    //               const Spacer(),
+
+    //               // Recipients and date info
+    //               Row(
+    //                 children: [
+    //                   Icon(
+    //                     Icons.people_outline_rounded,
+    //                     size: screenWidth * 0.04,
+    //                     color: Colors.grey.shade600,
+    //                   ),
+    //                   const SizedBox(width: 4),
+    //                   Text(
+    //                     "${invitation.recipients} recipients",
+    //                     style: GoogleFonts.inter(
+    //                       fontSize: screenWidth * 0.03,
+    //                       fontWeight: FontWeight.w500,
+    //                       color: Colors.grey.shade600,
+    //                     ),
+    //                   ),
+    //                 ],
+    //               ),
+
+    //               const SizedBox(height: 6),
+
+    //               Text(
+    //                 _formatDate(invitation.createdDate),
+    //                 style: GoogleFonts.inter(
+    //                   fontSize: screenWidth * 0.028,
+    //                   fontWeight: FontWeight.w500,
+    //                   color: Colors.grey.shade500,
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+
+    //       // Action buttons
+    //       Container(
+    //         padding: const EdgeInsets.all(16),
+    //         child: Row(
+    //           children: [
+    //             Expanded(
+    //               child: OutlinedButton(
+    //                 onPressed: () {
+    //                   // View invitation details
+    //                 },
+    //                 style: OutlinedButton.styleFrom(
+    //                   side:
+    //                       BorderSide(color: typeInfo['color'].withOpacity(0.3)),
+    //                   shape: RoundedRectangleBorder(
+    //                     borderRadius: BorderRadius.circular(12),
+    //                   ),
+    //                   padding: const EdgeInsets.symmetric(vertical: 12),
+    //                 ),
+    //                 child: Text(
+    //                   "View",
+    //                   style: GoogleFonts.inter(
+    //                     fontSize: screenWidth * 0.032,
+    //                     fontWeight: FontWeight.w600,
+    //                     color: typeInfo['color'],
+    //                   ),
+    //                 ),
+    //               ),
+    //             ),
+    //             const SizedBox(width: 8),
+    //             Expanded(
+    //               child: ElevatedButton(
+    //                 onPressed: () {
+    //                   // Share invitation
+    //                 },
+    //                 style: ElevatedButton.styleFrom(
+    //                   backgroundColor: typeInfo['color'],
+    //                   elevation: 0,
+    //                   shape: RoundedRectangleBorder(
+    //                     borderRadius: BorderRadius.circular(12),
+    //                   ),
+    //                   padding: const EdgeInsets.symmetric(vertical: 12),
+    //                 ),
+    //                 child: Text(
+    //                   "Share",
+    //                   style: GoogleFonts.inter(
+    //                     fontSize: screenWidth * 0.032,
+    //                     fontWeight: FontWeight.w600,
+    //                     color: Colors.white,
+    //                   ),
+    //                 ),
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 
   Widget _buildStatusBadge(String status, double screenWidth) {
@@ -816,8 +708,10 @@ class CompletedInvitation {
   final DateTime createdDate;
   final String status;
   final int recipients;
+  final String imagepath;
 
   CompletedInvitation({
+    required this.imagepath,
     required this.id,
     required this.type,
     required this.title,
