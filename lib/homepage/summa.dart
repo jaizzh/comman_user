@@ -3,6 +3,8 @@ import 'package:common_user/homepage/New%20Event/3rd%20screen/maineventpage.dart
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/planningtoolspage.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/fisrthalfpage.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/invitationhome.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/subdomain/sub_domain.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/videoinvitation/videoinvitation.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/majorcont.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,8 +18,11 @@ class singleventdashboard extends StatefulWidget {
 
 class _singleventdashboardState extends State<singleventdashboard> {
   bool planexpand = false;
+  static const Color buttonColor = Color(0xFF9A2143);
+  static const Color boxLightColor = Colors.white;
+  static const Color primaryWhite = Colors.white;
+  static const Color textDark = Colors.black87;
 
-  // Added scroll controller and title visibility tracking
   final ScrollController _scrollController = ScrollController();
   bool _showTitle = false;
   final double _expandedHeight = 120.0;
@@ -25,7 +30,6 @@ class _singleventdashboardState extends State<singleventdashboard> {
   @override
   void initState() {
     super.initState();
-    // Listen to scroll changes to hide/show title
     _scrollController.addListener(() {
       if (_scrollController.hasClients) {
         bool isCollapsed =
@@ -45,34 +49,45 @@ class _singleventdashboardState extends State<singleventdashboard> {
     super.dispose();
   }
 
+  double _scaleForWidth(BuildContext context) {
+    final w = MediaQuery.of(context).size.width;
+    final scale = (w / 375.0).clamp(0.82, 1.6);
+    return scale;
+  }
+
+  TextStyle _txt(BuildContext context,
+      {double baseSize = 14,
+      FontWeight weight = FontWeight.w600,
+      Color? color,
+      String? fontFamily}) {
+    final s = _scaleForWidth(context);
+    return GoogleFonts.getFont(
+      fontFamily ?? 'Inter',
+      fontSize: baseSize * s,
+      fontWeight: weight,
+      color: color ?? textDark,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
-      body: CustomScrollView(
-        controller: _scrollController, // Added scroll controller
-        slivers: [
-          // Premium App Bar
-          _buildPremiumAppBar(),
+    final s = _scaleForWidth(context);
 
-          // Main Content
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: CustomScrollView(
+        controller: _scrollController,
+        slivers: [
+          _buildPremiumAppBar(context),
           SliverToBoxAdapter(
             child: Column(
               children: [
                 singledashhalf(),
-                SizedBox(
-                  height: 10.0,
-                ),
-                majorcont(),
-
-                _buildQuickActions(),
-                _buildFeatureCategories(),
-
-                // Event Tools Grid
-                _buildEventToolsGrid(),
-                SizedBox(
-                  height: 20.0,
-                )
+                SizedBox(height: 8.0 * s),
+                majorcont(), // kept as-is; assumes itself is responsive or sized adaptively
+                _buildQuickActions(context),
+                _buildFeatureCategories(context),
+                _buildEventToolsGrid(context),
               ],
             ),
           ),
@@ -81,125 +96,174 @@ class _singleventdashboardState extends State<singleventdashboard> {
     );
   }
 
-  Widget _buildPremiumAppBar() {
+  Widget _buildPremiumAppBar(BuildContext context) {
+    final s = _scaleForWidth(context);
     return SliverAppBar(
-      expandedHeight: _expandedHeight,
+      expandedHeight: _expandedHeight * s,
       pinned: true,
       elevation: 0,
       backgroundColor: Colors.transparent,
-      // Show title only when scrolled (collapsed)
       title: _showTitle
           ? Text(
-              'Event Dashboard',
-              style: GoogleFonts.inter(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
+              'Free Plan',
+              style: _txt(context,
+                  baseSize: 15, weight: FontWeight.w600, color: primaryWhite),
             )
           : null,
       flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              AppColors.primary.withOpacity(1.0),
-              AppColors.primary,
-              AppColors.primary,
-            ],
-          ),
+        decoration: const BoxDecoration(
+          color: buttonColor,
         ),
         child: FlexibleSpaceBar(
           collapseMode: CollapseMode.pin,
-          // Show title only when expanded (not scrolled)
           title: !_showTitle
-              ? Text(
-                  'Event Dashboard',
-                  style: GoogleFonts.inter(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 12.0, vertical: 6.0),
+                        decoration: BoxDecoration(
+                          color: primaryWhite.withOpacity(0.18),
+                          borderRadius: BorderRadius.circular(12 * s),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.workspace_premium,
+                              color: primaryWhite,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: 6.0,
+                            ),
+                            Text(
+                              "Upgrade To Premium Plan",
+                              style: TextStyle(
+                                  fontSize: 10.0,
+                                  color: primaryWhite,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Text(
+                    //   'Event Plan ',
+                    //   style: _localTxt(context,
+                    //       baseSize: 13,
+                    //       weight: FontWeight.w600,
+                    //       color: primaryWhite),
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    //   child: Container(
+                    //     padding: EdgeInsets.all(8.0),
+                    //     decoration: BoxDecoration(
+                    //         color: AppColors.primary.withOpacity(0.1),
+                    //         boxShadow: [
+                    //           BoxShadow(
+                    //             spreadRadius: 1,
+                    //             blurRadius: 1,
+                    //             color: Colors.black54,
+                    //           )
+                    //         ]),
+                    //     // child: RichText(
+                    //     //     text: TextSpan(
+                    //     //         text: "Upgrade To Premium Plan",
+                    //     //         style: TextStyle(
+                    //     //             fontSize: 10.0,
+                    //     //             fontWeight: FontWeight.bold,
+                    //     //             color: Colors.white))),
+                    //   ),
+                    // )
+                  ],
                 )
               : null,
           centerTitle: false,
-          titlePadding: const EdgeInsets.only(left: 20, bottom: 16),
+          titlePadding: EdgeInsets.only(left: 20 * s, bottom: 16 * s),
         ),
       ),
       leading: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0 * s),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(12),
+            color: primaryWhite.withOpacity(0.18),
+            borderRadius: BorderRadius.circular(12 * s),
           ),
           child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new,
-                color: Colors.white, size: 20),
+            icon: Icon(Icons.arrow_back_ios_new,
+                color: primaryWhite, size: 20 * s),
             onPressed: () => Navigator.push(
                 context, MaterialPageRoute(builder: (_) => MinimalDemoPage())),
           ),
         ),
       ),
       actions: [
-        _buildAppBarAction(Icons.notifications_on_rounded, () {}),
-        _buildAppBarAction(Icons.more_vert_rounded, () {}),
-        const SizedBox(width: 8),
+        _buildAppBarAction(context, Icons.notifications_on_rounded, () {}),
+        _buildAppBarAction(context, Icons.more_vert_rounded, () {}),
+        SizedBox(width: 8 * s),
       ],
     );
   }
 
-  Widget _buildAppBarAction(IconData icon, VoidCallback onTap) {
+  // small helper that uses _txt but can't reference it inside flexibleSpace directly
+  TextStyle _localTxt(BuildContext context,
+      {double baseSize = 14,
+      FontWeight weight = FontWeight.w600,
+      Color? color}) {
+    return _txt(context, baseSize: baseSize, weight: weight, color: color);
+  }
+
+  Widget _buildAppBarAction(
+      BuildContext context, IconData icon, VoidCallback onTap) {
+    final s = _scaleForWidth(context);
     return Padding(
-      padding: const EdgeInsets.only(right: 8.0),
+      padding: EdgeInsets.only(right: 8.0 * s),
       child: Container(
-        width: 44,
-        height: 44,
+        width: 44 * s,
+        height: 44 * s,
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(12),
+          color: primaryWhite.withOpacity(0.18),
+          borderRadius: BorderRadius.circular(12 * s),
         ),
         child: IconButton(
-          icon: Icon(icon, color: Colors.white, size: 20),
+          icon: Icon(icon, color: primaryWhite, size: 20 * s),
           onPressed: onTap,
         ),
       ),
     );
   }
 
-  Widget _buildQuickActions() {
+  Widget _buildQuickActions(BuildContext context) {
+    final s = _scaleForWidth(context);
     return Container(
-      margin: const EdgeInsets.all(20),
+      margin: EdgeInsets.all(20.0 * s),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Quick Actions',
-            style: GoogleFonts.inter(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: const Color(0xFF1E293B),
-            ),
-          ),
-          const SizedBox(height: 16),
+          Text('Quick Actions',
+              style: _txt(context, baseSize: 16, weight: FontWeight.w800)),
+          SizedBox(height: 12.0 * s),
           Row(
             children: [
               Expanded(
                 child: _buildActionButton(
+                  context,
                   'Planning Tools',
                   Icons.construction_rounded,
-                  const Color(0xFF3B82F6),
                   () => Navigator.push(context,
                       MaterialPageRoute(builder: (_) => planningtools())),
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12 * s),
               Expanded(
                 child: _buildActionButton(
-                  'Invite Guests',
+                  context,
+                  'Make Invitation',
                   Icons.mail_outline_rounded,
-                  const Color(0xFF10B981),
                   () => Navigator.push(context,
                       MaterialPageRoute(builder: (_) => InvitationHome())),
                 ),
@@ -212,194 +276,253 @@ class _singleventdashboardState extends State<singleventdashboard> {
   }
 
   Widget _buildActionButton(
-      String title, IconData icon, Color color, VoidCallback onTap) {
+      BuildContext context, String title, IconData icon, VoidCallback onTap) {
+    final s = _scaleForWidth(context);
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(14 * s),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: color.withOpacity(0.2)),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14 * s),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 1,
+              spreadRadius: 1,
+            ),
+          ],
         ),
         child: Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: EdgeInsets.all(8 * s),
               decoration: BoxDecoration(
-                color: color,
-                borderRadius: BorderRadius.circular(10),
+                color: buttonColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(10 * s),
               ),
-              child: Icon(icon, color: Colors.white, size: 20),
+              child: Icon(icon, color: buttonColor, size: 20 * s),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12 * s),
             Expanded(
-              child: Text(
-                title,
-                style: GoogleFonts.inter(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: color,
-                ),
-              ),
+              child: Text(title,
+                  style: _txt(context,
+                      baseSize: 14,
+                      weight: FontWeight.w600,
+                      color: Colors.black)),
             ),
-            Icon(Icons.arrow_forward_ios_rounded, color: color, size: 16),
+            Icon(Icons.arrow_forward_ios_rounded,
+                color: Colors.black, size: 16 * s),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildFeatureCategories() {
+  Widget _buildFeatureCategories(BuildContext context) {
+    final s = _scaleForWidth(context);
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: EdgeInsets.symmetric(horizontal: 20 * s),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Event Features',
-            style: GoogleFonts.inter(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: const Color(0xFF1E293B),
-            ),
-          ),
-          const SizedBox(height: 8), // Reduced spacing
-          _buildFeatureGrid(),
+          Text('Event Features',
+              style: _txt(context, baseSize: 16, weight: FontWeight.w800)),
+          SizedBox(height: 8 * s),
+          _buildFeatureGrid(context),
         ],
       ),
     );
   }
 
-  Widget _buildFeatureGrid() {
+  Widget _buildFeatureGrid(BuildContext context) {
+    final s = _scaleForWidth(context);
+
     final features = [
-      FeatureItem('Gift Registry', Icons.card_giftcard_rounded, 0.2, '1/5',
-          const Color(0xFFF59E0B)),
-      FeatureItem('Invitations', Icons.mail_rounded, 0.4, '2/4',
-          const Color(0xFF3B82F6)),
-      FeatureItem('Video Invite', Icons.videocam_rounded, 0.1, '1/10',
-          const Color(0xFF10B981)),
-      FeatureItem('Money Gifts', Icons.monetization_on_rounded, 0.54, '4/6',
-          const Color(0xFF8B5CF6)),
-      FeatureItem('Co-Hosts', Icons.group_rounded, 0.65, '2/3',
-          const Color(0xFFEF4444)),
-      FeatureItem('Live Stream', Icons.live_tv_rounded, 0.8, 'Ready',
-          const Color(0xFF06B6D4)),
+      FeatureItem(
+          'Gift Registry', Icons.card_giftcard_rounded, 0.2, '1/5', Colors.red,
+          ontappee: () {}),
+      FeatureItem(
+        'Money Log',
+        Icons.attach_money_rounded,
+        0.4,
+        '2/4',
+        Colors.purpleAccent,
+        ontappee: () {},
+      ),
+      FeatureItem(
+        'Gift Log',
+        Icons.card_membership_rounded,
+        0.1,
+        '1/10',
+        Colors.lightBlueAccent,
+        ontappee: () {},
+      ),
+      FeatureItem(
+        'Money Gifts',
+        Icons.monetization_on_rounded,
+        0.54,
+        '4/6',
+        Colors.green,
+        ontappee: () {},
+      ),
+      FeatureItem(
+          'Video Invitation', Icons.group_rounded, 0.65, '2/3', Colors.teal,
+          ontappee: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => videoinvitation()));
+      }),
+      FeatureItem(
+          'Sub-Domain', Icons.live_tv_rounded, 0.0, 'Ready', Colors.indigo,
+          ontappee: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (_) => SubdomainCreationPage()));
+      }),
     ];
 
+    // responsive columns: <=420 -> 2, <=900 -> 2, >900 -> 3 (you can tune breakpoints)
+    final width = MediaQuery.of(context).size.width;
+    int crossAxisCount = 2;
+    if (width >= 1000) {
+      crossAxisCount = 3;
+    } else if (width >= 700) {
+      crossAxisCount = 2;
+    } else {
+      crossAxisCount = 2;
+    }
+
     return GridView.builder(
-      padding: EdgeInsets.zero, // ✅ This fixes the gap issue
+      padding: EdgeInsets.zero,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 1.5,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-      ),
       itemCount: features.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount,
+          childAspectRatio:
+              (width / crossAxisCount) / (150 * s), // approximate height adapt
+          crossAxisSpacing: 12 * s,
+          mainAxisSpacing: 12 * s,
+          mainAxisExtent: MediaQuery.of(context).size.height * 0.120),
       itemBuilder: (context, index) {
-        final feature = features[index];
-        return _buildFeatureCard(feature);
+        final f = features[index];
+        return _buildFeatureCard(context, f);
       },
     );
   }
 
-  Widget _buildFeatureCard(FeatureItem feature) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 12,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: feature.color.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(feature.icon, color: feature.color, size: 20),
-              ),
-              const Spacer(),
-              Text(
-                feature.status,
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: feature.color,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Text(
-            feature.title,
-            style: GoogleFonts.inter(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: const Color(0xFF1E293B),
+  Widget _buildFeatureCard(BuildContext context, FeatureItem feature) {
+    final s = _scaleForWidth(context);
+    return GestureDetector(
+      onTap: feature.ontappee,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 14.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8 * s),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 1,
+              spreadRadius: 1,
             ),
-          ),
-          const SizedBox(height: 8),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(4),
-            child: LinearProgressIndicator(
-              value: feature.progress,
-              backgroundColor: const Color(0xFFE2E8F0),
-              valueColor: AlwaysStoppedAnimation(feature.color),
-              minHeight: 6,
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 10.0,
             ),
-          ),
-        ],
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(8 * s),
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        spreadRadius: 1,
+                        blurRadius: 1,
+                        color: Colors.black12,
+                      )
+                    ],
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10 * s),
+                    border: Border.all(color: buttonColor.withOpacity(0.06)),
+                  ),
+                  child: Icon(feature.icon,
+                      color: feature.iconcolor, size: 20 * s),
+                ),
+                const Spacer(),
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 8 * s, vertical: 4 * s),
+                  decoration: BoxDecoration(
+                    color: boxLightColor,
+                    borderRadius: BorderRadius.circular(10 * s),
+                  ),
+                  child: Text(
+                    feature.status,
+                    style: GoogleFonts.inter(
+                      fontSize: 11 * s,
+                      fontWeight: FontWeight.w600,
+                      color: textDark,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 4 * s),
+            Text(
+              feature.title,
+              style: GoogleFonts.inter(
+                fontSize: 14 * s,
+                fontWeight: FontWeight.w700,
+                color: textDark,
+              ),
+            ),
+            SizedBox(height: 8 * s),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(4 * s),
+              child: LinearProgressIndicator(
+                value: feature.progress.clamp(0.0, 1.0),
+                backgroundColor: Colors.black12,
+                valueColor: AlwaysStoppedAnimation(buttonColor),
+                minHeight: 6 * s,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildEventToolsGrid() {
+  Widget _buildEventToolsGrid(BuildContext context) {
+    final s = _scaleForWidth(context);
+
     final tools = [
-      ToolItem('Money/Task Report', Icons.live_tv_rounded,
-          const Color(0xFFEF4444), () {}),
-      ToolItem('Chat To The Guest', Icons.photo_library_rounded,
-          const Color(0xFF3B82F6), () {}),
-      ToolItem('Manual Contact Entry', Icons.location_on_rounded,
-          const Color(0xFF10B981), () {}),
+      ToolItem('Money/Task Report', Icons.analytics_rounded, () {}),
+      ToolItem('Chat To The Guest', Icons.chat_rounded, () {}),
+      ToolItem('Manual Contact Entry', Icons.contact_phone_rounded, () {}),
     ];
 
     return Container(
-      margin: const EdgeInsets.all(20.0),
+      margin: EdgeInsets.all(20.0 * s),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Additional Tools',
-            style: GoogleFonts.inter(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: const Color(0xFF1E293B),
-            ),
-          ),
-          const SizedBox(height: 16),
+          Text('Additional Tools',
+              style: _txt(context, baseSize: 16, weight: FontWeight.w800)),
+          //  SizedBox(height: 14 * s),
           Row(
             children: tools
                 .map((tool) => Expanded(
                       child: Padding(
                         padding: EdgeInsets.only(
-                            right: tools.indexOf(tool) < tools.length - 1
-                                ? 12
-                                : 0),
-                        child: _buildToolCard(tool),
+                          right: tools.indexOf(tool) < tools.length - 1
+                              ? 12 * s
+                              : 0,
+                        ),
+                        child: _buildToolCard(context, tool),
                       ),
                     ))
                 .toList(),
@@ -409,34 +532,35 @@ class _singleventdashboardState extends State<singleventdashboard> {
     );
   }
 
-  Widget _buildToolCard(ToolItem tool) {
+  Widget _buildToolCard(BuildContext context, ToolItem tool) {
+    final s = _scaleForWidth(context);
     return GestureDetector(
       onTap: tool.onTap,
       child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: tool.color.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: tool.color.withOpacity(0.2)),
-        ),
+        padding: EdgeInsets.all(14 * s),
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.all(12),
+              padding: EdgeInsets.all(10 * s),
               decoration: BoxDecoration(
-                color: tool.color,
-                borderRadius: BorderRadius.circular(12),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      spreadRadius: 1, blurRadius: 1, color: Colors.black26)
+                ],
+                borderRadius: BorderRadius.circular(12 * s),
               ),
-              child: Icon(tool.icon, color: Colors.white, size: 24),
+              child: Icon(tool.icon, color: buttonColor, size: 22 * s),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 10 * s),
             Text(
               tool.title,
+              maxLines: 2,
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
-                fontSize: 12,
+                fontSize: 12 * s,
                 fontWeight: FontWeight.w600,
-                color: const Color(0xFF1E293B),
+                color: textDark,
               ),
             ),
           ],
@@ -451,16 +575,17 @@ class FeatureItem {
   final IconData icon;
   final double progress;
   final String status;
-  final Color color;
+  final Color iconcolor;
+  final VoidCallback? ontappee;
 
-  FeatureItem(this.title, this.icon, this.progress, this.status, this.color);
+  FeatureItem(this.title, this.icon, this.progress, this.status, this.iconcolor,
+      {required this.ontappee});
 }
 
 class ToolItem {
   final String title;
   final IconData icon;
-  final Color color;
   final VoidCallback onTap;
 
-  ToolItem(this.title, this.icon, this.color, this.onTap);
+  ToolItem(this.title, this.icon, this.onTap);
 }

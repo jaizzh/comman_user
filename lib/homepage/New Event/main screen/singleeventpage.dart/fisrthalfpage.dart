@@ -1,4 +1,4 @@
-import 'package:common_user/common/colors.dart';
+import 'package:common_user/app_colors.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,280 +11,35 @@ class singledashhalf extends StatefulWidget {
 }
 
 class _singledashhalfState extends State<singledashhalf> {
+  static const Color buttonColor = Color(0xFF9A2143); // Burgundy
+  static const Color boxLightColor = Color(0xFFEDD498); // Light Yellow
+  static const Color boxBoxLight = Color(0xFFF3ECE3); // Very Light Beige
+  static const Color primaryWhite = Colors.white; // Major White
+  static const Color textDark = Colors.black;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          firstcont(),
-        ],
+    return SingleChildScrollView(
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            firstcont(),
+            _buildPremiumVenueVendorSection(),
+          ],
+        ),
       ),
     );
   }
 
   Widget firstcont() {
-    return Stack(
-      children: [
-        Container(
-          child: Column(
-            children: [
-              Container(
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: AppColors.boxboxlight,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.elliptical(200, 100),
-                          bottomRight: Radius.elliptical(200, 100))),
-                  child: Column(
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "jegaz Birthday Party",
-                                      style: GoogleFonts.yaldevi(
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.buttoncolor),
-                                    ),
-                                    SizedBox(
-                                      height: 4.0,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text("Night Party",
-                                            style: TextStyle(
-                                                fontSize: 15.0,
-                                                color: Colors.black54,
-                                                fontWeight: FontWeight.bold)),
-                                        SizedBox(
-                                          width: 6.0,
-                                        ),
-                                        Container(
-                                            height: 10.0,
-                                            width: 2.0,
-                                            color: Colors.black54),
-                                        SizedBox(
-                                          width: 6.0,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.location_on,
-                                              color: Colors.black54,
-                                              size: 16.0,
-                                            ),
-                                            Text(
-                                              "Madhurai",
-                                              style: TextStyle(
-                                                  fontSize: 15.0,
-                                                  color: Colors.black54,
-                                                  fontWeight: FontWeight.bold),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 0.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                PremiumCountdownContainer(
-                                  initialDuration:
-                                      Duration(days: 12, hours: 5, minutes: 32),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Events Completed",
-                                    style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                  Text(
-                                    "3/14",
-                                    style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 4.0,
-                              ),
-                              ClipRRect(
-                                  borderRadius:
-                                      BorderRadiusGeometry.circular(8.0),
-                                  child: LinearProgressIndicator(
-                                    backgroundColor: Colors.white,
-                                    value: 0.3,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.green),
-                                    minHeight: 12.0,
-                                    stopIndicatorRadius: 20.0,
-                                    stopIndicatorColor: Colors.black,
-                                  ))
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6.0),
-                              color: Colors.white,
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.workspace_premium_rounded,
-                                  color: AppColors.buttoncolor,
-                                  size: 20.0,
-                                ),
-                                SizedBox(
-                                  width: 8.0,
-                                ),
-                                Text(
-                                  "Upgrade To Premium Plan",
-                                  style: GoogleFonts.sahitya(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  )),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.15,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Positioned(
-          bottom: -MediaQuery.of(context).size.height * 0.01 +
-              MediaQuery.of(context).size.height * 0.03,
-          right: 0,
-          left: 0,
-          top: MediaQuery.of(context).size.height * 0.225,
-          child: _buildPremiumVenueVendorSection(),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPremiumVenueVendorSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: _buildUltraPremiumVenueCard(
-                  title: "Venues",
-                  subtitle: "Perfect locations for your event",
-                  count: "0/1",
-                  total: "100+ Premium Venues Available",
-                  imagePath: "assets/images/vendoror.png",
-                  color: const Color(0xFF3B82F6),
-                  icon: Icons.location_city_rounded,
-                  progress: 0.0,
-                ),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: _buildUltraPremiumVenueCard(
-                  title: "Vendors",
-                  subtitle: "Trusted service partners",
-                  count: "0/3",
-                  total: "500+ Verified Vendors Available",
-                  imagePath: "assets/images/venueor.png",
-                  color: const Color(0xFF10B981),
-                  icon: Icons.store_rounded,
-                  progress: 0.0,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildUltraPremiumVenueCard({
-    required String title,
-    required String subtitle,
-    required String count,
-    required String total,
-    required String imagePath,
-    required Color color,
-    required IconData icon,
-    required double progress,
-  }) {
     return Container(
+      width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(32),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.10),
-            blurRadius: 32,
-            offset: const Offset(0, 16),
-            spreadRadius: -4,
-          ),
-          BoxShadow(
-            color: color.withOpacity(0.15),
+            color: buttonColor.withOpacity(0.15),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -292,231 +47,480 @@ class _singledashhalfState extends State<singledashhalf> {
       ),
       child: Column(
         children: [
-          // Premium Header Section
-          Stack(children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    color.withOpacity(0.08),
-                    color.withOpacity(0.05),
-                  ],
-                ),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(32),
-                  topRight: Radius.circular(32),
-                ),
-              ),
-              child: Column(
-                children: [
-                  // Title Row
-                  SizedBox(
-                    height: 6.0,
-                  ),
-                  const SizedBox(height: 10),
-                  Column(
+          const SizedBox(height: 20.0),
+          // Event Header Section
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Left side - Event details
+                Expanded(
+                  // flex: 2,
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title,
-                        style: GoogleFonts.inter(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.black,
+                        "Jegaz Birthday Party",
+                        style: GoogleFonts.yaldevi(
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.bold,
+                          color: buttonColor,
                         ),
+                      ),
+                      const SizedBox(height: 6.0),
+                      Wrap(
+                        spacing: 8.0,
+                        runSpacing: 4.0,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: primaryWhite,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: buttonColor.withOpacity(0.3),
+                                width: 1,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: buttonColor.withOpacity(0.1),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: const Text(
+                              "Night Party",
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                color: buttonColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.location_on,
+                                  color: Colors.black,
+                                  size: 14.0,
+                                ),
+                                SizedBox(width: 2),
+                                Text(
+                                  "Madurai",
+                                  style: TextStyle(
+                                    fontSize: 12.0,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
+                ),
 
-                  const SizedBox(height: 4),
+                // Right side - Countdown
+                Expanded(
+                  //  flex: 1,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: const PremiumCountdownContainer(
+                      initialDuration: Duration(
+                          days: 12, hours: 5, minutes: 32, seconds: 43),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
 
-                  // Premium Image Display
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Stack(
+          const SizedBox(height: 20.0),
+
+          // Progress Section
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 16,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Row(
                           children: [
                             Container(
-                              height: 90,
-                              width: 90,
+                              padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: color.withOpacity(0.3),
-                                  width: 3,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: color.withOpacity(0.25),
-                                    blurRadius: 16,
-                                    offset: const Offset(0, 8),
-                                  ),
-                                ],
+                                color: buttonColor,
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Center(
-                                child: Image.asset(
-                                  imagePath,
-                                  height: 60,
-                                  width: 60,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Container(
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                        color: color.withOpacity(0.1),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Icon(icon, color: color, size: 36),
-                                    );
-                                  },
+                              child: const Icon(
+                                Icons.trending_up_rounded,
+                                color: primaryWhite,
+                                size: 16,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            const Expanded(
+                              child: Text(
+                                "Events Completed",
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: textDark,
                                 ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: boxLightColor.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: buttonColor.withOpacity(0.2),
+                            width: 1,
+                          ),
+                        ),
+                        child: const Text(
+                          "3/14",
+                          style: TextStyle(
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.bold,
+                            color: buttonColor,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    height: 20.0,
+                  const SizedBox(height: 12.0),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: const LinearProgressIndicator(
+                      backgroundColor: boxBoxLight,
+                      value: 0.21, // 3/14 ≈ 21%
+                      valueColor: AlwaysStoppedAnimation<Color>(buttonColor),
+                      minHeight: 10.0,
+                    ),
                   ),
                 ],
               ),
             ),
-            Positioned(
-              bottom: 8.0,
-              right: 10.0,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      color.withOpacity(0.15),
-                      color.withOpacity(0.08),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: color.withOpacity(0.3),
-                    width: 1,
+          ),
+
+          const SizedBox(height: 20.0),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPremiumVenueVendorSection() {
+    return Container(
+      color: primaryWhite,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Venue & Vendors',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[800],
+                letterSpacing: 0.5,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: venuevendor(
+                    imagePath: "assets/images/vendoror.png",
+                    total: '0/1',
+                    title: 'Vendors',
+                    isVendor: true,
                   ),
                 ),
-                child: Text(
-                  count,
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w800,
-                    color: color,
+                const SizedBox(width: 16),
+                Expanded(
+                  child: venuevendor(
+                    imagePath: "assets/images/venueor.png",
+                    total: '1/3',
+                    title: 'Venues',
+                    isVendor: false,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget venuevendor({
+    required String imagePath,
+    required String total,
+    required String title,
+    required bool isVendor,
+  }) {
+    // Extract current and total numbers
+    final parts = total.split('/');
+    final current = int.parse(parts[0]);
+    final totalCount = int.parse(parts[1]);
+    final progress = totalCount > 0 ? current / totalCount : 0.0;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+        border: Border.all(
+          color: Colors.grey.withOpacity(0.1),
+          width: 1,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header with title and count
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey[800],
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color:
+                        _getStatusColor(current, totalCount).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color:
+                          _getStatusColor(current, totalCount).withOpacity(0.3),
+                      width: 1,
+                    ),
+                  ),
+                  child: Text(
+                    total,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: _getStatusColor(current, totalCount),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 12),
+
+            // Image and progress section
+            Row(
+              children: [
+                // Image container
+                Container(
+                  height: 60,
+                  width: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.grey[100],
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.asset(
+                      imagePath,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: buttonColor.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Icon(
+                            isVendor ? Icons.store : Icons.location_on,
+                            color: buttonColor,
+                            size: 30,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+
+                const SizedBox(width: 12),
+
+                // Progress and status
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _getStatusText(current, totalCount),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+
+                      // Progress bar
+                      Container(
+                        height: 6,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                        child: FractionallySizedBox(
+                          alignment: Alignment.centerLeft,
+                          widthFactor: progress.clamp(0.0, 1.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: _getStatusColor(current, totalCount),
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 4),
+
+                      Text(
+                        '${(progress * 100).toInt()}% Complete',
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.grey[500],
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 12),
+
+            // Action button
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Handle navigation to vendor/venue selection
+                  print(
+                      'Navigate to ${isVendor ? 'vendor' : 'venue'} selection');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: current == totalCount
+                      ? Colors.green[50]
+                      : buttonColor.withOpacity(0.1),
+                  foregroundColor:
+                      current == totalCount ? Colors.green[700] : buttonColor,
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(
+                      color: current == totalCount
+                          ? Colors.green.withOpacity(0.3)
+                          : buttonColor.withOpacity(0.3),
+                      width: 1,
+                    ),
+                  ),
+                ),
+                child: FittedBox(
+                  child: Text(
+                    current == totalCount
+                        ? '✓ ${isVendor ? 'Vendors' : 'Venues'} Selected'
+                        : '+ Add ${isVendor ? 'Vendors' : 'Venues'}',
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
             ),
-          ]),
-
-          // Premium Stats Section
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Column(
-              children: [
-                Container(
-                  height: 10,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF1F5F9),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Stack(
-                    children: [
-                      Container(
-                        width:
-                            MediaQuery.of(context).size.width * progress * 0.35,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [color, color.withOpacity(0.8)],
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: [
-                            BoxShadow(
-                              color: color.withOpacity(0.4),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 6),
-
-                Text(
-                  total,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black45,
-                  ),
-                ),
-
-                const SizedBox(height: 10),
-
-                // Premium Action Button
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          color.withOpacity(0.15),
-                          color.withOpacity(0.08),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: color.withOpacity(0.3),
-                        width: 1.5,
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Browse $title",
-                          style: GoogleFonts.mukta(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: color,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Icon(
-                          Icons.arrow_forward_rounded,
-                          size: 18,
-                          color: color,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 12.0,
-                )
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  // Helper methods
+  Color _getStatusColor(int current, int total) {
+    if (current == 0) {
+      return Colors.red[400]!;
+    } else if (current == total) {
+      return Colors.green[500]!;
+    } else {
+      return Colors.orange[500]!;
+    }
+  }
+
+  String _getStatusText(int current, int total) {
+    if (current == 0) {
+      return 'Not started';
+    } else if (current == total) {
+      return 'Completed';
+    } else {
+      return 'In progress';
+    }
   }
 }

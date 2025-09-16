@@ -37,10 +37,7 @@ class _planningtoolsState extends State<planningtools> {
           child: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new_rounded,
                 color: Colors.black),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => singleventdashboard()),
-            ),
+            onPressed: () => Navigator.maybePop(context),
           ),
         ),
         centerTitle: true,
