@@ -55,14 +55,6 @@ class _EinvitationState extends State<Einvitation> {
     _applyFilters();
   }
 
-  Future<void> _openFilterSheet() async {
-    final result = await filtersheet(context, _selectedCats);
-    if (result != null && result is Set<String>) {
-      _selectedCats = result;
-      _applyFilters();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final topSafe = MediaQuery.of(context).padding.top;
@@ -124,7 +116,6 @@ class _EinvitationState extends State<Einvitation> {
                 _IconPillButton(
                   icon: Icons.filter_alt_rounded,
                   label: 'Filter',
-                  onTap: _openFilterSheet,
                 ),
               ],
             ),
@@ -245,17 +236,17 @@ class _PremiumSearchField extends StatelessWidget {
 }
 
 class _IconPillButton extends StatelessWidget {
-  const _IconPillButton(
-      {required this.icon, required this.label, required this.onTap});
+  const _IconPillButton({
+    required this.icon,
+    required this.label,
+  });
   final IconData icon;
   final String label;
-  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
-      onTap: onTap,
       child: Ink(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         decoration: BoxDecoration(

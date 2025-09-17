@@ -1,4 +1,3 @@
-import 'package:common_user/app_colors.dart';
 import 'package:common_user/homepage/New%20Event/3rd%20screen/maineventpage.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/planningtoolspage.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/fisrthalfpage.dart';
@@ -207,14 +206,6 @@ class _singleventdashboardState extends State<singleventdashboard> {
         SizedBox(width: 8 * s),
       ],
     );
-  }
-
-  // small helper that uses _txt but can't reference it inside flexibleSpace directly
-  TextStyle _localTxt(BuildContext context,
-      {double baseSize = 14,
-      FontWeight weight = FontWeight.w600,
-      Color? color}) {
-    return _txt(context, baseSize: baseSize, weight: weight, color: color);
   }
 
   Widget _buildAppBarAction(

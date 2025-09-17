@@ -28,21 +28,6 @@ class _majorcontState extends State<majorcont> {
   List<Contact> _selectedContacts = [];
 
   // Helper text style factory
-  TextStyle _txt(
-    BuildContext context, {
-    double size = 14,
-    FontWeight weight = FontWeight.w600,
-    Color? color,
-    String? fontFamily,
-  }) {
-    final s = _scaleForWidth(context);
-    return GoogleFonts.getFont(
-      fontFamily ?? 'Inter',
-      fontSize: size * s,
-      fontWeight: weight,
-      color: color ?? textDark,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -809,43 +794,5 @@ class _majorcontState extends State<majorcont> {
         print('Selected: ${c.displayName}');
       }
     }
-  }
-
-  Widget _shareTile({
-    required String title,
-    required IconData icon,
-    required Color color,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            color: Colors.white,
-            boxShadow: const [
-              BoxShadow(spreadRadius: 1, blurRadius: 1, color: Colors.black26)
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 16.0, color: color),
-              const SizedBox(width: 6.0),
-              Text(
-                title,
-                style: const TextStyle(
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
