@@ -157,14 +157,14 @@ class _PremiumVideoCardState extends State<_PremiumVideoCard>
           },
           child: InkWell(
             onTap: widget.onTap,
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(10),
             child: Ink(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(10),
                 child: Column(
                   children: [
                     // Thumbnail with overlay
@@ -210,7 +210,7 @@ class _PremiumVideoCardState extends State<_PremiumVideoCard>
                     // Title + meta
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
+                        padding: const EdgeInsets.fromLTRB(12, 10, 12, 8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

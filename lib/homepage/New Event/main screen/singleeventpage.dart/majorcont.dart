@@ -223,7 +223,7 @@ class _majorcontState extends State<majorcont> {
   Widget _buildStatusIndicator(
       BuildContext context, String text, IconData icon, double s) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.0 * s, vertical: 6.0 * s),
+      padding: EdgeInsets.symmetric(horizontal: 8.0 * s, vertical: 6.0 * s),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(

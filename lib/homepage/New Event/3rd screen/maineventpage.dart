@@ -261,12 +261,12 @@ class _MinimalDemoPageState extends State<MinimalDemoPage>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, color: Color(0xFF9A2143), size: 20),
+              Icon(icon, color: Color(0xFF9A2143), size: 18),
               const SizedBox(width: 4),
               Text(
                 label,
                 style: GoogleFonts.inter(
-                  fontSize: 15,
+                  fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF9A2143),
                 ),

@@ -196,8 +196,7 @@ class _singleventdashboardState extends State<singleventdashboard> {
           child: IconButton(
             icon: Icon(Icons.arrow_back_ios_new,
                 color: primaryWhite, size: 20 * s),
-            onPressed: () => Navigator.push(
-                context, MaterialPageRoute(builder: (_) => MinimalDemoPage())),
+            onPressed: () => Navigator.maybePop(context),
           ),
         ),
       ),

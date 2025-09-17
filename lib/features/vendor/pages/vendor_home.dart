@@ -734,7 +734,7 @@ class _VendorHomeState extends State<VendorHome> {
     double screenHeight,
   ) {
     return SizedBox(
-      height: screenHeight / 4.5,
+      height: screenHeight / 4,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: musicDanceList.length > 5 ? 5 : musicDanceList.length,

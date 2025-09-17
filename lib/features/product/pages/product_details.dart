@@ -4,6 +4,7 @@ import 'package:common_user/app_colors.dart';
 import 'package:common_user/features/product/model/cart_model.dart';
 import 'package:common_user/features/product/model/product_model.dart';
 import 'package:common_user/features/product/widgets/cart_provider.dart';
+import 'package:common_user/features/product/widgets/giftRegidtry_alertBox.dart';
 import 'package:common_user/features/vendor/widgets/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,6 +48,17 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
               quantity: cartValue,
             );
+            // Show a SnackBar when the item is added
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  '${widget.product.name} added to cart',
+                  style: GoogleFonts.poppins(color: AppColors.black),
+                ),
+                backgroundColor: AppColors.paper,
+                duration: const Duration(seconds: 2),
+              ),
+            );
           })
         ],
       ),
@@ -88,7 +100,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      fav = true;
+                      fav = !fav; // Toggle the favorite state
                     });
                   },
                   child: CircleAvatar(
@@ -158,7 +170,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     fontWeight: FontWeight.w600),
               ),
               Text(
-                "  (420 Reviews)",
+                "   (420 Reviews)",
                 style: GoogleFonts.poppins(
                   color: Colors.black.withOpacity(0.6),
                   fontSize: 12,
@@ -433,6 +445,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                       color: AppColors.black),
                 ),
               ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              showGiftRegistryDialog(
+                  widget.product.name, context, widget.product);
+            },
+            child: const Card(
+              color: AppColors.paper,
+              child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Icon(Icons.card_giftcard)),
             ),
           )
         ],

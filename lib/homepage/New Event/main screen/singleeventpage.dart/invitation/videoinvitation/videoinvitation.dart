@@ -629,7 +629,7 @@ class _PremiumBottomSheet extends StatelessWidget {
 
   Widget _buildSheetHeader() {
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Column(
         children: [
           Text(
@@ -640,7 +640,7 @@ class _PremiumBottomSheet extends StatelessWidget {
               color: const Color(0xFF0F172A),
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           Text(
             "Choose your perfect wedding style",
             style: GoogleFonts.inter(
@@ -648,6 +648,9 @@ class _PremiumBottomSheet extends StatelessWidget {
               color: const Color(0xFF64748B),
             ),
           ),
+          SizedBox(
+            height: 10.0,
+          )
         ],
       ),
     );
@@ -698,7 +701,7 @@ class _PremiumBottomSheet extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.buttoncolor,
             foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(vertical: 16),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
