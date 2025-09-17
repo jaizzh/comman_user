@@ -1,10 +1,11 @@
 import 'package:common_user/app_colors.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/Einvitation/e-invitation.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/videoinvitation/videoinvitation.dart';
-import 'package:common_user/homepage/summa.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
+
+import 'package:widget_zoom/widget_zoom.dart';
 
 class InvitationHome extends StatefulWidget {
   const InvitationHome({super.key});
@@ -16,8 +17,8 @@ class InvitationHome extends StatefulWidget {
 class _InvitationHomeState extends State<InvitationHome>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
   late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
 
   // Sample completed invitations data
   final List<CompletedInvitation> completedInvitations = [
@@ -55,11 +56,13 @@ class _InvitationHomeState extends State<InvitationHome>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 1200),
     );
-    _scaleAnimation =
-        CurvedAnimation(parent: _controller, curve: Curves.easeOutBack);
     _fadeAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.3),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
     _controller.forward();
   }
 
@@ -75,108 +78,39 @@ class _InvitationHomeState extends State<InvitationHome>
     final screenWidth = size.width;
 
     return Scaffold(
-      appBar: _buildPremiumAppBar(size),
       backgroundColor: Colors.white,
-      body: FadeTransition(
-        opacity: _fadeAnimation,
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header Section
+      body: CustomScrollView(
+        //  physics: const BouncingScrollPhysics(),
+        slivers: [
+          _buildPremiumSliverAppBar(size),
+          SliverToBoxAdapter(
+            child: FadeTransition(
+              opacity: _fadeAnimation,
+              child: SlideTransition(
+                position: _slideAnimation,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Statistics Overview
+                    _buildPremiumStatisticsSection(screenWidth),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    // Completed Invitations Section
 
-              // Statistics Overview
-              _buildCompletedInvitationsSection(screenWidth),
+                    // Create New Invitations Section
+                    _buildCreateInvitationsSection(screenWidth),
+                    SizedBox(
+                      height: 20.0,
+                    ),
 
-              _buildStatisticsSection(screenWidth),
+                    if (completedInvitations.isNotEmpty)
+                      _buildCompletedInvitationsSection(screenWidth),
 
-              // Create New Invitations Section
-              _buildCreateInvitationsSection(screenWidth),
-
-              // Completed Invitations Section
-
-              const SizedBox(height: 32),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  PreferredSizeWidget _buildPremiumAppBar(Size size) {
-    return AppBar(
-      surfaceTintColor: Colors.white,
-      toolbarHeight: size.height * 0.07,
-      backgroundColor: Colors.white,
-      elevation: 0,
-      leading: IconButton(
-        icon: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: AppColors.primary.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: Colors.black,
-            size: 18,
-          ),
-        ),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const singleventdashboard()),
-          );
-        },
-      ),
-      title: Text(
-        "Invitations",
-        style: GoogleFonts.inter(
-          fontSize: size.width * 0.045,
-          fontWeight: FontWeight.w700,
-          color: Colors.black,
-          letterSpacing: -0.2,
-        ),
-      ),
-      centerTitle: true,
-    );
-  }
-
-  Widget _buildStatisticsSection(double screenWidth) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 18),
-      child: Row(
-        children: [
-          Expanded(
-            child: _buildStatCard(
-              title: "Total Invitations",
-              value: "${completedInvitations.length}",
-              icon: Icons.mail_rounded,
-              color: AppColors.primary,
-              screenWidth: screenWidth,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: _buildStatCard(
-              title: "Total Recipients",
-              value:
-                  "${completedInvitations.fold(0, (sum, inv) => sum + inv.recipients)}",
-              icon: Icons.people_rounded,
-              color: AppColors.darkGold,
-              screenWidth: screenWidth,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: _buildStatCard(
-              title: "Sent",
-              value:
-                  "${completedInvitations.where((inv) => inv.status == 'Sent' || inv.status == 'Completed').length}",
-              icon: Icons.send_rounded,
-              color: Colors.green.shade600,
-              screenWidth: screenWidth,
+                    const SizedBox(height: 10),
+                  ],
+                ),
+              ),
             ),
           ),
         ],
@@ -184,66 +118,438 @@ class _InvitationHomeState extends State<InvitationHome>
     );
   }
 
-  Widget _buildStatCard({
+  Widget _buildPremiumSliverAppBar(Size size) {
+    return SliverAppBar(
+      expandedHeight: 50,
+      pinned: true,
+      elevation: 0,
+      backgroundColor: const Color(0xFFFAFBFC),
+      surfaceTintColor: Colors.transparent,
+      flexibleSpace: FlexibleSpaceBar(
+        background: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+          ),
+        ),
+      ),
+      leading: Container(
+        margin: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: AppColors.primary,
+            size: 20,
+          ),
+          onPressed: () {
+            Navigator.maybePop(context);
+          },
+        ),
+      ),
+      // title: Text(
+      //   "Invitations",
+      //   style: GoogleFonts.inter(
+      //     fontSize: 24,
+      //     fontWeight: FontWeight.w800,
+      //     color: Colors.black87,
+      //     letterSpacing: -0.5,
+      //   ),
+      // ),
+      // centerTitle: true,
+    );
+  }
+
+  Widget _buildPremiumStatisticsSection(double screenWidth) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Container(
+        // margin: const EdgeInsets.fromLTRB(16, 0, 20, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Stats Cards Row
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Your Invitations",
+                  style: GoogleFonts.sahitya(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                )
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildCompactPremiumStatCard(
+                    title: "Total Invitations",
+                    value: "${completedInvitations.length}",
+                    icon: Icons.mail_rounded,
+                    screenWidth: screenWidth,
+                  ),
+                ),
+                const SizedBox(width: 7),
+                Container(
+                  height: 40.0,
+                  width: 1.0,
+                  color: Colors.black26,
+                ),
+                const SizedBox(width: 7),
+                Expanded(
+                  child: _buildCompactPremiumStatCard(
+                    title: "Pending Tasks",
+                    value: "1",
+                    icon: Icons.schedule_rounded,
+                    screenWidth: screenWidth,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCompactPremiumStatCard({
     required String title,
     required String value,
     required IconData icon,
-    required Color color,
+    // required Color primaryColor,
     required double screenWidth,
   }) {
     return Container(
-      padding: EdgeInsets.all(screenWidth * 0.035),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: color.withOpacity(0.1),
-          width: 1,
+      height: MediaQuery.of(context).size.height * 0.1,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Icon and Value Row
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Icon Container
+                Container(
+                  padding: EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(
+                    icon,
+                    color: AppColors.primary,
+                    size: 18,
+                  ),
+                ),
+                SizedBox(
+                  width: 12.0,
+                ),
+                // Value
+                Text(
+                  value,
+                  style: GoogleFonts.inter(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primary,
+                    height: 1,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 10),
+
+            // Title
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.inter(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black54,
+                    height: 1.1,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
-        boxShadow: [
-          BoxShadow(
-            color: color.withOpacity(0.08),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    );
+  }
+
+  Widget _buildCompletedInvitationsSection(double screenWidth) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(icon, color: color, size: screenWidth * 0.04),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Your Invitations",
+                    style: GoogleFonts.inter(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.black87,
+                      letterSpacing: -0.3,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          Text(
-            value,
-            style: GoogleFonts.inter(
-              fontSize: screenWidth * 0.05,
-              fontWeight: FontWeight.w800,
-              color: color,
-            ),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.325,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            itemCount: completedInvitations.length,
+            itemBuilder: (context, index) {
+              final invitation = completedInvitations[index];
+              return Container(
+                margin: EdgeInsets.only(
+                  right: index < completedInvitations.length - 1 ? 6 : 0,
+                ),
+                child: _buildPremiumCompletedCard(invitation, index),
+              );
+            },
           ),
-          const SizedBox(height: 4),
-          Text(
-            title,
-            style: GoogleFonts.inter(
-              fontSize: screenWidth * 0.03,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey.shade600,
+        ),
+        const SizedBox(height: 32),
+      ],
+    );
+  }
+
+  Widget _buildPremiumCompletedCard(CompletedInvitation invitation, int index) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 1,
+              spreadRadius: 1,
             ),
-          ),
-        ],
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image Section
+            Container(
+              height: MediaQuery.of(context).size.height * 0.130,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage(invitation.imagepath),
+                ),
+              ),
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.black.withOpacity(0.1),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 16,
+                    right: 16,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: _getStatusColor(invitation.status),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            _getStatusIcon(invitation.status),
+                            color: Colors.white,
+                            size: 12,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            invitation.status,
+                            style: GoogleFonts.inter(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Content Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Text(
+                    invitation.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.inter(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black87,
+                      height: 1.3,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: AppColors.primary.withOpacity(0.2),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          _getTypeIcon(invitation.type),
+                          size: 12,
+                          color: AppColors.primary,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          _getTypeText(invitation.type),
+                          style: GoogleFonts.inter(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () {
+                            showZoomDialog();
+                          },
+                          icon: const Icon(Icons.visibility_rounded, size: 16),
+                          label: const Text(
+                            "View",
+                            style: TextStyle(
+                                fontSize: 13.0,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.primary),
+                          ),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: AppColors.primary,
+                            side: BorderSide(
+                                color: AppColors.primary, width: 1.75),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: () {},
+                          icon: const Icon(Icons.share_rounded, size: 16),
+                          label: const Text("Share"),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: Colors.white,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  void showZoomDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: WidgetZoom(
+            heroAnimationTag: 'dialog_image_tag',
+            zoomWidget: Image.asset(
+              'assets/images/wedcat4.jpg',
+              fit: BoxFit.cover,
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -252,67 +558,62 @@ class _InvitationHomeState extends State<InvitationHome>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(18, 24, 18, 16),
-          child: Text(
-            "Create New Invitation",
-            style: GoogleFonts.inter(
-              fontSize: screenWidth * 0.048,
-              fontWeight: FontWeight.w800,
-              color: Colors.black87,
-              letterSpacing: -0.2,
-            ),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            //  crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Create New",
+                style: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.black87,
+                  letterSpacing: -0.3,
+                ),
+              ),
+            ],
           ),
         ),
+        const SizedBox(height: 6),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              PremiumInvitationCard(
-                heading: 'Physical Invitation',
-                subheading:
-                    'Make your physical invitation with vendors or upload the physical invitation',
-                imageAsset: 'assets/images/invit3.jpg',
+              _buildPremiumNewInvitationCard(
+                title: 'Physical Invitation',
+                subtitle: 'Premium printed cards with elegant designs',
+                icon: Icons.card_giftcard_rounded,
+                gradient: [
+                  AppColors.primary,
+                  AppColors.primary.withOpacity(0.8)
+                ],
                 onTap: () {},
-                fade: _fadeAnimation,
-                scale: _scaleAnimation,
-                goldDark: AppColors.darkGold,
-                goldLight: AppColors.lightGold,
-                primary: AppColors.primary,
               ),
               const SizedBox(height: 16),
-              PremiumInvitationCard(
-                heading: 'E-invitation',
-                subheading:
-                    'Make your E-invitation and share through your mobile apps',
-                imageAsset: 'assets/images/invit2.jpg',
+              _buildPremiumNewInvitationCard(
+                title: 'E-invitation',
+                subtitle: 'Digital invites to share instantly',
+                icon: Icons.email_rounded,
+                gradient: [Colors.blue.shade600, Colors.blue.shade400],
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => Einvitation()),
+                    MaterialPageRoute(builder: (_) => const Einvitation()),
                   );
                 },
-                fade: _fadeAnimation,
-                scale: _scaleAnimation,
-                goldDark: AppColors.darkGold,
-                goldLight: AppColors.lightGold,
-                primary: AppColors.primary,
               ),
               const SizedBox(height: 16),
-              PremiumInvitationCard(
-                heading: 'Video Invitation',
-                subheading: 'Create your video invitation with event details',
-                imageAsset: 'assets/images/invit4.jpg',
+              _buildPremiumNewInvitationCard(
+                title: 'Video Invitation',
+                subtitle: 'Personalized video messages',
+                icon: Icons.videocam_rounded,
+                gradient: [Colors.purple.shade600, Colors.purple.shade400],
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const videoinvitation()),
                   );
                 },
-                fade: _fadeAnimation,
-                scale: _scaleAnimation,
-                goldDark: AppColors.darkGold,
-                goldLight: AppColors.lightGold,
-                primary: AppColors.primary,
               ),
             ],
           ),
@@ -321,384 +622,136 @@ class _InvitationHomeState extends State<InvitationHome>
     );
   }
 
-  Widget _buildCompletedInvitationsSection(double screenWidth) {
-    if (completedInvitations.isEmpty) {
-      return _buildEmptyState(screenWidth);
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(18, 32, 18, 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Completed Invitations",
-                style: GoogleFonts.inter(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                  letterSpacing: -0.2,
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: screenWidth * 0.55,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            itemCount: completedInvitations.length,
-            itemBuilder: (context, index) {
-              final valuee = completedInvitations[index];
-              return Container(
-                  // margin: EdgeInsets.only(
-                  //     right: index < completedInvitations.length - 1 ? 16 : 0),
-                  child: _buildCompletedInvitationCard(
-                      imagecomplete: valuee.imagepath));
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCompletedInvitationCard({required String imagecomplete}) {
-    return Card(
-      elevation: 2.0,
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.72,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Column(
-          children: [
-            //  Container(),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover, image: AssetImage(imagecomplete))),
-            )
+  Widget _buildPremiumNewInvitationCard({
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required List<Color> gradient,
+    required VoidCallback onTap,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            gradient.first.withOpacity(0.1),
+            gradient.last.withOpacity(0.05),
           ],
         ),
+        border: Border.all(
+          color: gradient.first.withOpacity(0.2),
+          width: 1,
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(10),
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: gradient),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(icon, color: Colors.white, size: 24),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: GoogleFonts.inter(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        subtitle,
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey.shade600,
+                          height: 1.3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: gradient.first,
+                  size: 20,
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
-    // return Container(
-    //   width: screenWidth * 0.72,
-    //   decoration: BoxDecoration(
-    //     color: Colors.white,
-    //     borderRadius: BorderRadius.circular(20),
-    //     border: Border.all(
-    //       color: typeInfo['color'].withOpacity(0.1),
-    //       width: 1.5,
-    //     ),
-    //     boxShadow: [
-    //       BoxShadow(
-    //         color: typeInfo['color'].withOpacity(0.08),
-    //         blurRadius: 16,
-    //         offset: const Offset(0, 8),
-    //       ),
-    //     ],
-    //   ),
-    //   child: Column(
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: [
-    //       // Header with status
-    //       Container(
-    //         padding: const EdgeInsets.all(16),
-    //         decoration: BoxDecoration(
-    //           gradient: LinearGradient(
-    //             colors: [
-    //               typeInfo['color'].withOpacity(0.05),
-    //               Colors.white.withOpacity(0.8),
-    //             ],
-    //           ),
-    //           borderRadius: const BorderRadius.only(
-    //             topLeft: Radius.circular(20),
-    //             topRight: Radius.circular(20),
-    //           ),
-    //         ),
-    //         child: Row(
-    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //           children: [
-    //             Container(
-    //               padding: const EdgeInsets.all(10),
-    //               decoration: BoxDecoration(
-    //                 color: typeInfo['color'].withOpacity(0.1),
-    //                 borderRadius: BorderRadius.circular(12),
-    //               ),
-    //               child: Icon(
-    //                 typeInfo['icon'],
-    //                 color: typeInfo['color'],
-    //                 size: screenWidth * 0.05,
-    //               ),
-    //             ),
-    //             _buildStatusBadge(invitation.status, screenWidth),
-    //           ],
-    //         ),
-    //       ),
-
-    //       // Content
-    //       Expanded(
-    //         child: Padding(
-    //           padding: const EdgeInsets.all(16),
-    //           child: Column(
-    //             crossAxisAlignment: CrossAxisAlignment.start,
-    //             children: [
-    //               Text(
-    //                 invitation.title,
-    //                 style: GoogleFonts.inter(
-    //                   fontSize: screenWidth * 0.042,
-    //                   fontWeight: FontWeight.w700,
-    //                   color: Colors.black87,
-    //                 ),
-    //                 maxLines: 2,
-    //                 overflow: TextOverflow.ellipsis,
-    //               ),
-
-    //               const SizedBox(height: 8),
-
-    //               Text(
-    //                 typeInfo['label'],
-    //                 style: GoogleFonts.inter(
-    //                   fontSize: screenWidth * 0.032,
-    //                   fontWeight: FontWeight.w500,
-    //                   color: typeInfo['color'],
-    //                 ),
-    //               ),
-
-    //               const Spacer(),
-
-    //               // Recipients and date info
-    //               Row(
-    //                 children: [
-    //                   Icon(
-    //                     Icons.people_outline_rounded,
-    //                     size: screenWidth * 0.04,
-    //                     color: Colors.grey.shade600,
-    //                   ),
-    //                   const SizedBox(width: 4),
-    //                   Text(
-    //                     "${invitation.recipients} recipients",
-    //                     style: GoogleFonts.inter(
-    //                       fontSize: screenWidth * 0.03,
-    //                       fontWeight: FontWeight.w500,
-    //                       color: Colors.grey.shade600,
-    //                     ),
-    //                   ),
-    //                 ],
-    //               ),
-
-    //               const SizedBox(height: 6),
-
-    //               Text(
-    //                 _formatDate(invitation.createdDate),
-    //                 style: GoogleFonts.inter(
-    //                   fontSize: screenWidth * 0.028,
-    //                   fontWeight: FontWeight.w500,
-    //                   color: Colors.grey.shade500,
-    //                 ),
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       ),
-
-    //       // Action buttons
-    //       Container(
-    //         padding: const EdgeInsets.all(16),
-    //         child: Row(
-    //           children: [
-    //             Expanded(
-    //               child: OutlinedButton(
-    //                 onPressed: () {
-    //                   // View invitation details
-    //                 },
-    //                 style: OutlinedButton.styleFrom(
-    //                   side:
-    //                       BorderSide(color: typeInfo['color'].withOpacity(0.3)),
-    //                   shape: RoundedRectangleBorder(
-    //                     borderRadius: BorderRadius.circular(12),
-    //                   ),
-    //                   padding: const EdgeInsets.symmetric(vertical: 12),
-    //                 ),
-    //                 child: Text(
-    //                   "View",
-    //                   style: GoogleFonts.inter(
-    //                     fontSize: screenWidth * 0.032,
-    //                     fontWeight: FontWeight.w600,
-    //                     color: typeInfo['color'],
-    //                   ),
-    //                 ),
-    //               ),
-    //             ),
-    //             const SizedBox(width: 8),
-    //             Expanded(
-    //               child: ElevatedButton(
-    //                 onPressed: () {
-    //                   // Share invitation
-    //                 },
-    //                 style: ElevatedButton.styleFrom(
-    //                   backgroundColor: typeInfo['color'],
-    //                   elevation: 0,
-    //                   shape: RoundedRectangleBorder(
-    //                     borderRadius: BorderRadius.circular(12),
-    //                   ),
-    //                   padding: const EdgeInsets.symmetric(vertical: 12),
-    //                 ),
-    //                 child: Text(
-    //                   "Share",
-    //                   style: GoogleFonts.inter(
-    //                     fontSize: screenWidth * 0.032,
-    //                     fontWeight: FontWeight.w600,
-    //                     color: Colors.white,
-    //                   ),
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 
-  Widget _buildStatusBadge(String status, double screenWidth) {
-    Color statusColor;
+  // Helper methods for status and type
+  Color _getStatusColor(String status) {
     switch (status) {
       case 'Completed':
-        statusColor = Colors.green.shade600;
-        break;
+        return Colors.green.shade600;
       case 'Sent':
-        statusColor = Colors.blue.shade600;
-        break;
+        return Colors.blue.shade600;
       case 'In Progress':
-        statusColor = Colors.orange.shade600;
-        break;
+        return Colors.orange.shade600;
       default:
-        statusColor = Colors.grey.shade600;
+        return Colors.grey.shade600;
     }
-
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: screenWidth * 0.025,
-        vertical: 6,
-      ),
-      decoration: BoxDecoration(
-        color: statusColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: statusColor.withOpacity(0.3),
-          width: 1,
-        ),
-      ),
-      child: Text(
-        status,
-        style: GoogleFonts.inter(
-          fontSize: screenWidth * 0.028,
-          fontWeight: FontWeight.w600,
-          color: statusColor,
-        ),
-      ),
-    );
   }
 
-  Widget _buildEmptyState(double screenWidth) {
-    return Container(
-      margin: const EdgeInsets.all(18),
-      padding: EdgeInsets.all(screenWidth * 0.08),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: Colors.grey.shade200,
-          width: 1,
-        ),
-      ),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: AppColors.lightGold.withOpacity(0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.mail_outline_rounded,
-              size: screenWidth * 0.12,
-              color: AppColors.primary.withOpacity(0.6),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            "No Completed Invitations",
-            style: GoogleFonts.inter(
-              fontSize: screenWidth * 0.045,
-              fontWeight: FontWeight.w700,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            "Start creating invitations to see them here",
-            style: GoogleFonts.inter(
-              fontSize: screenWidth * 0.035,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey.shade600,
-            ),
-          ),
-        ],
-      ),
-    );
+  IconData _getStatusIcon(String status) {
+    switch (status) {
+      case 'Completed':
+        return Icons.check_circle_rounded;
+      case 'Sent':
+        return Icons.send_rounded;
+      case 'In Progress':
+        return Icons.pending_rounded;
+      default:
+        return Icons.info_rounded;
+    }
   }
 
-  Map<String, dynamic> _getInvitationTypeInfo(InvitationType type) {
+  IconData _getTypeIcon(InvitationType type) {
     switch (type) {
       case InvitationType.physical:
-        return {
-          'label': 'Physical Invitation',
-          'icon': Icons.mail_rounded,
-          'color': AppColors.primary,
-        };
+        return Icons.card_giftcard_rounded;
       case InvitationType.eInvitation:
-        return {
-          'label': 'E-Invitation',
-          'icon': Icons.email_rounded,
-          'color': Colors.blue.shade600,
-        };
+        return Icons.email_rounded;
       case InvitationType.video:
-        return {
-          'label': 'Video Invitation',
-          'icon': Icons.video_call_rounded,
-          'color': Colors.purple.shade600,
-        };
+        return Icons.videocam_rounded;
     }
   }
 
-  String _formatDate(DateTime date) {
-    final now = DateTime.now();
-    final difference = now.difference(date).inDays;
-
-    if (difference == 0) {
-      return "Today";
-    } else if (difference == 1) {
-      return "Yesterday";
-    } else if (difference < 7) {
-      return "$difference days ago";
-    } else {
-      return "${date.day}/${date.month}/${date.year}";
+  String _getTypeText(InvitationType type) {
+    switch (type) {
+      case InvitationType.physical:
+        return 'Physical';
+      case InvitationType.eInvitation:
+        return 'E-invite';
+      case InvitationType.video:
+        return 'Video';
     }
   }
 }
 
-// Data models
+// Data models remain the same
 enum InvitationType { physical, eInvitation, video }
 
 class CompletedInvitation {
@@ -719,203 +772,4 @@ class CompletedInvitation {
     required this.status,
     required this.recipients,
   });
-}
-
-/// Premium, compact, responsive card (keeping your original design)
-class PremiumInvitationCard extends StatelessWidget {
-  const PremiumInvitationCard({
-    super.key,
-    required this.heading,
-    required this.subheading,
-    required this.imageAsset,
-    required this.onTap,
-    required this.fade,
-    required this.scale,
-    required this.goldDark,
-    required this.goldLight,
-    required this.primary,
-  });
-
-  final String heading;
-  final String subheading;
-  final String imageAsset;
-  final VoidCallback onTap;
-  final Animation<double> fade;
-  final Animation<double> scale;
-  final Color goldDark;
-  final Color goldLight;
-  final Color primary;
-
-  @override
-  Widget build(BuildContext context) {
-    final w = MediaQuery.of(context).size.width;
-    final double cardHeight = (w * 0.26).clamp(112.0, 138.0);
-    final double cardWidth = (w * 0.88).clamp(320.0, 520.0);
-    final double imageSize = (cardHeight * 0.58).clamp(60.0, 92.0);
-    final double textMaxWidth = (cardWidth - imageSize) * 0.68;
-
-    return SizedBox(
-      height: cardHeight + 8,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              height: cardHeight,
-              width: cardWidth,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(18),
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    const Color(0xFFFFF3D2),
-                    goldLight.withOpacity(0.95),
-                    const Color(0xFFE3C98A),
-                  ],
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.06),
-                    blurRadius: 18,
-                    spreadRadius: 1,
-                    offset: const Offset(0, 10),
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.all(1.8),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.white.withOpacity(0.9),
-                            goldLight.withOpacity(0.8),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                      ),
-                    ),
-                    BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                      child: InkWell(
-                        onTap: onTap,
-                        splashColor: primary.withOpacity(0.08),
-                        highlightColor: Colors.transparent,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: 16,
-                            right: imageSize / 2 + 20,
-                            top: 14,
-                            bottom: 14,
-                          ),
-                          child: Row(
-                            children: [
-                              ConstrainedBox(
-                                constraints:
-                                    BoxConstraints(maxWidth: textMaxWidth),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      heading,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.inter(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 18,
-                                        letterSpacing: 0.2,
-                                        color: primary,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 6),
-                                    Text(
-                                      subheading,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.inter(
-                                        fontSize: 13.5,
-                                        height: 1.35,
-                                        color: Colors.grey.shade900,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Container(
-                                      height: 2,
-                                      width: 58,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(2),
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            goldDark.withOpacity(0.9),
-                                            goldLight.withOpacity(0.65),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            right: 20,
-            top: (cardHeight - imageSize) / 2,
-            child: ScaleTransition(
-              scale: scale,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [goldDark, goldLight.withOpacity(0.95)],
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: goldDark.withOpacity(0.25),
-                      blurRadius: 14,
-                      offset: const Offset(0, 6),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(2),
-                  child: Container(
-                    height: imageSize,
-                    width: imageSize,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(image: AssetImage(imageAsset)),
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child: Image.asset(
-                      imageAsset,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

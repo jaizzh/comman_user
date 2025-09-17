@@ -4,8 +4,6 @@ import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/grouping/grouping.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/tasklist/tasklist.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/timeline/timelinepage.dart';
-import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/singleeventdashboard.dart';
-import 'package:common_user/homepage/summa.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

@@ -207,7 +207,7 @@ class _majorcontState extends State<majorcont> {
                 children: [
                   _buildStatusIndicator(
                       context, '0 Guests', Icons.people_outline_rounded, s),
-                  SizedBox(width: 10.0 * s),
+                  SizedBox(width: 5.0 * s),
                   _buildStatusIndicator(
                       context, '0 Co-hosts', Icons.handshake_outlined, s),
                 ],
@@ -222,7 +222,7 @@ class _majorcontState extends State<majorcont> {
   Widget _buildStatusIndicator(
       BuildContext context, String text, IconData icon, double s) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.0 * s, vertical: 6.0 * s),
+      padding: EdgeInsets.symmetric(horizontal: 8.0 * s, vertical: 6.0 * s),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
