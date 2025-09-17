@@ -210,7 +210,7 @@ class _SubdomainCreationPageState extends State<SubdomainCreationPage>
 
   Widget _buildSubdomainSection() {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -228,7 +228,7 @@ class _SubdomainCreationPageState extends State<SubdomainCreationPage>
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -253,7 +253,7 @@ class _SubdomainCreationPageState extends State<SubdomainCreationPage>
                     Text(
                       "Subdomain Name",
                       style: GoogleFonts.inter(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.w700,
                         color: const Color(0xFF111827),
                       ),
@@ -261,7 +261,7 @@ class _SubdomainCreationPageState extends State<SubdomainCreationPage>
                     Text(
                       "Choose a unique subdomain for your website",
                       style: GoogleFonts.inter(
-                        fontSize: 14,
+                        fontSize: 13,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF6B7280),
                       ),
@@ -286,6 +286,7 @@ class _SubdomainCreationPageState extends State<SubdomainCreationPage>
               children: [
                 Expanded(
                   child: TextField(
+                    textCapitalization: TextCapitalization.sentences,
                     controller: _subdomainController,
                     onChanged: (value) {
                       if (value.isNotEmpty) {
@@ -325,7 +326,7 @@ class _SubdomainCreationPageState extends State<SubdomainCreationPage>
                   child: Text(
                     domainSuffix,
                     style: GoogleFonts.inter(
-                      fontSize: 16,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: const Color(0xFF6B7280),
                     ),
@@ -434,7 +435,7 @@ class _SubdomainCreationPageState extends State<SubdomainCreationPage>
                   Text(
                     "Choose Template",
                     style: GoogleFonts.inter(
-                      fontSize: 18,
+                      fontSize: 15,
                       fontWeight: FontWeight.w700,
                       color: const Color(0xFF111827),
                     ),
@@ -442,7 +443,7 @@ class _SubdomainCreationPageState extends State<SubdomainCreationPage>
                   Text(
                     "Select a template that fits your needs",
                     style: GoogleFonts.inter(
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xFF6B7280),
                     ),
@@ -469,22 +470,25 @@ class _SubdomainCreationPageState extends State<SubdomainCreationPage>
 
   Widget _buildTemplateSection() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.7,
-      padding: const EdgeInsets.all(16),
+      // height: MediaQuery.of(context).size.height * 0.7,
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
             spreadRadius: 1,
             blurRadius: 1,
-            color: Colors.black12,
+            color: Colors.black26,
           )
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            height: 12.0,
+          ),
           Row(
             children: [
               Container(
@@ -516,7 +520,7 @@ class _SubdomainCreationPageState extends State<SubdomainCreationPage>
                     Text(
                       "Choose Template",
                       style: GoogleFonts.inter(
-                        fontSize: 18,
+                        fontSize: 15,
                         fontWeight: FontWeight.w700,
                         color: const Color(0xFF111827),
                       ),
@@ -524,7 +528,7 @@ class _SubdomainCreationPageState extends State<SubdomainCreationPage>
                     Text(
                       "Select a template that fits your needs",
                       style: GoogleFonts.inter(
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF6B7280),
                       ),
@@ -552,7 +556,7 @@ class _SubdomainCreationPageState extends State<SubdomainCreationPage>
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 10),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: SizedBox(
@@ -613,7 +617,7 @@ class _SubdomainCreationPageState extends State<SubdomainCreationPage>
       required Color colorr1,
       required Color colortext}) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(6.0),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
         decoration: BoxDecoration(
@@ -624,7 +628,7 @@ class _SubdomainCreationPageState extends State<SubdomainCreationPage>
         child: Text(
           texter,
           style: TextStyle(
-              fontSize: 15.0, fontWeight: FontWeight.bold, color: colortext),
+              fontSize: 13.0, fontWeight: FontWeight.bold, color: colortext),
         ),
       ),
     );
@@ -639,76 +643,80 @@ class _SubdomainCreationPageState extends State<SubdomainCreationPage>
           selectedTemplateIndex = index;
         });
       },
-      child: Container(
-        padding: EdgeInsets.all(4.0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: isSelected
-              ? Border.all(color: AppColors.primary, width: 3.0)
-              : Border.all(color: Colors.black38),
-          boxShadow: [
-            BoxShadow(spreadRadius: 1, blurRadius: 1, color: Colors.black38)
-          ],
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  //  padding: EdgeInsets.all(20.0),
-                  height: MediaQuery.of(context).size.height * 0.150,
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(templatelist[index])),
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 14.0),
+        child: Container(
+          padding: EdgeInsets.all(4.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: isSelected
+                ? Border.all(color: AppColors.primary, width: 3.0)
+                : Border.all(color: Colors.black38),
+            boxShadow: [
+              BoxShadow(spreadRadius: 1, blurRadius: 1, color: Colors.black38)
+            ],
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    //  padding: EdgeInsets.all(20.0),
+                    height: MediaQuery.of(context).size.height * 0.130,
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage(templatelist[index])),
+                    ),
                   ),
-                ),
-                Positioned(
-                    right: 8.0,
-                    top: 8.0,
-                    child: Container(
-                      padding: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.black26,
-                      ),
-                      child: Icon(
-                        Icons.remove_red_eye_rounded,
-                        color: Colors.white,
-                      ),
-                    ))
-              ],
-            ),
-            SizedBox(
-              height: 8.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  template.name,
-                  style: GoogleFonts.inter(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xFF111827),
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              template.description,
-              style: GoogleFonts.inter(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: const Color(0xFF6B7280),
+                  Positioned(
+                      right: 8.0,
+                      top: 8.0,
+                      child: Container(
+                        padding: EdgeInsets.all(3.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.black26,
+                        ),
+                        child: Icon(
+                          Icons.remove_red_eye_rounded,
+                          color: Colors.white,
+                        ),
+                      ))
+                ],
               ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
+              SizedBox(
+                height: 8.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    template.name,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF111827),
+                    ),
+                  ),
+                ],
+              ),
+              Text(
+                template.description,
+                style: GoogleFonts.inter(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0xFF6B7280),
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
         ),
       ),
     );

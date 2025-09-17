@@ -1,10 +1,11 @@
-import 'package:common_user/homepage/New%20Event/3rd%20screen/maineventpage.dart';
+import 'package:common_user/app_colors.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/planningtoolspage.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/fisrthalfpage.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/invitationhome.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/subdomain/sub_domain.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/videoinvitation/videoinvitation.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/majorcont.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -97,6 +98,7 @@ class _singleventdashboardState extends State<singleventdashboard> {
 
   Widget _buildPremiumAppBar(BuildContext context) {
     final s = _scaleForWidth(context);
+
     return SliverAppBar(
       expandedHeight: _expandedHeight * s,
       pinned: true,
@@ -104,85 +106,70 @@ class _singleventdashboardState extends State<singleventdashboard> {
       backgroundColor: Colors.transparent,
       title: _showTitle
           ? Text(
-              'Free Plan',
+              'Jaiz Birthday Party',
               style: _txt(context,
                   baseSize: 15, weight: FontWeight.w600, color: primaryWhite),
+              overflow: TextOverflow.ellipsis, // Add this
             )
           : null,
       flexibleSpace: Container(
         decoration: const BoxDecoration(
-          color: buttonColor,
+          color: AppColors.primary,
         ),
         child: FlexibleSpaceBar(
           collapseMode: CollapseMode.pin,
           title: !_showTitle
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 12.0, vertical: 6.0),
-                        decoration: BoxDecoration(
-                          color: primaryWhite.withOpacity(0.18),
-                          borderRadius: BorderRadius.circular(12 * s),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.workspace_premium,
-                              color: primaryWhite,
-                              size: 15,
-                            ),
-                            SizedBox(
-                              width: 6.0,
-                            ),
-                            Text(
-                              "Upgrade To Premium Plan",
+              ? LayoutBuilder(
+                  // Add LayoutBuilder to get available width
+                  builder: (context, constraints) {
+                    return Container(
+                      width: constraints.maxWidth,
+                      child: Row(
+                        children: [
+                          // Constrain text width
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Jaiz Birthday Party',
                               style: TextStyle(
-                                  fontSize: 10.0,
-                                  color: primaryWhite,
-                                  fontWeight: FontWeight.bold),
+                                fontSize: 14.0 * s,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ),
-                          ],
-                        ),
+                          ),
+
+                          SizedBox(width: 10 * s),
+
+                          // Constrain countdown container
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              // constraints: BoxConstraints(
+                              //   maxWidth: constraints.maxWidth *
+                              //       0.6, // Limit to 60% of available width
+                              // ),
+                              child: const PremiumCountdownContainer(
+                                initialDuration: Duration(
+                                  days: 12,
+                                  hours: 5,
+                                  minutes: 32,
+                                  seconds: 43,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    // Text(
-                    //   'Jaiz Birthday Party',
-                    //   style: _localTxt(context,
-                    //       baseSize: 13,
-                    //       weight: FontWeight.w600,
-                    //       color: primaryWhite),
-                    // ),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    //   child: Container(
-                    //     padding: EdgeInsets.all(8.0),
-                    //     decoration: BoxDecoration(
-                    //         color: AppColors.primary.withOpacity(0.1),
-                    //         boxShadow: [
-                    //           BoxShadow(
-                    //             spreadRadius: 1,
-                    //             blurRadius: 1,
-                    //             color: Colors.black54,
-                    //           )
-                    //         ]),
-                    //     // child: RichText(
-                    //     //     text: TextSpan(
-                    //     //         text: "Upgrade To Premium Plan",
-                    //     //         style: TextStyle(
-                    //     //             fontSize: 10.0,
-                    //     //             fontWeight: FontWeight.bold,
-                    //     //             color: Colors.white))),
-                    //   ),
-                    // )
-                  ],
+                    );
+                  },
                 )
               : null,
           centerTitle: false,
-          titlePadding: EdgeInsets.only(left: 20 * s, bottom: 16 * s),
+          titlePadding: EdgeInsets.only(
+              left: 10 * s, bottom: 16 * s, right: 2 * s), // Add right padding
         ),
       ),
       leading: Padding(
@@ -195,8 +182,7 @@ class _singleventdashboardState extends State<singleventdashboard> {
           child: IconButton(
             icon: Icon(Icons.arrow_back_ios_new,
                 color: primaryWhite, size: 20 * s),
-            onPressed: () => Navigator.push(
-                context, MaterialPageRoute(builder: (_) => MinimalDemoPage())),
+            onPressed: () => Navigator.maybePop(context),
           ),
         ),
       ),
@@ -334,14 +320,6 @@ class _singleventdashboardState extends State<singleventdashboard> {
           'Gift Registry', Icons.card_giftcard_rounded, 0.2, '1/5', Colors.red,
           ontappee: () {}),
       FeatureItem(
-        'Money Log',
-        Icons.attach_money_rounded,
-        0.4,
-        '2/4',
-        Colors.purpleAccent,
-        ontappee: () {},
-      ),
-      FeatureItem(
         'Gift Log',
         Icons.card_membership_rounded,
         0.1,
@@ -353,8 +331,16 @@ class _singleventdashboardState extends State<singleventdashboard> {
         'Money Gifts',
         Icons.monetization_on_rounded,
         0.54,
-        '4/6',
+        '\$450/\$1000',
         Colors.green,
+        ontappee: () {},
+      ),
+      FeatureItem(
+        'No of Guests',
+        Icons.attach_money_rounded,
+        0.4,
+        '143/300',
+        Colors.purpleAccent,
         ontappee: () {},
       ),
       FeatureItem(
@@ -363,8 +349,7 @@ class _singleventdashboardState extends State<singleventdashboard> {
         Navigator.push(
             context, MaterialPageRoute(builder: (_) => videoinvitation()));
       }),
-      FeatureItem(
-          'Sub-Domain', Icons.live_tv_rounded, 0.0, 'Ready', Colors.indigo,
+      FeatureItem('Website', Icons.live_tv_rounded, 0.0, 'Ready', Colors.indigo,
           ontappee: () {
         Navigator.push(context,
             MaterialPageRoute(builder: (_) => SubdomainCreationPage()));

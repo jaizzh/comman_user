@@ -1,4 +1,5 @@
-import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/timer.dart';
+import 'package:common_user/features/vendor/pages/vendor_home.dart';
+import 'package:common_user/features/venue/presentation/pages/venue_home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -46,122 +47,10 @@ class _singledashhalfState extends State<singledashhalf> {
       ),
       child: Column(
         children: [
-          const SizedBox(height: 20.0),
-          // Event Header Section
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Left side - Event details
-                Expanded(
-                  // flex: 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Jegaz Birthday Party",
-                        style: GoogleFonts.yaldevi(
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.bold,
-                          color: buttonColor,
-                        ),
-                      ),
-                      const SizedBox(height: 6.0),
-                      Wrap(
-                        spacing: 8.0,
-                        runSpacing: 4.0,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: primaryWhite,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: buttonColor.withOpacity(0.3),
-                                width: 1,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: buttonColor.withOpacity(0.1),
-                                  blurRadius: 4,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: const Text(
-                              "Night Party",
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                color: buttonColor,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 4),
-                            child: const Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.location_on,
-                                  color: Colors.black,
-                                  size: 14.0,
-                                ),
-                                SizedBox(width: 2),
-                                Text(
-                                  "Madurai",
-                                  style: TextStyle(
-                                    fontSize: 12.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-
-                // Right side - Countdown
-                Expanded(
-                  //  flex: 1,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    child: const PremiumCountdownContainer(
-                      initialDuration: Duration(
-                          days: 12, hours: 5, minutes: 32, seconds: 43),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 20.0),
-
-          // Progress Section
+          const SizedBox(height: 10.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 16,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
               child: Column(
                 children: [
                   Row(
@@ -211,7 +100,7 @@ class _singledashhalfState extends State<singledashhalf> {
                         child: const Text(
                           "3/14",
                           style: TextStyle(
-                            fontSize: 13.0,
+                            fontSize: 10.0,
                             fontWeight: FontWeight.bold,
                             color: buttonColor,
                           ),
@@ -233,8 +122,19 @@ class _singledashhalfState extends State<singledashhalf> {
               ),
             ),
           ),
+          SizedBox(
+            height: 20.0,
+          ),
 
-          const SizedBox(height: 20.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14.0),
+            child: CompactPlanContainer(),
+          ),
+          // Event Header Section
+
+          SizedBox(
+            height: 20.0,
+          )
         ],
       ),
     );
@@ -252,7 +152,7 @@ class _singledashhalfState extends State<singledashhalf> {
               children: [
                 Expanded(
                   child: venuevendor(
-                    imagePath: "assets/images/vendoror.png",
+                    imagePath: "assets/images/venueor.png",
                     total: '0/1',
                     title: 'Vendors',
                     isVendor: true,
@@ -261,7 +161,7 @@ class _singledashhalfState extends State<singledashhalf> {
                 const SizedBox(width: 4),
                 Expanded(
                   child: venuevendor(
-                    imagePath: "assets/images/venueor.png",
+                    imagePath: "assets/images/vendoror.png",
                     total: '1/3',
                     title: 'Venues',
                     isVendor: false,
@@ -449,9 +349,13 @@ class _singledashhalfState extends State<singledashhalf> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Handle navigation to vendor/venue selection
-                    print(
-                        'Navigate to ${isVendor ? 'vendor' : 'venue'} selection');
+                    if (isVendor)
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => VendorHome()));
+                    else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => VenueHome()));
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: current == totalCount
@@ -510,5 +414,109 @@ class _singledashhalfState extends State<singledashhalf> {
     } else {
       return 'In progress';
     }
+  }
+}
+
+class CompactPlanContainer extends StatelessWidget {
+  final String price;
+  final String trialText;
+  final VoidCallback? onTap;
+
+  const CompactPlanContainer({
+    Key? key,
+    this.price = 'Choose Your Plan',
+    this.trialText = 'Upgrade plan to get more Feature',
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 1,
+              spreadRadius: 1,
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Check Circle
+            Row(
+              children: [
+                Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF10B981),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF10B981).withOpacity(0.3),
+                        blurRadius: 6,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.money_off_rounded,
+                    color: Colors.white,
+                    size: 14,
+                  ),
+                ),
+
+                const SizedBox(width: 12),
+
+                // Text Content
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text(
+                          price,
+                          style: GoogleFonts.inter(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      trialText,
+                      style: GoogleFonts.inter(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            Container(
+              height: 25,
+              width: 25,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  border: Border.all(color: Colors.black45, width: 2)),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -256,10 +256,9 @@ class _majorcontState extends State<majorcont> {
           child: _buildSecondaryActionButton(
               context, 'Add Co-Host', Icons.handshake_rounded, () {
             _pickMultipleContacts();
-            Navigator.pop(context);
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Contacts share tapped')),
-            );
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //   const SnackBar(content: Text('Contacts share tapped')),
+            // );
           }, s),
         ),
       ],
