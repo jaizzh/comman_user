@@ -1,7 +1,6 @@
 import 'package:common_user/common/colors.dart';
-import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/singleeventdashboard.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/common/singleeventdashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PremiumEventCard extends StatefulWidget {

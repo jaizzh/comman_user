@@ -1,11 +1,11 @@
 import 'package:common_user/app_colors.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/planningtoolspage.dart';
-import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/fisrthalfpage.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/common/fisrthalfpage.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/common/majorcont.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/invitationhome.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/subdomain/sub_domain.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/videoinvitation/videoinvitation.dart';
-import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/majorcont.dart';
-import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/timer.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/common/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
