@@ -1,61 +1,56 @@
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/material.dart';
 
-class SimpleNotificationService {
-  static final FlutterLocalNotificationsPlugin _notificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+class SimpleAwesomeNotification {
+  static bool _inited = false;
 
-  // Initialize notifications
+  /// Call this once at app start (BEFORE runApp preferred)
   static Future<void> init() async {
-    // Android settings
-    const AndroidInitializationSettings androidSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    if (_inited) return;
+    _inited = true;
 
-    // iOS settings
-    const DarwinInitializationSettings iosSettings =
-        DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
+    AwesomeNotifications().initialize(
+      null, // app icon
+      [
+        NotificationChannel(
+          channelKey: 'basic_channel',
+          channelName: 'General',
+          channelDescription: 'General notifications',
+          importance: NotificationImportance.Max,
+          defaultPrivacy: NotificationPrivacy.Public,
+          playSound: true,
+          enableVibration: true,
+          ledColor: Colors.white,
+        ),
+      ],
+      debug: false,
     );
 
-    const InitializationSettings settings = InitializationSettings(
-      android: androidSettings,
-      iOS: iosSettings,
-    );
-
-    await _notificationsPlugin.initialize(settings);
+    // Android 13+ or iOS: ask runtime permission
+    final allowed = await AwesomeNotifications().isNotificationAllowed();
+    if (!allowed) {
+      await AwesomeNotifications().requestPermissionToSendNotifications();
+    }
   }
 
-  // Show simple notification
-  static Future<void> showNotification({
-    required String title,
-    required String body,
-  }) async {
-    const AndroidNotificationDetails androidDetails =
-        AndroidNotificationDetails(
-      'simple_channel',
-      'Simple Notifications',
-      channelDescription: 'Simple notification channel',
-      importance: Importance.max,
-      priority: Priority.high,
-    );
+  /// Fire-and-forget simple notification
+  static Future<void> show(String title, String body,
+      {Map<String, String>? payload}) async {
+    // Safety: ensure initialized even if caller forgot
+    if (!_inited) {
+      await init();
+    }
 
-    const DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    );
-
-    const NotificationDetails notificationDetails = NotificationDetails(
-      android: androidDetails,
-      iOS: iosDetails,
-    );
-
-    await _notificationsPlugin.show(
-      0, // notification ID
-      title,
-      body,
-      notificationDetails,
+    final id = DateTime.now().millisecondsSinceEpoch % 100000;
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: id,
+        channelKey: 'basic_channel',
+        title: title,
+        body: body,
+        payload: payload,
+        notificationLayout: NotificationLayout.Default,
+      ),
     );
   }
 }

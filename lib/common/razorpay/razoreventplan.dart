@@ -2,195 +2,140 @@ import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.d
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-class RazorpayServiceeventplan {
-  RazorpayServiceeventplan._();
-  static final RazorpayServiceeventplan instance = RazorpayServiceeventplan._();
+class RazorpayServiceevent {
+  RazorpayServiceevent._();
+  static final RazorpayServiceevent instance = RazorpayServiceevent._();
 
   final Razorpay _razorpay = Razorpay();
   bool _inited = false;
 
   BuildContext? _lastContext;
-  int _selectedPlanIndex = 1; // Add this to track selected plan
+  int _lastAmountPaise = 0;
 
   void init() {
     if (_inited) return;
     _inited = true;
 
-    // ✅ Fixed: Removed BuildContext from callback signature
+    print('🔧 Initializing Razorpay callbacks...');
+
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
-        (PaymentSuccessResponse response) async {
+        (PaymentSuccessResponse r) async {
+      print('🎉 SUCCESS CALLBACK TRIGGERED!');
+      print('Payment ID: ${r.paymentId}');
+      print('Order ID: ${r.orderId}');
+      print('Signature: ${r.signature}');
+
       final ctx = _lastContext;
-      if (ctx == null || !ctx.mounted) return; // ✅ Check if context is valid
+      if (ctx == null) {
+        print('❌ Context is null in success callback');
+        return;
+      }
 
-      debugPrint('Payment Success: ${response.paymentId}');
+      // Small delay to ensure Razorpay UI is dismissed
+      await Future.delayed(Duration(milliseconds: 500));
+      SimpleAwesomeNotification.show("Premium Plan Activated",
+          "You are unlocked the premium version of mangal mall.now you can access more feature");
+      try {
+        // Show success snackbar
+        ScaffoldMessenger.of(ctx).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.green, // Changed to green for success
+            content: Text(
+              'Payment Successful! ID: ${r.paymentId}',
+              style: TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        );
 
-      // ✅ Small delay to ensure Razorpay overlay is closed
-      await Future.delayed(const Duration(milliseconds: 500));
+        // Test notification
+        // print('🔔 Sending test notification...');
+        //   await SimpleAwesomeNotification.show('Payment Successful! 🎉',
+        //       'Payment ID: ${r.paymentId ?? "Unknown"}');
 
-      // ✅ Use _lastContext, not the non-existent context parameter
-      if (ctx.mounted) {
-        _showSuccessDialog(ctx);
+        // print('✅ Success callback completed');
+      } catch (e) {
+        print('❌ Error in success callback: $e');
       }
     });
 
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
-        (PaymentFailureResponse response) {
-      final ctx = _lastContext;
-      if (ctx == null || !ctx.mounted) return;
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, (PaymentFailureResponse r) {
+      print('❌ ERROR CALLBACK TRIGGERED!');
+      print('Error Code: ${r.code}');
+      print('Error Message: ${r.message}');
 
-      debugPrint('Payment Error: ${response.code} - ${response.message}');
-      //   SimpleNotificationService.init();
-      SimpleNotificationService.showNotification(
-          title: "Your Premium Plan Was Unlocked",
-          body:
-              "You're Unlocked More Features By Upgrading the Plan To The Premium");
+      final ctx = _lastContext;
+      if (ctx == null) {
+        print('❌ Context is null in error callback');
+        return;
+      }
+
       ScaffoldMessenger.of(ctx).showSnackBar(
         SnackBar(
           backgroundColor: Colors.red,
           content: Text(
-            'Payment failed: ${response.message ?? response.code.toString()}',
-            style: const TextStyle(
-              fontSize: 14.0,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
+            'Payment failed: ${r.message ?? r.code.toString()}',
+            style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.white,
+                fontWeight: FontWeight.bold),
           ),
         ),
       );
     });
 
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET,
-        (ExternalWalletResponse response) {
-      debugPrint("External wallet: ${response.walletName}");
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, (ExternalWalletResponse r) {
+      print('💳 EXTERNAL WALLET TRIGGERED: ${r.walletName}');
     });
+
+    print('✅ Razorpay callbacks initialized');
   }
 
   void openCheckout({
     required BuildContext context,
     required String keyId,
     required int amountPaise,
-    required int selectedPlanIndex, // ✅ Add this parameter
     String? orderId,
   }) {
+    print('🚀 Opening Razorpay checkout...');
+    print('Amount: $amountPaise paise');
+    print('Key ID: $keyId');
+    print('Order ID: $orderId');
+
     _lastContext = context;
-    _selectedPlanIndex = selectedPlanIndex; // ✅ Store selected plan
+    _lastAmountPaise = amountPaise;
 
     final options = {
       'key': keyId,
-      'amount': amountPaise, // in paise
+      'amount': amountPaise,
       if (orderId != null) 'order_id': orderId,
       'name': 'Your Company',
-      'description': 'Premium Plan Subscription',
-      'retry': {'enabled': true, 'max_count': 1},
+      'description': 'Test Payment',
+      'timeout': 180, // Increased timeout
+      'retry': {'enabled': true, 'max_count': 1}, // This is important!
       'prefill': {'contact': '9876543210', 'email': 'user@example.com'},
       'theme': {'color': '#9A2143'},
+      'method': {
+        'upi': true,
+        'card': true,
+        'netbanking': true,
+        'wallet': true,
+      },
     };
 
     try {
+      print('📱 Calling _razorpay.open()...');
       _razorpay.open(options);
     } catch (e, st) {
-      debugPrint('Razorpay open() error: $e\n$st');
-
-      // Show error to user
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.red,
-            content: Text('Failed to open payment: $e'),
-          ),
-        );
-      }
+      print('❌ Razorpay open() error: $e');
+      print('Stack trace: $st');
     }
   }
 
-  void dispose() => _razorpay.clear();
-
-  void _showSuccessDialog(BuildContext context) {
-    const List<String> planTitles = ['Basic', 'Standard', 'Premium'];
-    const List<String> prices = ['\$9', '\$19', '\$35'];
-
-    // ✅ Double-check context is still valid
-    if (!context.mounted) return;
-
-    showDialog(
-      context: context,
-      barrierDismissible: false, // ✅ Prevent dismissing accidentally
-      builder: (dialogContext) => Dialog(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.check_circle_outline,
-                  color: Colors.green,
-                  size: 48,
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Payment Successful!',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                '${planTitles[_selectedPlanIndex]} Plan (${prices[_selectedPlanIndex]}/month)',
-                style: const TextStyle(
-                  color: Colors.black87,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 4),
-              const Text(
-                'Your premium features are now active!',
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 14,
-                ),
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(dialogContext).pop(); // Close dialog
-                    // ✅ Navigate to next screen or close current screen
-                    Navigator.of(context).pop(true); // Return success result
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: const Text(
-                    'Continue',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+  void dispose() {
+    print('🧹 Disposing Razorpay...');
+    _razorpay.clear();
   }
 }

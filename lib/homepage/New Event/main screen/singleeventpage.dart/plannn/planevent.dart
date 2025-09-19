@@ -22,15 +22,15 @@ class _PremiumPlanEventState extends State<PremiumPlanEvent> {
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             _buildHeaderSection(),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             _buildPlanCarousel(),
-            SizedBox(height: 30),
+            SizedBox(height: 14),
             _buildSelectedPlanDetails(),
             Spacer(),
             _buildContinueButton(),
-            SizedBox(height: 30),
+            SizedBox(height: 10),
           ],
         ),
       ),
@@ -45,7 +45,7 @@ class _PremiumPlanEventState extends State<PremiumPlanEvent> {
       title: Text(
         "Choose Your Plan",
         style: TextStyle(
-          fontSize: 20,
+          fontSize: 17.5,
           fontWeight: FontWeight.bold,
           color: Colors.black,
         ),
@@ -85,16 +85,16 @@ class _PremiumPlanEventState extends State<PremiumPlanEvent> {
           Text(
             "Unlock Premium Features",
             style: TextStyle(
-              fontSize: 25,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
           ),
-          SizedBox(height: 8),
+          SizedBox(height: 4),
           Text(
             "Choose the perfect plan for your needs",
             style: TextStyle(
-              fontSize: 15,
+              fontSize: 11,
               color: Colors.black54,
             ),
           ),
@@ -105,7 +105,7 @@ class _PremiumPlanEventState extends State<PremiumPlanEvent> {
 
   Widget _buildPlanCarousel() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height * 0.550,
       child: PageView.builder(
         controller: pageController,
         onPageChanged: (index) {
@@ -284,15 +284,15 @@ class _PremiumPlanEventState extends State<PremiumPlanEvent> {
 
               // Main content
               Padding(
-                padding: EdgeInsets.all(24),
+                padding: EdgeInsets.all(0),
                 child: Column(
                   children: [
-                    SizedBox(height: plan['isPopular'] ? 25 : 15),
+                    SizedBox(height: plan['isPopular'] ? 20 : 15),
 
                     // Circular header
                     Container(
-                      width: 120,
-                      height: 120,
+                      width: MediaQuery.of(context).size.height * 0.17,
+                      height: MediaQuery.of(context).size.height * 0.2,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [plan['color1'], plan['color2']],
@@ -357,7 +357,7 @@ class _PremiumPlanEventState extends State<PremiumPlanEvent> {
                       ),
                     ),
 
-                    SizedBox(height: 14),
+                    SizedBox(height: 10),
 
                     // Features list with icons
                     Expanded(
@@ -429,7 +429,7 @@ class _PremiumPlanEventState extends State<PremiumPlanEvent> {
   Widget _buildFeatureItem(
       String feature, Color accentColor, IconData iconss, String value) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 14.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -478,11 +478,11 @@ class _PremiumPlanEventState extends State<PremiumPlanEvent> {
     ];
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Card(
         elevation: 5.0,
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(spreadRadius: 1, blurRadius: 1, color: Colors.black26)
@@ -511,7 +511,7 @@ class _PremiumPlanEventState extends State<PremiumPlanEvent> {
                   ),
                 ],
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 6),
               Text(
                 planDescriptions[selectedPlanIndex],
                 style: TextStyle(
@@ -542,7 +542,7 @@ class _PremiumPlanEventState extends State<PremiumPlanEvent> {
       padding: EdgeInsets.symmetric(horizontal: 24),
       child: Container(
         width: double.infinity,
-        height: MediaQuery.of(context).size.height * 0.06,
+        height: MediaQuery.of(context).size.height * 0.05,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [colors1[selectedPlanIndex], colors2[selectedPlanIndex]],
@@ -561,17 +561,21 @@ class _PremiumPlanEventState extends State<PremiumPlanEvent> {
         child: MaterialButton(
           onPressed: () {
             // Calculate amount based on selected plan
-            final amounts = [900, 1900, 3500]; // In paise (₹9, ₹19, ₹35)
-            final amount = amounts[selectedPlanIndex];
-
-            // Initialize and open Razorpay
-            RazorpayServiceeventplan.instance.init();
-            RazorpayServiceeventplan.instance.openCheckout(
-              context: context,
-              keyId: "rzp_test_1DP5mmOlF5G5ag",
-              amountPaise: amount,
-              selectedPlanIndex: selectedPlanIndex, // Pass selected plan
-            );
+            //  final amounts = [900, 1900, 3500]; // In paise (₹9, ₹19, ₹35)
+            // final amount = amounts[selectedPlanIndex];
+            RazorpayServiceevent.instance.init();
+            RazorpayServiceevent.instance.openCheckout(
+                context: context,
+                keyId: "rzp_test_1DP5mmOlF5G5ag",
+                amountPaise: 10000);
+            // // Initialize and open Razorpay
+            // RazorpayServiceeventplan.instance.init();
+            // RazorpayServiceeventplan.instance.openCheckout(
+            //   context: context,
+            //   keyId: "rzp_test_1DP5mmOlF5G5ag",
+            //   amountPaise: amount,
+            //   selectedPlanIndex: selectedPlanIndex, // Pass selected plan
+            // );
           },
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -583,7 +587,7 @@ class _PremiumPlanEventState extends State<PremiumPlanEvent> {
                 'Continue with ',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -591,7 +595,7 @@ class _PremiumPlanEventState extends State<PremiumPlanEvent> {
                 ['Basic', 'Standard', 'Premium'][selectedPlanIndex],
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),

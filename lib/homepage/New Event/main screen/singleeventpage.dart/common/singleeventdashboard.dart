@@ -1,6 +1,7 @@
 import 'package:common_user/app_colors.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/planning%20tools/planningtoolspage.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/common/fisrthalfpage.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/common/giftmoneylog/giftlog.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/common/majorcont.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/invitationhome.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/subdomain/sub_domain.dart';
@@ -325,7 +326,9 @@ class _singleventdashboardState extends State<singleventdashboard> {
         0.1,
         '1/10',
         Colors.lightBlueAccent,
-        ontappee: () {},
+        ontappee: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => GiftLog()));
+        },
       ),
       FeatureItem(
         'Money Gifts',
@@ -333,7 +336,9 @@ class _singleventdashboardState extends State<singleventdashboard> {
         0.54,
         '\$450/\$1000',
         Colors.green,
-        ontappee: () {},
+        ontappee: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => GiftLog()));
+        },
       ),
       FeatureItem(
         'No of Guests',

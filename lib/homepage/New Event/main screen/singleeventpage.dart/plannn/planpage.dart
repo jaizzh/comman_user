@@ -89,41 +89,64 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final isTablet = size.width > 600;
+    final width = size.width;
+    final height = size.height;
+
+    // Responsive breakpoints
+    final isSmallScreen = width < 360;
+    final isMediumScreen = width >= 360 && width < 600;
+    final isTablet = width >= 600 && width < 900;
+    final isLargeScreen = width >= 900;
+
+    // Responsive multipliers
+    final paddingMultiplier = isSmallScreen
+        ? 0.04
+        : isMediumScreen
+            ? 0.045
+            : isTablet
+                ? 0.05
+                : 0.055;
+    final spacingMultiplier = isSmallScreen
+        ? 0.025
+        : isMediumScreen
+            ? 0.03
+            : isTablet
+                ? 0.035
+                : 0.04;
 
     return Container(
-      padding: EdgeInsets.all(isTablet ? 32 : 24),
+      padding: EdgeInsets.all(width * paddingMultiplier),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(isTablet),
-          SizedBox(height: isTablet ? 32 : 24),
-          _buildPlanCards(isTablet),
-          SizedBox(height: isTablet ? 32 : 24),
-          _buildContinueButton(isTablet),
+          _buildHeader(width, height),
+          SizedBox(height: height * spacingMultiplier),
+          _buildPlanCards(width, height),
+          SizedBox(height: height * spacingMultiplier),
+          _buildContinueButton(width, height),
         ],
       ),
     );
   }
 
-  Widget _buildHeader(bool isTablet) {
+  Widget _buildHeader(double width, double height) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Choose Your Plan',
           style: GoogleFonts.inter(
-            fontSize: isTablet ? 32 : 28,
+            fontSize: width * 0.06, // Responsive font size
             fontWeight: FontWeight.w900,
             color: Colors.black87,
             letterSpacing: -0.5,
           ),
         ),
-        SizedBox(height: isTablet ? 12 : 8),
+        SizedBox(height: height * 0.01),
         Text(
           'Select the perfect plan for your needs. Upgrade or downgrade at any time.',
           style: GoogleFonts.inter(
-            fontSize: isTablet ? 16 : 14,
+            fontSize: width * 0.025, // Responsive font size
             fontWeight: FontWeight.w500,
             color: Colors.grey.shade600,
             height: 1.4,
@@ -133,14 +156,19 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
     );
   }
 
-  Widget _buildPlanCards(bool isTablet) {
+  Widget _buildPlanCards(double width, double height) {
     return Column(
-      children: plans.map((plan) => _buildPlanCard(plan, isTablet)).toList(),
+      children:
+          plans.map((plan) => _buildPlanCard(plan, width, height)).toList(),
     );
   }
 
-  Widget _buildPlanCard(PlanData plan, bool isTablet) {
+  Widget _buildPlanCard(PlanData plan, double width, double height) {
     final isSelected = selectedPlan == plan.type;
+    final cardMargin = height * 0.02;
+    final borderRadius = width * 0.05;
+    final iconSize = width * 0.12;
+    final checkIconSize = width * 0.04;
 
     return GestureDetector(
       onTap: () {
@@ -156,9 +184,9 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        margin: EdgeInsets.only(bottom: isTablet ? 20 : 16),
+        margin: EdgeInsets.only(bottom: cardMargin),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(isTablet ? 24 : 20),
+          borderRadius: BorderRadius.circular(borderRadius),
           gradient: isSelected
               ? LinearGradient(
                   begin: Alignment.topLeft,
@@ -195,20 +223,20 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
         child: Stack(
           children: [
             Padding(
-              padding: EdgeInsets.all(isTablet ? 28 : 24),
+              padding: EdgeInsets.all(width * 0.06),
               child: Row(
                 children: [
                   // Plan Icon and Selection Indicator
                   Container(
-                    width: isTablet ? 60 : 50,
-                    height: isTablet ? 60 : 50,
+                    width: iconSize,
+                    height: iconSize,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: isSelected
                             ? [plan.color, plan.color.withOpacity(0.8)]
                             : [Colors.grey.shade300, Colors.grey.shade200],
                       ),
-                      borderRadius: BorderRadius.circular(isTablet ? 18 : 15),
+                      borderRadius: BorderRadius.circular(iconSize * 0.3),
                       boxShadow: [
                         if (isSelected)
                           BoxShadow(
@@ -225,15 +253,15 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
                           _getPlanIcon(plan.type),
                           color:
                               isSelected ? Colors.white : Colors.grey.shade600,
-                          size: isTablet ? 28 : 24,
+                          size: iconSize * 0.5,
                         ),
                         if (isSelected)
                           Positioned(
-                            top: 4,
-                            right: 4,
+                            top: iconSize * 0.08,
+                            right: iconSize * 0.08,
                             child: Container(
-                              width: isTablet ? 18 : 16,
-                              height: isTablet ? 18 : 16,
+                              width: checkIconSize,
+                              height: checkIconSize,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 shape: BoxShape.circle,
@@ -248,7 +276,7 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
                               child: Icon(
                                 Icons.check,
                                 color: plan.color,
-                                size: isTablet ? 12 : 10,
+                                size: checkIconSize * 0.6,
                               ),
                             ),
                           ),
@@ -256,7 +284,7 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
                     ),
                   ),
 
-                  SizedBox(width: isTablet ? 24 : 20),
+                  SizedBox(width: width * 0.05),
 
                   // Plan Details
                   Expanded(
@@ -268,32 +296,32 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
                             Text(
                               plan.name,
                               style: GoogleFonts.inter(
-                                fontSize: isTablet ? 22 : 20,
+                                fontSize: width * 0.05,
                                 fontWeight: FontWeight.w800,
                                 color: Colors.black87,
                               ),
                             ),
                             if (plan.isPopular) ...[
-                              SizedBox(width: isTablet ? 12 : 8),
+                              SizedBox(width: width * 0.02),
                               Container(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: isTablet ? 10 : 8,
-                                  vertical: isTablet ? 4 : 3,
+                                  horizontal: width * 0.025,
+                                  vertical: height * 0.005,
                                 ),
                                 decoration: BoxDecoration(
-                                  gradient: LinearGradient(
+                                  gradient: const LinearGradient(
                                     colors: [
-                                      const Color(0xFFFF6B6B),
-                                      const Color(0xFFFF8E53),
+                                      Color(0xFFFF6B6B),
+                                      Color(0xFFFF8E53),
                                     ],
                                   ),
                                   borderRadius:
-                                      BorderRadius.circular(isTablet ? 12 : 10),
+                                      BorderRadius.circular(width * 0.025),
                                 ),
                                 child: Text(
                                   'POPULAR',
                                   style: GoogleFonts.inter(
-                                    fontSize: isTablet ? 10 : 8,
+                                    fontSize: width * 0.02,
                                     fontWeight: FontWeight.w700,
                                     color: Colors.white,
                                     letterSpacing: 0.5,
@@ -303,22 +331,22 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
                             ],
                           ],
                         ),
-                        SizedBox(height: isTablet ? 6 : 4),
+                        SizedBox(height: height * 0.005),
                         Text(
                           plan.description,
                           style: GoogleFonts.inter(
-                            fontSize: isTablet ? 14 : 12,
+                            fontSize: width * 0.03,
                             fontWeight: FontWeight.w500,
                             color: Colors.grey.shade600,
                           ),
                         ),
-                        SizedBox(height: isTablet ? 12 : 8),
+                        SizedBox(height: height * 0.01),
                         Row(
                           children: [
                             Text(
                               plan.price,
                               style: GoogleFonts.inter(
-                                fontSize: isTablet ? 28 : 24,
+                                fontSize: width * 0.06,
                                 fontWeight: FontWeight.w900,
                                 color: isSelected ? plan.color : Colors.black87,
                               ),
@@ -326,7 +354,7 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
                             Text(
                               plan.period,
                               style: GoogleFonts.inter(
-                                fontSize: isTablet ? 14 : 12,
+                                fontSize: width * 0.03,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.grey.shade600,
                               ),
@@ -339,8 +367,8 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
 
                   // Radio Button
                   Container(
-                    width: isTablet ? 28 : 24,
-                    height: isTablet ? 28 : 24,
+                    width: width * 0.06,
+                    height: width * 0.06,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
@@ -353,7 +381,7 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
                         ? Icon(
                             Icons.check,
                             color: Colors.white,
-                            size: isTablet ? 16 : 14,
+                            size: width * 0.035,
                           )
                         : null,
                   ),
@@ -371,8 +399,7 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
                       scale: _scaleAnimation.value,
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(isTablet ? 24 : 20),
+                          borderRadius: BorderRadius.circular(borderRadius),
                           gradient: LinearGradient(
                             colors: [
                               plan.color.withOpacity(0.1),
@@ -391,13 +418,15 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
     );
   }
 
-  Widget _buildContinueButton(bool isTablet) {
+  Widget _buildContinueButton(double width, double height) {
     final selectedPlanData =
         plans.firstWhere((plan) => plan.type == selectedPlan);
+    final buttonHeight = height * 0.07;
+    final borderRadius = width * 0.04;
 
     return Container(
       width: double.infinity,
-      height: isTablet ? 60 : 54,
+      height: buttonHeight,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -405,7 +434,7 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
             selectedPlanData.color.withOpacity(0.8),
           ],
         ),
-        borderRadius: BorderRadius.circular(isTablet ? 18 : 16),
+        borderRadius: BorderRadius.circular(borderRadius),
         boxShadow: [
           BoxShadow(
             color: selectedPlanData.color.withOpacity(0.4),
@@ -417,7 +446,7 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(isTablet ? 18 : 16),
+          borderRadius: BorderRadius.circular(borderRadius),
           onTap: () {
             HapticFeedback.mediumImpact();
             widget.onPlanSelected?.call(selectedPlan);
@@ -429,17 +458,17 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
                 Text(
                   'Continue with ${selectedPlanData.name}',
                   style: GoogleFonts.inter(
-                    fontSize: isTablet ? 18 : 16,
+                    fontSize: width * 0.04,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                     letterSpacing: 0.2,
                   ),
                 ),
-                SizedBox(width: isTablet ? 12 : 8),
+                SizedBox(width: width * 0.02),
                 Icon(
                   Icons.arrow_forward_rounded,
                   color: Colors.white,
-                  size: isTablet ? 22 : 20,
+                  size: width * 0.05,
                 ),
               ],
             ),
