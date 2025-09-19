@@ -1,7 +1,7 @@
 import 'package:common_user/common/colors.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/singleeventdashboard.dart';
-import 'package:common_user/homepage/summa.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PremiumEventCard extends StatefulWidget {
@@ -36,57 +36,63 @@ class _PremiumEventCardState extends State<PremiumEventCard>
 
   @override
   Widget build(BuildContext context) {
-    // final size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
+    final isTablet = size.width > 600;
 
     return GestureDetector(
+      onTapDown: (_) => _animationController.forward(),
+      onTapUp: (_) => _animationController.reverse(),
+      onTapCancel: () => _animationController.reverse(),
       onTap: () {
         Navigator.push(
             context, MaterialPageRoute(builder: (_) => singleventdashboard()));
       },
       child: ScaleTransition(
         scale: _scaleAnimation,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24),
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0xFF4F46E5).withOpacity(0.15),
-                blurRadius: 20,
-                offset: const Offset(0, 8),
-              ),
-              BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(24),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: Card(
+            elevation: 4.0,
             child: Container(
+              // constraints: BoxConstraints(
+              //   maxHeight: maxHeight,
+              // ),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Colors.white,
-                    const Color(0xFFFAFBFF),
-                    Colors.white,
-                  ],
-                ),
-                border: Border.all(
-                  color: const Color(0xFFE2E8F0),
-                  width: 1,
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildHeader(),
-                  _buildProgressSection(),
-                  _buildEventDetails(),
-                  _buildActionSection(),
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black38,
+                    blurRadius: 1,
+                    spreadRadius: 1,
+                  ),
                 ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Colors.white,
+                        const Color(0xFFFAFBFF),
+                        Colors.white,
+                      ],
+                    ),
+                    //
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _buildCompactHeader(isTablet),
+                      _buildCompactProgressSection(isTablet),
+                      _buildCompactEventDetails(isTablet),
+                      _buildCompactActionSection(isTablet),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
@@ -95,9 +101,12 @@ class _PremiumEventCardState extends State<PremiumEventCard>
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildCompactHeader(bool isTablet) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: isTablet ? 16 : 12,
+        vertical: isTablet ? 14 : 10,
+      ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -110,94 +119,82 @@ class _PremiumEventCardState extends State<PremiumEventCard>
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              Text(
+                "Vini Birthday Party",
+                style: GoogleFonts.inter(
+                  fontSize: isTablet ? 16 : 14,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isTablet ? 12 : 10,
+                  vertical: isTablet ? 5 : 4,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(
-                      height: 14.0,
+                    Icon(
+                      Icons.access_time_rounded,
+                      size: isTablet ? 14 : 12,
+                      color: AppColors.boxlightcolor,
                     ),
-                    Text(
-                      "Vini Birthday Party",
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                    SizedBox(width: isTablet ? 6 : 4),
+                    Flexible(
+                      child: Text(
+                        "6d 13h 32m",
+                        style: GoogleFonts.inter(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.boxlightcolor,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    SizedBox(
-                      height: 6.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 6),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: Colors.white.withOpacity(0.3),
-                              width: 1,
-                            ),
-                          ),
-                          child: Text(
-                            "Wedding",
-                            style: GoogleFonts.inter(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10.0,
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 6),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color: const Color(0xFF10B981).withOpacity(0.3),
-                                blurRadius: 8,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(
-                                Icons.access_time,
-                                size: 16,
-                                color: Colors.black,
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                "6d 13h 32m",
-                                style: GoogleFonts.inter(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
                   ],
                 ),
               ),
+            ],
+          ),
+          SizedBox(height: isTablet ? 8 : 6),
+          Row(
+            children: [
+              Container(
+                width: 100,
+                padding: EdgeInsets.symmetric(
+                  horizontal: isTablet ? 1 : 1,
+                  vertical: isTablet ? 5 : 4,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.3),
+                    width: 1,
+                  ),
+                ),
+                child: Text(
+                  "Wedding",
+                  style: GoogleFonts.inter(
+                    fontSize: isTablet ? 11 : 9,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                ),
+              ),
+              SizedBox(width: isTablet ? 10 : 8),
             ],
           ),
         ],
@@ -205,118 +202,99 @@ class _PremiumEventCardState extends State<PremiumEventCard>
     );
   }
 
-  Widget _buildProgressSection() {
+  Widget _buildCompactProgressSection(bool isTablet) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildCombinedProgressCard(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCombinedProgressCard() {
-    return Container(
+      margin: EdgeInsets.all(isTablet ? 12 : 10),
       child: Column(
         children: [
-          _buildProgressSection1(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildProgressSection1() {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(14),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black38.withOpacity(0.3),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Icon(
-                Icons.task_alt_rounded,
-                color: AppColors.buttoncolor,
-                size: 22,
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Task Checklist",
-                    style: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF1E293B),
+          Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(isTablet ? 10 : 8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 6,
+                      offset: const Offset(0, 2),
                     ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    "Keep track of your progress",
-                    style: GoogleFonts.inter(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xFF64748B),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: AppColors.buttoncolor.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                "7/10",
-                style: GoogleFonts.inter(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
+                  ],
+                ),
+                child: Icon(
+                  Icons.task_alt_rounded,
                   color: AppColors.buttoncolor,
+                  size: isTablet ? 18 : 16,
                 ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(6),
-          child: LinearProgressIndicator(
-            value: 0.75, // 75% progress
-            backgroundColor: const Color(0xFFE2E8F0),
-            valueColor: AlwaysStoppedAnimation<Color>(
-              AppColors.buttoncolor,
-            ),
-            minHeight: 8,
+              SizedBox(width: isTablet ? 12 : 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Task Checklist",
+                      style: GoogleFonts.inter(
+                        fontSize: isTablet ? 14 : 12,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF1E293B),
+                      ),
+                    ),
+                    Text(
+                      "Keep track of your progress",
+                      style: GoogleFonts.inter(
+                        fontSize: isTablet ? 11 : 10,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xFF64748B),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isTablet ? 8 : 6,
+                  vertical: isTablet ? 4 : 3,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.buttoncolor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  "7/10",
+                  style: GoogleFonts.inter(
+                    fontSize: isTablet ? 12 : 11,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.buttoncolor,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
-      ],
+          SizedBox(height: isTablet ? 12 : 10),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: LinearProgressIndicator(
+              value: 0.75,
+              backgroundColor: const Color(0xFFE2E8F0),
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.buttoncolor),
+              minHeight: isTablet ? 6 : 5,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildEventDetails() {
+  Widget _buildCompactEventDetails(bool isTablet) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 6),
+      padding: EdgeInsets.symmetric(horizontal: isTablet ? 12 : 10),
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.all(isTablet ? 12 : 10),
         decoration: BoxDecoration(
           color: const Color(0xFFF8FAFC),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(isTablet ? 14 : 12),
           border: Border.all(
             color: const Color(0xFFE2E8F0),
             width: 1,
@@ -324,32 +302,28 @@ class _PremiumEventCardState extends State<PremiumEventCard>
         ),
         child: Column(
           children: [
-            _buildDetailRow(
-              Icons.people_outline,
+            _buildCompactDetailRow(
+              Icons.people_outline_rounded,
               "Invited Guests",
               "100 / 300",
               const Color(0xFF8B5CF6),
+              isTablet,
             ),
-            const SizedBox(height: 12),
-            _buildDetailRow(
+            SizedBox(height: isTablet ? 10 : 8),
+            _buildCompactDetailRow(
               Icons.calendar_today_outlined,
               "Event Date",
               "30/06/2025 - 31/06/2025",
               const Color(0xFF3B82F6),
+              isTablet,
             ),
-            const SizedBox(height: 12),
-            _buildDetailRow(
+            SizedBox(height: isTablet ? 10 : 8),
+            _buildCompactDetailRow(
               Icons.location_on_outlined,
               "Venue",
               "Sivakasi SSK Mahal",
               const Color(0xFFEF4444),
-            ),
-            const SizedBox(height: 12),
-            _buildDetailRow(
-              Icons.person_add_alt_outlined,
-              "Co-Hosts",
-              "0 added",
-              const Color(0xFF06B6D4),
+              isTablet,
             ),
           ],
         ),
@@ -357,19 +331,19 @@ class _PremiumEventCardState extends State<PremiumEventCard>
     );
   }
 
-  Widget _buildDetailRow(
-      IconData icon, String label, String value, Color color) {
+  Widget _buildCompactDetailRow(
+      IconData icon, String label, String value, Color color, bool isTablet) {
     return Row(
       children: [
         Container(
-          padding: const EdgeInsets.all(8),
+          padding: EdgeInsets.all(isTablet ? 8 : 6),
           decoration: BoxDecoration(
             color: color.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(isTablet ? 10 : 8),
           ),
-          child: Icon(icon, color: color, size: 18),
+          child: Icon(icon, color: color, size: isTablet ? 16 : 14),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: isTablet ? 12 : 10),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -377,19 +351,20 @@ class _PremiumEventCardState extends State<PremiumEventCard>
               Text(
                 label,
                 style: GoogleFonts.inter(
-                  fontSize: 12,
+                  fontSize: isTablet ? 11 : 10,
                   fontWeight: FontWeight.w500,
                   color: const Color(0xFF6B7280),
                 ),
               ),
-              const SizedBox(height: 2),
               Text(
                 value,
                 style: GoogleFonts.inter(
-                  fontSize: 14,
+                  fontSize: isTablet ? 12 : 11,
                   fontWeight: FontWeight.w600,
                   color: const Color(0xFF1F2937),
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
@@ -398,53 +373,60 @@ class _PremiumEventCardState extends State<PremiumEventCard>
     );
   }
 
-  Widget _buildActionSection() {
+  Widget _buildCompactActionSection(bool isTablet) {
     return Padding(
-      padding: const EdgeInsets.all(12),
+      padding: EdgeInsets.all(isTablet ? 12 : 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildActionButton(
+          _buildCompactActionButton(
             Icons.visibility_outlined,
             "View",
             const Color(0xFF6B7280),
             () {
-              // Handle view action
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => singleventdashboard()));
             },
+            isTablet,
           ),
-          _buildActionButton(
+          _buildCompactActionButton(
             Icons.edit_outlined,
             "Edit",
             const Color(0xFF3B82F6),
-            () {
-              // Handle edit action
-            },
+            () {},
+            isTablet,
           ),
-          _buildActionButton(
+          _buildCompactActionButton(
             Icons.delete_outline,
             "Delete",
             const Color(0xFFEF4444),
             () {
               _showDeleteConfirmation();
             },
+            isTablet,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildActionButton(
-      IconData icon, String label, Color color, VoidCallback onPressed) {
+  Widget _buildCompactActionButton(IconData icon, String label, Color color,
+      VoidCallback onPressed, bool isTablet) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: onPressed,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(isTablet ? 10 : 8),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+          padding: EdgeInsets.symmetric(
+            horizontal: isTablet ? 14 : 12,
+            vertical: isTablet ? 6 : 5,
+          ),
           decoration: BoxDecoration(
             color: color.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(isTablet ? 10 : 8),
             border: Border.all(
               color: color.withOpacity(0.2),
               width: 1,
@@ -453,12 +435,12 @@ class _PremiumEventCardState extends State<PremiumEventCard>
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, color: color, size: 18),
-              const SizedBox(width: 6),
+              Icon(icon, color: color, size: isTablet ? 16 : 14),
+              SizedBox(width: isTablet ? 6 : 4),
               Text(
                 label,
                 style: GoogleFonts.inter(
-                  fontSize: 12,
+                  fontSize: isTablet ? 11 : 10,
                   fontWeight: FontWeight.w600,
                   color: color,
                 ),
@@ -481,14 +463,14 @@ class _PremiumEventCardState extends State<PremiumEventCard>
           title: Text(
             "Delete Event",
             style: GoogleFonts.inter(
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
           ),
           content: Text(
             "Are you sure you want to delete this event? This action cannot be undone.",
             style: GoogleFonts.inter(
-              fontSize: 14,
+              fontSize: 13,
               color: const Color(0xFF6B7280),
             ),
           ),

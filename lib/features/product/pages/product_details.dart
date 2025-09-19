@@ -436,7 +436,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               color: AppColors.paper,
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: Text(
                   "Add to cart",
                   style: GoogleFonts.poppins(

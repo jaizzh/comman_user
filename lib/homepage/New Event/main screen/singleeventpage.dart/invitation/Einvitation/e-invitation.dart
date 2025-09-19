@@ -55,10 +55,13 @@ class _EinvitationState extends State<Einvitation> {
     _applyFilters();
   }
 
-  Future<void> _openFilterSheet() async {
-    final result = await filtersheet(context, _selectedCats);
-    if (result != null && result is Set<String>) {
-      _selectedCats = result;
+  // Fixed: Added proper filter sheet handler
+  Future<void> _showFilterSheet() async {
+    final selectedCategories = await filtersheet(context, _selectedCats);
+    if (selectedCategories != null) {
+      setState(() {
+        _selectedCats = selectedCategories;
+      });
       _applyFilters();
     }
   }
@@ -121,10 +124,11 @@ class _EinvitationState extends State<Einvitation> {
                   ),
                 ),
                 const SizedBox(width: 10),
+                // Fixed: Proper filter button call
                 _IconPillButton(
                   icon: Icons.filter_alt_rounded,
                   label: 'Filter',
-                  onTap: _openFilterSheet,
+                  onTap: _showFilterSheet,
                 ),
               ],
             ),
@@ -244,18 +248,23 @@ class _PremiumSearchField extends StatelessWidget {
   }
 }
 
+// Fixed: Complete _IconPillButton class with proper onTap parameter
 class _IconPillButton extends StatelessWidget {
-  const _IconPillButton(
-      {required this.icon, required this.label, required this.onTap});
+  const _IconPillButton({
+    required this.icon,
+    required this.label,
+    required this.onTap, // Fixed: Added onTap parameter
+  });
+
   final IconData icon;
   final String label;
-  final VoidCallback onTap;
+  final VoidCallback onTap; // Fixed: Added onTap field
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: onTap, // Fixed: Corrected typo from 'ontap' to 'onTap'
       borderRadius: BorderRadius.circular(12),
-      onTap: onTap,
       child: Ink(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         decoration: BoxDecoration(

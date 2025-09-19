@@ -70,7 +70,7 @@ class _singlevideoinviteState extends State<singlevideoinvite> {
 
   Widget listsofvideo() {
     return GridView.builder(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 24),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 14),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 14,
@@ -171,7 +171,7 @@ class _PremiumVideoCardState extends State<_PremiumVideoCard>
                     Stack(
                       children: [
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.170,
+                          height: MediaQuery.of(context).size.height * 0.160,
                           width: double.infinity,
                           child: Image.asset(
                             widget.imageAsset,

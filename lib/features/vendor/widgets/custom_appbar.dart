@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:common_user/app_colors.dart';
+import 'package:common_user/features/chat/pages/user_list_page.dart';
 import 'package:common_user/features/product/pages/cart_page.dart';
 import 'package:common_user/features/product/widgets/cart_provider.dart';
 import 'package:common_user/features/vendor/widgets/navigation.dart';
@@ -56,15 +57,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         if (showNotification)
-          const Card(
-            color: AppColors.primary,
-            elevation: 3,
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.notifications,
-                size: 20,
-                color: AppColors.white,
+          GestureDetector(
+            onTap: () {
+              navigateWithSlide(context, UsersPage());
+            },
+            child: const Card(
+              color: AppColors.primary,
+              elevation: 3,
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.notifications,
+                  size: 20,
+                  color: AppColors.white,
+                ),
               ),
             ),
           ),

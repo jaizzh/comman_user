@@ -694,7 +694,7 @@ class _PremiumBottomSheet extends StatelessWidget {
 
   Widget _buildActionButton(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(12),
       child: SizedBox(
         width: double.infinity,
         child: ElevatedButton(
@@ -747,17 +747,17 @@ class _WeddingCategoryCard extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(10),
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(10),
             border: Border.all(color: const Color(0xFFE2E8F0)),
           ),
           child: Column(
             children: [
               Container(
-                height: 100,
+                height: 80,
                 margin: const EdgeInsets.all(8),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
@@ -774,7 +774,7 @@ class _WeddingCategoryCard extends StatelessWidget {
                   title,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
-                    fontSize: 13,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: const Color(0xFF0F172A),
                   ),

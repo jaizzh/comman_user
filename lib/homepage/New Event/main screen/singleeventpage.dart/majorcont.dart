@@ -1,7 +1,6 @@
 import 'package:common_user/common/mobile%20contacts/groupingcontact.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/circleinvite.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -29,21 +28,6 @@ class _majorcontState extends State<majorcont> {
   List<Contact> _selectedContacts = [];
 
   // Helper text style factory
-  TextStyle _txt(
-    BuildContext context, {
-    double size = 14,
-    FontWeight weight = FontWeight.w600,
-    Color? color,
-    String? fontFamily,
-  }) {
-    final s = _scaleForWidth(context);
-    return GoogleFonts.getFont(
-      fontFamily ?? 'Inter',
-      fontSize: size * s,
-      fontWeight: weight,
-      color: color ?? textDark,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +192,7 @@ class _majorcontState extends State<majorcont> {
                 children: [
                   _buildStatusIndicator(
                       context, '0 Guests', Icons.people_outline_rounded, s),
-                  SizedBox(width: 10.0 * s),
+                  SizedBox(width: 5.0 * s),
                   _buildStatusIndicator(
                       context, '0 Co-hosts', Icons.handshake_outlined, s),
                 ],
@@ -272,10 +256,9 @@ class _majorcontState extends State<majorcont> {
           child: _buildSecondaryActionButton(
               context, 'Add Co-Host', Icons.handshake_rounded, () {
             _pickMultipleContacts();
-            Navigator.pop(context);
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Contacts share tapped')),
-            );
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //   const SnackBar(content: Text('Contacts share tapped')),
+            // );
           }, s),
         ),
       ],
@@ -810,43 +793,5 @@ class _majorcontState extends State<majorcont> {
         print('Selected: ${c.displayName}');
       }
     }
-  }
-
-  Widget _shareTile({
-    required String title,
-    required IconData icon,
-    required Color color,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            color: Colors.white,
-            boxShadow: const [
-              BoxShadow(spreadRadius: 1, blurRadius: 1, color: Colors.black26)
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 16.0, color: color),
-              const SizedBox(width: 6.0),
-              Text(
-                title,
-                style: const TextStyle(
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }

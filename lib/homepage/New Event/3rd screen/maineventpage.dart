@@ -1,3 +1,4 @@
+import 'package:common_user/homepage/New%20Event/1st%20screen/eventplan.dart';
 import 'package:common_user/homepage/New%20Event/3rd%20screen/eventbox.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -51,7 +52,7 @@ class _MinimalDemoPageState extends State<MinimalDemoPage>
                   child: _buildCleanHeader(context),
                 ),
 
-                const SizedBox(height: 24),
+                const SizedBox(height: 4),
 
                 // Financial Overview
                 Padding(
@@ -59,7 +60,7 @@ class _MinimalDemoPageState extends State<MinimalDemoPage>
                   child: _buildFinancialSection(),
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
 
                 // Action Buttons
                 Padding(
@@ -99,7 +100,7 @@ class _MinimalDemoPageState extends State<MinimalDemoPage>
           IconButton(
             icon: const Icon(Icons.arrow_back_ios_new, size: 20),
             color: const Color(0xFF374151),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.maybePop(context),
           ),
 
           // User Info
@@ -156,7 +157,7 @@ class _MinimalDemoPageState extends State<MinimalDemoPage>
         Text(
           "Total Investment",
           style: GoogleFonts.inter(
-            fontSize: 14,
+            fontSize: 12,
             fontWeight: FontWeight.w500,
             color: const Color(0xFF6B7280),
           ),
@@ -169,7 +170,7 @@ class _MinimalDemoPageState extends State<MinimalDemoPage>
             Text(
               "\$14,386",
               style: GoogleFonts.inter(
-                fontSize: 32,
+                fontSize: 25,
                 fontWeight: FontWeight.w800,
                 color: const Color(0xFF111827),
                 height: 1.0,
@@ -178,7 +179,7 @@ class _MinimalDemoPageState extends State<MinimalDemoPage>
             Text(
               ".00",
               style: GoogleFonts.inter(
-                fontSize: 20,
+                fontSize: 16,
                 fontWeight: FontWeight.w600,
                 color: const Color(0xFF6B7280),
               ),
@@ -206,7 +207,7 @@ class _MinimalDemoPageState extends State<MinimalDemoPage>
                   Text(
                     "+12.5%",
                     style: GoogleFonts.inter(
-                      fontSize: 12,
+                      fontSize: 10,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
@@ -227,7 +228,10 @@ class _MinimalDemoPageState extends State<MinimalDemoPage>
           child: _buildCleanActionButton(
             "Create New Event",
             Icons.add,
-            () {},
+            () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => eventplan()));
+            },
           ),
         ),
         const SizedBox(width: 16),
@@ -250,7 +254,7 @@ class _MinimalDemoPageState extends State<MinimalDemoPage>
         onTap: onTap,
         borderRadius: BorderRadius.circular(8),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10.0),
           decoration: BoxDecoration(
             border: Border.all(
               color: const Color(0xFFE5E7EB),
@@ -266,7 +270,7 @@ class _MinimalDemoPageState extends State<MinimalDemoPage>
               Text(
                 label,
                 style: GoogleFonts.inter(
-                  fontSize: 13,
+                  fontSize: 11,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF9A2143),
                 ),
@@ -285,12 +289,12 @@ class _MinimalDemoPageState extends State<MinimalDemoPage>
         Text(
           "Event Overview",
           style: GoogleFonts.inter(
-            fontSize: 18,
+            fontSize: 15,
             fontWeight: FontWeight.w700,
             color: const Color(0xFF111827),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 6),
         Row(
           children: [
             Expanded(
@@ -328,7 +332,7 @@ class _MinimalDemoPageState extends State<MinimalDemoPage>
   Widget _buildMinimalStatCard(
       String value, String label, IconData icon, Color accentColor) {
     return Container(
-      height: 120, // Fixed height instead of MediaQuery percentage
+      height: 100, // Fixed height instead of MediaQuery percentage
       decoration: BoxDecoration(
         border: Border.all(
           color: const Color(0xFFE5E7EB),
@@ -345,13 +349,13 @@ class _MinimalDemoPageState extends State<MinimalDemoPage>
               Icon(
                 icon,
                 color: accentColor,
-                size: 24,
+                size: 22,
               ),
               const SizedBox(width: 8.0),
               Text(
                 value,
                 style: GoogleFonts.inter(
-                  fontSize: 28,
+                  fontSize: 20,
                   fontWeight: FontWeight.w800,
                   color: const Color(0xFF111827),
                 ),
@@ -371,7 +375,7 @@ class _MinimalDemoPageState extends State<MinimalDemoPage>
               textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           Container(
             height: 2,
             margin: const EdgeInsets.symmetric(horizontal: 16),

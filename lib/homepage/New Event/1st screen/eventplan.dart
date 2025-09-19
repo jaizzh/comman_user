@@ -129,8 +129,7 @@ class _eventplanState extends State<eventplan> {
               color: Colors.black,
               size: 18.0,
             ),
-            onPressed: () => Navigator.push(
-                context, MaterialPageRoute(builder: (_) => homepage())),
+            onPressed: () => Navigator.pop(context),
           ),
         ),
         centerTitle: true,
