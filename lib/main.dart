@@ -1,6 +1,7 @@
 import 'package:common_user/common/razorpay/razoreventplan.dart';
 import 'package:common_user/common/razorpay/razorpay.dart';
 import 'package:common_user/features/venue/presentation/model/location_provider.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/common/giftmoneylog/providersvalues.dart'; // Add this import
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/common/singleeventdashboard.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/plannn/notification.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,8 +15,18 @@ void main() async {
   RazorpayService.instance.init();
   RazorpayServiceevent.instance.init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(ChangeNotifierProvider(
-      create: (_) => LocationProvider(), child: const MyApp()));
+
+  // MultiProvider use பண்ணி multiple providers add பண்ணுங்க
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LocationProvider()),
+        ChangeNotifierProvider(
+            create: (_) => formvalues()), // Add your formvalues provider
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,8 +35,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        themeMode: ThemeMode.system,
-        home: singleventdashboard());
+      debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.system,
+      home: singleventdashboard(),
+    );
   }
 }
