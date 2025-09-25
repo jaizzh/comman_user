@@ -140,7 +140,7 @@ class _CalendarPageState extends State<CalendarPage> {
     const EventModel(
       eventName: "Prakash & Anu Wedding Anniversary",
       eventType: "Wedding Anniversary",
-      startDate: "07/09/2025",
+      startDate: "10/09/2025",
       endDate: "12/09/2025",
       inviteFrom: 8838185633,
     ),
@@ -201,7 +201,7 @@ class _CalendarPageState extends State<CalendarPage> {
   // Get all events for a specific date
   List<EventModel> _getEventsForDate(DateTime date) {
     final List<EventModel> eventsForDay = [];
-    final allEvents = [..._inviteEventList, ..._inviteAcceptList];
+    final allEvents = _inviteAcceptList;
 
     for (final event in allEvents) {
       final startDate = _parseDate(event.startDate);
