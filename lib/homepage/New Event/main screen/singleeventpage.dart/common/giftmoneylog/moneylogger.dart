@@ -54,6 +54,7 @@ class _MoneyLoggerState extends State<MoneyLogger>
           Expanded(
             child: SingleChildScrollView(
               child: Container(
+                color: Colors.white,
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(

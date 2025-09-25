@@ -2,8 +2,8 @@ import 'package:common_user/common/razorpay/razoreventplan.dart';
 import 'package:common_user/common/razorpay/razorpay.dart';
 import 'package:common_user/features/venue/presentation/model/location_provider.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/common/giftmoneylog/providersvalues.dart'; // Add this import
-import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/common/singleeventdashboard.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/plannn/notification.dart';
+import 'package:common_user/homepage/dashboard%20page/mainpage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
-      home: singleventdashboard(),
+      home: MainPage(),
     );
   }
 }

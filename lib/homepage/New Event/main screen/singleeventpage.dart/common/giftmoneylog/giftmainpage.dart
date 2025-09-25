@@ -234,32 +234,6 @@ class _GiftLogState extends State<GiftLog> {
                 ),
               ),
 
-              // ✅ FIXED: TabBarView with GiftLogger getting provider data
-              // Expanded(
-              //   child: TabBarView(
-              //     children: [
-              //       // ✅ Use existing GiftLogger with provider data
-              //       Consumer<formvalues>(
-              //         builder: (context, provider, child) {
-              //           final allItems = provider.getAllValues();
-              //           // Filter only gift items (items with 'giftname' field)
-              //           final giftItems = allItems
-              //               .where((item) => item.containsKey('giftname'))
-              //               .toList();
-
-              //           return GiftLogger(
-              //             items: giftItems, // ✅ Pass filtered provider data
-              //             onAddPressed: _openGiftForm,
-              //           );
-              //         },
-              //       ),
-              //       // Money Log Tab
-              //       const MoneyLogger(),
-              //     ],
-              //   ),
-              // ),
-
-//Only this TabBarView section needs update:
               Expanded(
                 child: TabBarView(
                   children: [
@@ -283,13 +257,6 @@ class _GiftLogState extends State<GiftLog> {
               ),
             ],
           ),
-        ),
-
-        // FAB for adding gifts
-        floatingActionButton: FloatingActionButton(
-          onPressed: _openGiftForm,
-          backgroundColor: AppColors.primary,
-          child: const Icon(Icons.add, color: Colors.white),
         ),
       ),
     );
