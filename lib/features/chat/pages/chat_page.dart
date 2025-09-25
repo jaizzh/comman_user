@@ -59,7 +59,11 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       backgroundColor: AppColors.paper,
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back_ios),
+        leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(Icons.arrow_back)),
         title: Text(
           widget.otherUserName,
           style: GoogleFonts.poppins(fontSize: 17),
