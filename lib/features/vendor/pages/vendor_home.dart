@@ -14,6 +14,7 @@ import 'package:common_user/features/vendor/widgets/navigation.dart';
 import 'package:common_user/features/venue/presentation/model/location_provider.dart';
 import 'package:common_user/features/venue/presentation/pages/filter_page.dart';
 import 'package:common_user/features/venue/presentation/pages/location_search_page.dart';
+import 'package:common_user/features/view_invites/pages/view_invite_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -78,15 +79,20 @@ class _VendorHomeState extends State<VendorHome> {
                 ),
               ),
               SizedBox(width: screenWidth * 0.01),
-              Card(
-                color: AppColors.primary,
-                elevation: 3,
-                child: Padding(
-                  padding: EdgeInsets.all(screenWidth * 0.02),
-                  child: const Icon(
-                    Icons.shopping_bag,
-                    size: 20,
-                    color: AppColors.white,
+              GestureDetector(
+                onTap: () {
+                  navigateWithSlide(context, const ViewInvitePage());
+                },
+                child: Card(
+                  color: AppColors.primary,
+                  elevation: 3,
+                  child: Padding(
+                    padding: EdgeInsets.all(screenWidth * 0.02),
+                    child: const Icon(
+                      Icons.shopping_bag,
+                      size: 20,
+                      color: AppColors.white,
+                    ),
                   ),
                 ),
               ),
