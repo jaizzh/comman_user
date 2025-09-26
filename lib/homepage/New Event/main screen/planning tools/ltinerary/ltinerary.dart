@@ -2,7 +2,6 @@ import 'package:common_user/common/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class ltinerarypage extends StatefulWidget {
   const ltinerarypage({super.key});
 
@@ -14,9 +13,6 @@ class _ltinerarypageState extends State<ltinerarypage> {
   final TextEditingController eventnamecont = TextEditingController();
   final TextEditingController placenamecont = TextEditingController();
 
-//  final _formKey = GlobalKey<FormState>();
-
-  // Saved timelines (max 6)
   final List<Map<String, String>> itineraryfields = [];
 
   // Date & time
@@ -57,13 +53,12 @@ class _ltinerarypageState extends State<ltinerarypage> {
 
   // form filled + time valid
   bool get _canSaveOne =>
-    _isEventNameValid &&
+      _isEventNameValid &&
       _isPlaceValid &&
       selectedDate != null &&
       startTime != null &&
       endTime != null &&
       _areTimesValid;
-
 
   bool get _canSave => _canSaveOne;
 
@@ -94,7 +89,8 @@ class _ltinerarypageState extends State<ltinerarypage> {
 
   Future<void> _pickTime({required bool isStart}) async {
     final now = TimeOfDay.now();
-    final initial = isStart ? (startTime ?? now) : (endTime ?? startTime ?? now);
+    final initial =
+        isStart ? (startTime ?? now) : (endTime ?? startTime ?? now);
 
     final picked = await showTimePicker(
       context: context,
@@ -131,7 +127,8 @@ class _ltinerarypageState extends State<ltinerarypage> {
       } else {
         if (startTime != null && _toMinutes(picked) < _toMinutes(startTime!)) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("End time can't be before start time")),
+            const SnackBar(
+                content: Text("End time can't be before start time")),
           );
           return;
         }
@@ -164,13 +161,19 @@ class _ltinerarypageState extends State<ltinerarypage> {
     });
 
     // Clear inputs for next entry
-   _clearInputsOnly();
+    _clearInputsOnly();
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        backgroundColor: Colors.green,
-        duration: Duration(seconds: 2),
-        content: Text("Your TimeLine Was Added Successfully",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15.0),)),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+          content: Text(
+            "Your TimeLine Was Added Successfully",
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 15.0),
+          )),
     );
   }
 
@@ -190,30 +193,43 @@ class _ltinerarypageState extends State<ltinerarypage> {
     setState(() => itineraryfields.removeAt(index));
   }
 
-   bool addbool = false;
+  bool addbool = false;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        child: Column(children: [
-          SizedBox(height: 16.0,),
-          iternaryheading(),
-           SizedBox(height: 8.0,),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Container(height: 1.0,width: double.infinity,color: AppColors.buttoncolor,),
-          ),
-          SizedBox(height: 8.0,),if(addbool == true) timelineadd(),
-          SizedBox(height: 12.0,),
-           _savedList(),
-      
-      
-      
-        ],),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 16.0,
+            ),
+            iternaryheading(),
+            SizedBox(
+              height: 8.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Container(
+                height: 1.0,
+                width: double.infinity,
+                color: AppColors.buttoncolor,
+              ),
+            ),
+            SizedBox(
+              height: 8.0,
+            ),
+            if (addbool == true) timelineadd(),
+            SizedBox(
+              height: 12.0,
+            ),
+            _savedList(),
+          ],
+        ),
       ),
     );
   }
-  Widget iternaryheading(){
+
+  Widget iternaryheading() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Row(
@@ -222,46 +238,67 @@ class _ltinerarypageState extends State<ltinerarypage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Vini Birthday Party",style: GoogleFonts.sahitya( fontSize: 18.0,fontWeight: FontWeight.bold,color: AppColors.buttoncolor)),
-              Text("Event - Birthday",style: GoogleFonts.mPlus1( fontSize: 12.0,fontWeight: FontWeight.bold,color: Colors.black54)),
+              Text("Vini Birthday Party",
+                  style: GoogleFonts.sahitya(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.buttoncolor)),
+              Text("Event - Birthday",
+                  style: GoogleFonts.mPlus1(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54)),
             ],
           ),
-          if(addbool == false) GestureDetector(
-            onTap: () {
-              setState(() {
-                addbool = true;
-              });
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                color: AppColors.buttoncolor,
-              ),
-              child:  Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 6.0),
-                child: Row(
-                  children: [
-                    Icon(Icons.add,color: Colors.white,),
-                    Text("Add Itinerary",style: TextStyle(color: Colors.white),),
-                  ],
+          if (addbool == false)
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  addbool = true;
+                });
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: AppColors.buttoncolor,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 6.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        "Add Itinerary",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          if(addbool == true) Container(
-            child: IconButton(onPressed: (){
-              setState(() {
-                addbool = false;
-              });
-            }, icon: Icon(Icons.close,color: AppColors.buttoncolor,)),
-          ),
- 
-
+          if (addbool == true)
+            Container(
+              child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      addbool = false;
+                    });
+                  },
+                  icon: Icon(
+                    Icons.close,
+                    color: AppColors.buttoncolor,
+                  )),
+            ),
         ],
       ),
     );
   }
-    Widget timelineadd() {
+
+  Widget timelineadd() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Container(
@@ -276,8 +313,8 @@ class _ltinerarypageState extends State<ltinerarypage> {
         child: Column(
           children: [
             const SizedBox(height: 14),
-              labell("Add Your Itinerary"),
-                  const SizedBox(height: 10),
+            labell("Add Your Itinerary"),
+            const SizedBox(height: 10),
             _textBox(
               hint: "Enter Task",
               maxLen: 28,
@@ -348,7 +385,7 @@ class _ltinerarypageState extends State<ltinerarypage> {
     );
   }
 
- Widget labell(String text) => Padding(
+  Widget labell(String text) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -364,14 +401,14 @@ class _ltinerarypageState extends State<ltinerarypage> {
           ],
         ),
       );
-      Widget _savedList() {
+  Widget _savedList() {
     if (itineraryfields.isEmpty) return const SizedBox.shrink();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
@@ -392,145 +429,150 @@ class _ltinerarypageState extends State<ltinerarypage> {
             separatorBuilder: (_, __) => const SizedBox(height: 8),
             itemBuilder: (ctx, i) {
               final m = itineraryfields[i];
-               return Container(
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(12),
-      boxShadow: const [
-        BoxShadow(color: Colors.black26, blurRadius: 4, spreadRadius: 1),
-      ],
-    ),
-    child: Stack(
-      children: [
-        // accent bar
-        Positioned.fill(
-          left: 0,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              width: 4,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                color: AppColors.buttoncolor, // your brand color
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  bottomLeft: Radius.circular(12),
+              return Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.black26, blurRadius: 4, spreadRadius: 1),
+                  ],
                 ),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(14, 12, 6, 12),
-          child: Row(
-            children: [
-              const SizedBox(width: 8),
-              // main info
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
                   children: [
-                    // title + date pill
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Text(
-                           m['eventName']!  ,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.inter(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 6),
+                    // accent bar
+                    Positioned.fill(
+                      left: 0,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          width: 4,
+                          height: double.infinity,
                           decoration: BoxDecoration(
-                            color: AppColors.boxboxlight,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(Icons.event, size: 14, color: Colors.black54),
-                              const SizedBox(width: 6),
-                              Text(
-                                m['date']! ,
-                                style: GoogleFonts.inter(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 8),
-
-                    // time row
-                    Row(
-                      children: [
-                        const Icon(Icons.schedule, size: 16, color: Colors.black54),
-                        const SizedBox(width: 6),
-                        Text(
-                         "${ m['start']!}   –  ${m['end']!} ",
-                          style: GoogleFonts.inter(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black87,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 6),
-
-                    // place row
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(Icons.place, size: 16, color: Colors.black54),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Text(
-                            m["place"]!,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.inter(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black87,
+                            color: AppColors.buttoncolor, // your brand color
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(12),
+                              bottomLeft: Radius.circular(12),
                             ),
                           ),
                         ),
-                      ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(14, 12, 6, 12),
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 8),
+                          // main info
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // title + date pill
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        m['eventName']!,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.inter(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w800,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 6),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.boxboxlight,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Icon(Icons.event,
+                                              size: 14, color: Colors.black54),
+                                          const SizedBox(width: 6),
+                                          Text(
+                                            m['date']!,
+                                            style: GoogleFonts.inter(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                const SizedBox(height: 8),
+
+                                // time row
+                                Row(
+                                  children: [
+                                    const Icon(Icons.schedule,
+                                        size: 16, color: Colors.black54),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      "${m['start']!}   –  ${m['end']!} ",
+                                      style: GoogleFonts.inter(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                const SizedBox(height: 6),
+
+                                // place row
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Icon(Icons.place,
+                                        size: 16, color: Colors.black54),
+                                    const SizedBox(width: 6),
+                                    Expanded(
+                                      child: Text(
+                                        m["place"]!,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.inter(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          // delete button
+                          IconButton(
+                            tooltip: 'Delete',
+                            onPressed: () {
+                              _removeAt(i);
+                            },
+                            icon: const Icon(Icons.delete_outline,
+                                color: Colors.red),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              ),
-
-              // delete button
-              IconButton(
-                tooltip: 'Delete',
-                onPressed: (){
-                  _removeAt(i);
-                },
-                icon: const Icon(Icons.delete_outline, color: Colors.red),
-              ),
-            ],
-          ),
-        ),
-      ],
-    ),
-  );
+              );
             },
           ),
         ],
@@ -627,9 +669,9 @@ class _ltinerarypageState extends State<ltinerarypage> {
   //                         ),
   //                       ],
   //                     ),
-          
+
   //                     const SizedBox(height: 8),
-          
+
   //                     // time row
   //                     Row(
   //                       children: [
@@ -645,9 +687,9 @@ class _ltinerarypageState extends State<ltinerarypage> {
   //                         ),
   //                       ],
   //                     ),
-          
+
   //                     const SizedBox(height: 6),
-          
+
   //                     // place row
   //                     Row(
   //                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -671,7 +713,7 @@ class _ltinerarypageState extends State<ltinerarypage> {
   //                   ],
   //                 ),
   //               ),
-          
+
   //               // delete button
   //               IconButton(
   //                 tooltip: 'Delete',
@@ -691,8 +733,7 @@ class _ltinerarypageState extends State<ltinerarypage> {
   //     );
   // }
 
-
- Widget _textBox({
+  Widget _textBox({
     required String hint,
     required int maxLen,
     required TextEditingController controller,
@@ -763,7 +804,8 @@ class _ltinerarypageState extends State<ltinerarypage> {
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Row(
           children: [
-            const Icon(Icons.access_time_filled, size: 18, color: Colors.black45),
+            const Icon(Icons.access_time_filled,
+                size: 18, color: Colors.black45),
             const SizedBox(width: 20),
             Expanded(
               child: Text(
@@ -795,8 +837,7 @@ class _ltinerarypageState extends State<ltinerarypage> {
                 ? _saveCurrentTimeline
                 : () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Fill All The Fields")),
+                      SnackBar(content: Text("Fill All The Fields")),
                     );
                   },
             child: Opacity(
@@ -851,5 +892,4 @@ class _ltinerarypageState extends State<ltinerarypage> {
       ),
     );
   }
-
 }

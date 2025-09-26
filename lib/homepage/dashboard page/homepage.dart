@@ -6,7 +6,9 @@ import 'package:common_user/homepage/dashboard%20page/neweventcard.dart';
 import 'package:common_user/homepage/dashboard%20page/promocard.dart';
 import 'package:common_user/homepage/dashboard%20page/vendorlist.dart';
 import 'package:common_user/homepage/dashboard%20page/venuelist.dart';
+import 'package:common_user/homepage/dashboard%20page/view_invite/calenderpage.dart';
 import 'package:common_user/homepage/profilepage/profile.dart';
+import 'package:common_user/summa.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -237,10 +239,30 @@ class _homepageState extends State<homepage> {
               },
               pather: 'assets/images/chat1.png',
               name: 'Create New Event'),
-          choosecreate(
-              onTapper: () {},
-              pather: 'assets/images/chat2.png',
-              name: 'View All Invites'),
+          Stack(
+            children: [
+              choosecreate(
+                  onTapper: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => CalendarPage()));
+                  },
+                  pather: 'assets/images/chat2.png',
+                  name: 'View All Invites'),
+              Positioned(
+                  right: 10,
+                  top: 0,
+                  child: Container(
+                    padding: EdgeInsets.all(4.0),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: AppColors.buttoncolor),
+                    child: Icon(
+                      Icons.door_front_door_rounded,
+                      color: Colors.white,
+                      size: 12.0,
+                    ),
+                  ))
+            ],
+          ),
           choosecreate(
               onTapper: () {},
               pather: 'assets/images/chat3.png',
