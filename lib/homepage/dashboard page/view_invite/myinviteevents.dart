@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:common_user/features/vendor/widgets/navigation.dart';
+import 'package:common_user/features/view_invites/pages/view_invite_page.dart';
 import 'package:flutter/material.dart';
 import 'package:common_user/app_colors.dart';
 
@@ -252,32 +254,38 @@ class _MyInviteEventsState extends State<MyInviteEvents> {
                                           fontSize: 13.0,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 12.0, vertical: 4.0),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(4.0),
-                                        color: AppColors.primary,
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.remove_red_eye_rounded,
-                                            color: Colors.white,
-                                            size: 14.0,
-                                          ),
-                                          SizedBox(
-                                            width: 4.0,
-                                          ),
-                                          Text(
-                                            "View",
-                                            style: TextStyle(
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white),
-                                          ),
-                                        ],
+                                    GestureDetector(
+                                      onTap: () {
+                                        navigateWithSlide(
+                                            context, const ViewInvitePage());
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12.0, vertical: 4.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                          color: AppColors.primary,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.remove_red_eye_rounded,
+                                              color: Colors.white,
+                                              size: 14.0,
+                                            ),
+                                            SizedBox(
+                                              width: 4.0,
+                                            ),
+                                            Text(
+                                              "View",
+                                              style: TextStyle(
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     )
                                   ],
