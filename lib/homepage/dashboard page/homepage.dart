@@ -8,7 +8,6 @@ import 'package:common_user/homepage/dashboard%20page/vendorlist.dart';
 import 'package:common_user/homepage/dashboard%20page/venuelist.dart';
 import 'package:common_user/homepage/dashboard%20page/view_invite/calenderpage.dart';
 import 'package:common_user/homepage/profilepage/profile.dart';
-import 'package:common_user/summa.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -256,7 +255,7 @@ class _homepageState extends State<homepage> {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle, color: AppColors.buttoncolor),
                     child: Icon(
-                      Icons.door_front_door_rounded,
+                      Icons.notification_add,
                       color: Colors.white,
                       size: 12.0,
                     ),
