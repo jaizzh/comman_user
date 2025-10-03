@@ -1,4 +1,6 @@
 import 'package:common_user/app_colors.dart';
+import 'package:common_user/homepage/dashboard%20page/view_invite/invitehistorypage.dart';
+import 'package:common_user/homepage/dashboard%20page/view_invite/manualadd.dart';
 import 'package:common_user/homepage/dashboard%20page/view_invite/myinviteevents.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -54,7 +56,7 @@ class EventModel {
   final String eventType;
   final String startDate;
   final String endDate;
-  final int? inviteFrom;
+  final String inviteFrom;
   final bool isAccepted;
 
   const EventModel({
@@ -62,17 +64,17 @@ class EventModel {
     required this.eventType,
     required this.startDate,
     required this.endDate,
-    this.inviteFrom,
+    required this.inviteFrom,
     this.isAccepted = false,
   });
 
   factory EventModel.fromMap(Map<dynamic, dynamic> map) {
     return EventModel(
       eventName: map['eventname']?.toString() ?? '',
-      eventType: map['eventtype']?.toString() ?? '',
+      eventType: map['eventtype']?.toString() ?? map['relationship']?.toString() ?? '',
       startDate: map['startdate']?.toString() ?? '',
       endDate: map['enddate']?.toString() ?? '',
-      inviteFrom: map['invitefrom'] as int?,
+      inviteFrom: map['invitefrom']?.toString() ?? '',
       isAccepted: map['isAccepted'] as bool? ?? false,
     );
   }
@@ -93,7 +95,7 @@ class EventModel {
     String? eventType,
     String? startDate,
     String? endDate,
-    int? inviteFrom,
+    String? inviteFrom,
     bool? isAccepted,
   }) {
     return EventModel(
@@ -135,14 +137,14 @@ class _CalendarPageState extends State<CalendarPage> {
       eventType: "Birthday Party",
       startDate: "06/09/2025",
       endDate: "08/09/2025",
-      inviteFrom: 9500427658,
+      inviteFrom: "9500427658",
     ),
     const EventModel(
       eventName: "Prakash & Anu Wedding Anniversary",
       eventType: "Wedding Anniversary",
       startDate: "10/09/2025",
       endDate: "12/09/2025",
-      inviteFrom: 8838185633,
+      inviteFrom: "8838185633",
     ),
   ];
 
@@ -197,6 +199,33 @@ class _CalendarPageState extends State<CalendarPage> {
 
   bool _isEndOfRange(DateTime date, DateTimeRange range) =>
       isSameDay(_dateOnly(date), range.end);
+
+  // Add manual event callback
+  void _addManualEvent(Map<dynamic, dynamic> eventData) {
+    setState(() {
+      // Create EventModel from the manual data
+      final newEvent = EventModel(
+        eventName: eventData['eventname']?.toString() ?? '',
+        eventType: eventData['relationship']?.toString() ?? 'Manual Event',
+        startDate: eventData['startdate']?.toString() ?? '',
+        endDate: eventData['enddate']?.toString() ?? '',
+        inviteFrom: eventData['inviteFrom']?.toString() ?? '', // Manual events don't have invite from
+        isAccepted: true, // Manual events are automatically accepted
+      );
+      
+      // Add to accepted list
+      _inviteAcceptList.add(newEvent);
+    });
+    
+    // Show success message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Event "${eventData['eventname']}" added successfully!'),
+        backgroundColor: AppColors.primary,
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
 
   // Get all events for a specific date
   List<EventModel> _getEventsForDate(DateTime date) {
@@ -497,11 +526,39 @@ class _CalendarPageState extends State<CalendarPage> {
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
+            SizedBox(height: 10.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      manualinvitesheet(context, onEventAdded: _addManualEvent);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 14.0, vertical: 4.0),
+                      decoration: BoxDecoration(
+                          color: AppColors.primary,
+                          borderRadius: BorderRadius.circular(5.0)),
+                      child: Text(
+                        "Add Manual Invite",
+                        style: TextStyle(
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             _buildCalendar(context),
             _buildInviteList(context),
             MyInviteEvents(
-                completelistinvite:
-                    _inviteAcceptList.map((e) => e.toMap()).toList()),
+              completelistinvite: _inviteAcceptList.map((e) => e.toMap()).toList(),
+              onEventAdded: _addManualEvent,
+            ),
           ],
         ),
       ),
@@ -539,7 +596,9 @@ class _CalendarPageState extends State<CalendarPage> {
       centerTitle: true,
       actions: [
         _buildAppBarAction(context, Icons.notifications_active_rounded, () {}),
-        _buildAppBarAction(context, Icons.history_rounded, () {}),
+        _buildAppBarAction(context, Icons.history_rounded, () {
+         Navigator.push(context, MaterialPageRoute(builder: (_)=> invitehistory()));
+        }),
         SizedBox(width: ResponsiveHelper.getResponsiveWidth(context, 0.02)),
       ],
     );
@@ -809,7 +868,7 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 
-  // Invite list widget (rest of the methods remain the same)
+  // Invite list widget
   Widget _buildInviteList(BuildContext context) {
     if (_inviteEventList.isEmpty) {
       return const SizedBox.shrink();
