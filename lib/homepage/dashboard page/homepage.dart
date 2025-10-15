@@ -2,11 +2,11 @@ import 'package:common_user/common/colors.dart';
 import 'package:common_user/common/razorpay/razorbool.dart';
 import 'package:common_user/homepage/New%20Event/1st%20screen/eventplan.dart';
 import 'package:common_user/homepage/New%20Event/3rd%20screen/maineventpage.dart';
+import 'package:common_user/homepage/dashboard%20page/invites_visit/screens/calenderspage.dart';
 import 'package:common_user/homepage/dashboard%20page/neweventcard.dart';
 import 'package:common_user/homepage/dashboard%20page/promocard.dart';
 import 'package:common_user/homepage/dashboard%20page/vendorlist.dart';
 import 'package:common_user/homepage/dashboard%20page/venuelist.dart';
-import 'package:common_user/homepage/dashboard%20page/view_invite/calenderpage.dart';
 import 'package:common_user/homepage/profilepage/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -243,7 +243,7 @@ class _homepageState extends State<homepage> {
               choosecreate(
                   onTapper: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => CalendarPage()));
+                        MaterialPageRoute(builder: (_) => calendermain()));
                   },
                   pather: 'assets/images/chat2.png',
                   name: 'View All Invites'),
