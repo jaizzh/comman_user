@@ -331,19 +331,35 @@ class _ManualEventSheetState extends ConsumerState<_ManualEventSheet> {
     final picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime.utc(2024, 1, 1, 0, 0, 0),
-      lastDate: DateTime.utc(
-        2030,
-        1,
-        1,
-        1,
-      ),
+      firstDate: DateTime(2024, 1, 1),
+      lastDate: DateTime(2030, 12, 31),
     );
     if (picked == null) return;
-    final String pickformat = DateFormat("dd-mm-yyyy").format(picked);
+
+    final storage = DateFormat("yyyy-MM-dd").format(picked); // ✅ parse-safe
     setState(() {
-      dateinstring = pickformat;
       startdate = picked;
+      dateinstring = storage; // InviteModel.startDate uses this
     });
   }
+
+  // Future<void> choosedate() async {
+  //   final picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime.utc(2024, 1, 1, 0, 0, 0),
+  //     lastDate: DateTime.utc(
+  //       2030,
+  //       1,
+  //       1,
+  //       1,
+  //     ),
+  //   );
+  //   if (picked == null) return;
+  //   final String pickformat = DateFormat("dd-mm-yyyy").format(picked);
+  //   setState(() {
+  //     dateinstring = pickformat;
+  //     startdate = picked;
+  //   });
+  // }
 }

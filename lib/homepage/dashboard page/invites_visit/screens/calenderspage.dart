@@ -6,17 +6,40 @@ import 'package:common_user/app_colors.dart';
 import 'package:common_user/homepage/dashboard%20page/invites_visit/model/model.dart';
 import 'package:common_user/homepage/dashboard%20page/invites_visit/screens/fullimagescreen.dart';
 import 'package:common_user/homepage/dashboard%20page/invites_visit/screens/manualevent.dart';
+import 'package:common_user/homepage/dashboard%20page/invites_visit/widgets/bottomscreen.dart';
 import 'package:common_user/homepage/dashboard%20page/invites_visit/widgets/riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class calendermain extends ConsumerStatefulWidget {
-  const calendermain({super.key});
+  final DateTime? startdatedp;
+  final DateTime? enddatedp;
+  final int? comporincompint;
+  final int? inviteormanual;
+  const calendermain({
+    super.key,
+    required this.startdatedp,
+    required this.enddatedp,
+    required this.comporincompint,
+    required this.inviteormanual,
+  });
   @override
   ConsumerState<calendermain> createState() => _calendermainState();
 }
 
 class _calendermainState extends ConsumerState<calendermain> {
+  DateTime? startdateor;
+  DateTime? enddateor;
+  int? selectedcategory;
+  int? inviteee;
+  void initState() {
+    super.initState();
+    startdateor = widget.startdatedp;
+    enddateor = widget.enddatedp;
+    selectedcategory = widget.comporincompint;
+    inviteee = widget.inviteormanual;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,6 +142,9 @@ class _calendermainState extends ConsumerState<calendermain> {
                     color: Colors.black),
               ),
               GestureDetector(
+                onTap: () {
+                  showFilterBottomSheet(context);
+                },
                 child: Container(
                     padding:
                         EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
@@ -263,7 +289,7 @@ class _calendermainState extends ConsumerState<calendermain> {
                         backgroundColor: AppColors.primary,
                       ),
                       onPressed: () {
-                        // READ in callbacks to mutate state
+                        // READ callbacks to mutate state
                         ref.read(inviteecontact.notifier).update((list) {
                           final newList = List<InviteModel>.from(list);
                           final removedInvite = newList.removeAt(index);
@@ -321,6 +347,33 @@ class _calendermainState extends ConsumerState<calendermain> {
   Widget invitecompleted() {
     final completed = ref.watch(invitecompletes);
 
+    final now = DateTime.now();
+    DateTime strip(DateTime d) => DateTime(d.year, d.month, d.day);
+    final today = strip(now);
+
+    final filtered = completed.where((e) {
+      final parsed = DateTime.tryParse(e.startDate); // expects "yyyy-MM-dd"
+      if (parsed == null) return false;
+
+      final d = strip(parsed);
+
+      // Date range (inclusive)
+      if (startdateor != null && d.isBefore(strip(startdateor!))) return false;
+      if (enddateor != null && d.isAfter(strip(enddateor!))) return false;
+
+      // Category: 0/null=All, 1=Completed(past), 2=Incompleted(today & future)
+      if (selectedcategory == 1 && !d.isBefore(today)) return false;
+      if (selectedcategory == 2 && d.isBefore(today)) return false;
+
+      // Manual/Invited: 0/null=All, 1=Manual only, 2=Invited only
+      final addr = (e.address).trim().toLowerCase();
+      final isManual = addr == 'manual';
+      if (inviteee == 1 && isManual) return false; // keep only Manual
+      if (inviteee == 2 && !isManual) return false; // keep only Invited
+
+      return true;
+    }).toList();
+
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -330,9 +383,9 @@ class _calendermainState extends ConsumerState<calendermain> {
         crossAxisCount: 2,
         childAspectRatio: 7 / 10,
       ),
-      itemCount: completed.length,
+      itemCount: filtered.length,
       itemBuilder: (context, index) {
-        final invitecon = completed[index];
+        final invitecon = filtered[index];
 
         return Card(
           elevation: 4,

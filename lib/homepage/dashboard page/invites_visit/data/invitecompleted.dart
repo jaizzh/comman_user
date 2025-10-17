@@ -3,16 +3,16 @@
 import 'package:common_user/homepage/dashboard%20page/invites_visit/model/model.dart';
 
 final List<InviteModel> inviteComplete = [
-  InviteModel(
-    eventName: 'Wedding Ceremony',
-    eventType: 'Marriage',
-    startDate: '2025-10-20',
-    endDate: '2025-10-21',
-    image: 'assets/images/inviter2.jpg',
-    inviteFrom: 'Arun & Priya',
-    address: 'No.12, Flower Street, Chennai',
-    multiImages: const [],
-  ),
+  // InviteModel(
+  //   eventName: 'Wedding Ceremony',
+  //   eventType: 'Marriage',
+  //   startDate: '2025-10-20',
+  //   endDate: '2025-10-21',
+  //   image: 'assets/images/inviter2.jpg',
+  //   inviteFrom: 'Arun & Priya',
+  //   address: 'No.12, Flower Street, Chennai',
+  //   multiImages: const [],
+  // ),
   InviteModel(
     eventName: 'House Warming',
     eventType: 'Function',

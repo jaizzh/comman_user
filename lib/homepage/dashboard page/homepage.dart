@@ -242,8 +242,15 @@ class _homepageState extends State<homepage> {
             children: [
               choosecreate(
                   onTapper: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => calendermain()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => calendermain(
+                                  startdatedp: null,
+                                  enddatedp: null,
+                                  comporincompint: null,
+                                  inviteormanual: null,
+                                )));
                   },
                   pather: 'assets/images/chat2.png',
                   name: 'View All Invites'),
