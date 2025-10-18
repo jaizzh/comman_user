@@ -1,9 +1,15 @@
 import 'package:common_user/common/colors.dart';
 import 'package:common_user/common/razorpay/razorbool.dart';
+import 'package:common_user/features/vendor/pages/vendor_home.dart';
+import 'package:common_user/features/venue/presentation/pages/venue_home.dart';
 import 'package:common_user/homepage/New%20Event/1st%20screen/eventplan.dart';
 import 'package:common_user/homepage/New%20Event/3rd%20screen/maineventpage.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/invitationhome.dart';
+import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/plannn/planevent.dart';
 import 'package:common_user/homepage/dashboard%20page/invites_visit/screens/calenderspage.dart';
+import 'package:common_user/homepage/dashboard%20page/mainpage.dart';
 import 'package:common_user/homepage/dashboard%20page/neweventcard.dart';
+import 'package:common_user/homepage/dashboard%20page/notification.dart';
 import 'package:common_user/homepage/dashboard%20page/promocard.dart';
 import 'package:common_user/homepage/dashboard%20page/vendorlist.dart';
 import 'package:common_user/homepage/dashboard%20page/venuelist.dart';
@@ -39,7 +45,10 @@ class _homepageState extends State<homepage> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: drawerwidget(context),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         surfaceTintColor: Colors.white,
@@ -51,7 +60,9 @@ class _homepageState extends State<homepage> {
         title: Row(
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                _scaffoldKey.currentState!.openDrawer();
+              },
               icon: const Icon(Icons.menu_rounded, size: 20),
               color: Colors.black87,
             ),
@@ -81,7 +92,10 @@ class _homepageState extends State<homepage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => NotificationPage()));
+            },
             tooltip: 'Notifications',
             icon: const Icon(Icons.notifications_none_rounded, size: 22),
             color: Colors.black54,
@@ -266,7 +280,7 @@ class _homepageState extends State<homepage> {
                       color: Colors.white,
                       size: 12.0,
                     ),
-                  ))
+                  )),
             ],
           ),
           choosecreate(
@@ -589,6 +603,145 @@ class _homepageState extends State<homepage> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget drawerwidget(BuildContext context) {
+    return Drawer(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Column(
+          children: [
+            // 👤 Drawer Header
+            DrawerHeader(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: AssetImage('assets/images/jega.png'),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Jegathish",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "jegavk18@gmail.com",
+                    style: TextStyle(color: Colors.black54, fontSize: 14),
+                  ),
+                ],
+              ),
+            ),
+
+            // 📋 Menu Items
+            Expanded(
+              child: ListView(
+                children: [
+                  _drawerItem(context, Icons.dashboard, "Dashboard", onTap: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (_) => MainPage()));
+                  }),
+                  _drawerItem(context, Icons.location_city, "Venue Page",
+                      onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => VenueHome()));
+                  }),
+                  _drawerItem(context, Icons.store, "Vendor Page", onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => VendorHome()));
+                  }),
+                  _drawerItem(context, Icons.mail_outline, "Make Invitation",
+                      onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => InvitationHome()));
+                  }),
+                  _drawerItem(context, Icons.event_available, "View My Events",
+                      onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => MinimalDemoPage()));
+                  }),
+                  _drawerItem(context, Icons.event_note, "View My Invites",
+                      onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => calendermain(
+                                startdatedp: null,
+                                enddatedp: null,
+                                comporincompint: null,
+                                inviteormanual: null)));
+                  }),
+                  _drawerItem(context, Icons.card_giftcard, "Send Gift",
+                      onTap: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (_) => MainPage()));
+                  }),
+                  _drawerItem(context, Icons.payment, "Plan Page", onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => PremiumPlanEvent()));
+                  }),
+                  _drawerItem(context, Icons.person, "Profile", onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => ProfileDemo()));
+                  }),
+                  _drawerItem(context, Icons.logout, "Log Out", isLogout: true,
+                      onTap: () {
+                    Navigator.pop(context);
+                  }),
+                ],
+              ),
+            ),
+
+            // ✨ Optional Footer
+            const Padding(
+              padding: EdgeInsets.only(bottom: 16.0),
+              child: Text(
+                "© 2025 MangalMall",
+                style: TextStyle(color: Colors.black54, fontSize: 12),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// 🔹 Reusable Drawer Item Widget
+  Widget _drawerItem(BuildContext context, IconData icon, String title,
+      {bool isLogout = false, required Function()? onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: ListTile(
+        leading: Icon(
+          icon,
+          color: isLogout ? Colors.redAccent : AppColors.buttoncolor,
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: isLogout ? Colors.redAccent : Colors.black,
+            fontWeight: isLogout ? FontWeight.bold : FontWeight.w500,
+            fontSize: 15,
+          ),
+        ),
+        hoverColor: Colors.white24,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
         ),
       ),
     );

@@ -96,7 +96,6 @@ class _PremiumChoosePlanContainerState extends State<PremiumChoosePlanContainer>
     final isSmallScreen = width < 360;
     final isMediumScreen = width >= 360 && width < 600;
     final isTablet = width >= 600 && width < 900;
-    final isLargeScreen = width >= 900;
 
     // Responsive multipliers
     final paddingMultiplier = isSmallScreen

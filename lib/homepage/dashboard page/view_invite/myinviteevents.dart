@@ -1,17 +1,13 @@
-// ignore_for_file: avoid_print
-
 import 'dart:async';
-import 'package:common_user/homepage/dashboard%20page/view_invite/invitehistorypage.dart';
 import 'package:flutter/material.dart';
 import 'package:common_user/app_colors.dart';
-import 'package:common_user/homepage/dashboard%20page/view_invite/manualadd.dart';
 
 class MyInviteEvents extends StatefulWidget {
   final List<Map<dynamic, dynamic>> completelistinvite;
   final Function(Map<dynamic, dynamic>)? onEventAdded; // Add callback parameter
-  
+
   const MyInviteEvents({
-    super.key, 
+    super.key,
     required this.completelistinvite,
     this.onEventAdded,
   });
@@ -49,58 +45,38 @@ class _MyInviteEventsState extends State<MyInviteEvents> {
     return '${days > 0 ? '${days}d ' : ''}$hh:$mm:$ss';
   }
 
-  void _openManualSheet() {
-    manualinvitesheet(
-      context,
-      onEventAdded: (Map<dynamic, dynamic> newEvent) {
-        setState(() {
-          _invites.add(newEvent);
-        });
-        // Also call the parent callback if provided
-        if (widget.onEventAdded != null) {
-          widget.onEventAdded!(newEvent);
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Event "${newEvent['eventname']}" added successfully!'),
-            backgroundColor: AppColors.primary,
-            duration: Duration(seconds: 2),
-          ),
-        );
-      },
-    );
-  }
+  // Debug helper method to check what values are actually stored
+  String _getDisplayText(Map<dynamic, dynamic> completed) {
+    print("=== Debug Event Data ===");
+    print("Full event data: $completed");
+    print("invitefrom: '${completed["invitefrom"]}'");
+    print("inviteFrom: '${completed["inviteFrom"]}'");
+    print("relationship: '${completed["relationship"]}'");
+    print("========================");
 
- // Debug helper method to check what values are actually stored
-String _getDisplayText(Map<dynamic, dynamic> completed) {
-  print("=== Debug Event Data ===");
-  print("Full event data: $completed");
-  print("invitefrom: '${completed["invitefrom"]}'");
-  print("inviteFrom: '${completed["inviteFrom"]}'"); 
-  print("relationship: '${completed["relationship"]}'");
-  print("========================");
+    // 1st Priority: inviteFrom values
+    if (completed["invitefrom"] != null &&
+        completed["invitefrom"].toString().trim().isNotEmpty) {
+      print("Showing invitefrom: ${completed["invitefrom"]}");
+      return "Invited By: ${completed["invitefrom"]}";
+    }
+    if (completed["inviteFrom"] != null &&
+        completed["inviteFrom"].toString().trim().isNotEmpty) {
+      print("Showing inviteFrom: ${completed["inviteFrom"]}");
+      return "Invited By: ${completed["inviteFrom"]}";
+    }
 
-  // 1st Priority: inviteFrom values
-  if (completed["invitefrom"] != null && completed["invitefrom"].toString().trim().isNotEmpty) {
-    print("Showing invitefrom: ${completed["invitefrom"]}");
-    return "Invited By: ${completed["invitefrom"]}";
-  }
-  if (completed["inviteFrom"] != null && completed["inviteFrom"].toString().trim().isNotEmpty) {
-    print("Showing inviteFrom: ${completed["inviteFrom"]}");
-    return "Invited By: ${completed["inviteFrom"]}";
-  }
-  
-  // 2nd Priority: relationship value  
-  if (completed["relationship"] != null && completed["relationship"].toString().trim().isNotEmpty) {
-    print("Showing relationship: ${completed["relationship"]}");
-    return "Relationship: ${completed["relationship"]}";
-  }
-  
-  // 3rd Priority: fallback
-  print("Showing fallback: Manual Entry");
-  return "Manual Entry";
-}
+    // 2nd Priority: relationship value
+    if (completed["relationship"] != null &&
+        completed["relationship"].toString().trim().isNotEmpty) {
+      print("Showing relationship: ${completed["relationship"]}");
+      return "Relationship: ${completed["relationship"]}";
+    }
 
+    // 3rd Priority: fallback
+    print("Showing fallback: Manual Entry");
+    return "Manual Entry";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,9 +109,10 @@ String _getDisplayText(Map<dynamic, dynamic> completed) {
                 ],
               ),
             ),
-          
+
           // Events List
-           if (_invites.isNotEmpty)   Column(
+          if (_invites.isNotEmpty)
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -185,12 +162,16 @@ String _getDisplayText(Map<dynamic, dynamic> completed) {
                                     ),
                                   ),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                        width: MediaQuery.of(context).size.width * 0.5,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
                                         child: Text(
-                                          completed["eventname"]?.toString() ?? 'Untitled Event',
+                                          completed["eventname"]?.toString() ??
+                                              'Untitled Event',
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
@@ -213,16 +194,21 @@ String _getDisplayText(Map<dynamic, dynamic> completed) {
                                           StreamBuilder<Duration>(
                                             stream: Stream.periodic(
                                               const Duration(seconds: 1),
-                                              (_) => target.difference(DateTime.now()),
+                                              (_) => target
+                                                  .difference(DateTime.now()),
                                             ),
                                             builder: (context, snapshot) {
-                                              final d = snapshot.data ?? target.difference(DateTime.now());
+                                              final d = snapshot.data ??
+                                                  target.difference(
+                                                      DateTime.now());
                                               return Text(
                                                 niceLeft(d),
                                                 style: TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w700,
-                                                  color: d.isNegative ? Colors.red : Colors.green,
+                                                  color: d.isNegative
+                                                      ? Colors.red
+                                                      : Colors.green,
                                                 ),
                                               );
                                             },
@@ -231,19 +217,23 @@ String _getDisplayText(Map<dynamic, dynamic> completed) {
                                       ),
                                       const SizedBox(height: 6),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           // Priority-based display logic
                                           Flexible(
                                             flex: 3,
                                             child: Container(
                                               padding: EdgeInsets.symmetric(
-                                                  horizontal: 20.0, vertical: 4.0),
+                                                  horizontal: 20.0,
+                                                  vertical: 4.0),
                                               decoration: BoxDecoration(
                                                 color: AppColors.primary,
                                                 borderRadius: BorderRadius.only(
-                                                  topRight: Radius.circular(10.0),
-                                                  bottomRight: Radius.circular(10.0),
+                                                  topRight:
+                                                      Radius.circular(10.0),
+                                                  bottomRight:
+                                                      Radius.circular(10.0),
                                                 ),
                                               ),
                                               child: Text(
@@ -259,7 +249,10 @@ String _getDisplayText(Map<dynamic, dynamic> completed) {
                                           ),
                                           SizedBox(width: 8.0),
                                           // Show city if available
-                                          if (completed["city"] != null && completed["city"].toString().isNotEmpty)
+                                          if (completed["city"] != null &&
+                                              completed["city"]
+                                                  .toString()
+                                                  .isNotEmpty)
                                             Flexible(
                                               flex: 2,
                                               child: Text(
@@ -323,7 +316,8 @@ String _getDisplayText(Map<dynamic, dynamic> completed) {
                                 ),
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "See Event Details",
