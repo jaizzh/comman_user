@@ -1,1556 +1,1165 @@
-// import 'package:crackers/genz_crackers/model/product_model.dart';
+// ignore_for_file: depend_on_referenced_packages
 
-// List<ProductCategory> productcategories = [
-//   ProductCategory(
-//     id: 1,
-//     name: "Single Sound Crackers",
-//     image: "assets/imgi_10_5.jpg",
-//     products: [
-//       Product(
-//         id: 1,
-//         name: "2 3/4\" Kurvi",
-//         image: "assets/imgi_10_5.jpg",
-//         size: "5 PCS",
-//         price: 70,
-//         unit: "1 PKT",
-//       ),
-//       Product(
-//         id: 2,
-//         name: "3 1/2\" Lakshmi",
-//         image: "assets/imgi_11_7.jpg",
-//         size: "5 PCS",
-//         price: 150,
-//         unit: "1 PKT",
-//       ),
-//       Product(
-//         id: 3,
-//         name: "4 Lakshmi",
-//         image: "assets/imgi_11_7.jpg",
-//         size: "5 PCS",
-//         price: 200,
-//         unit: "1 PKT",
-//       ),
-//       Product(
-//         id: 4,
-//         name: "Deluxe Lakshmi",
-//         image: "assets/imgi_12_8.jpg",
-//         size: "5 PCS",
-//         price: 300,
-//         unit: "1 PKT",
-//       ),
-//       Product(
-//         id: 5,
-//         name: "Gold Lakshmi",
-//         image: "assets/imgi_13_165.jpg",
-//         size: "5 PCS",
-//         price: 300,
-//         unit: "1 PKT",
-//       ),
-//       Product(
-//         id: 6,
-//         name: "5\" Lakshmi/Spider",
-//         image: "assets/imgi_14_166.jpg",
-//         size: "5 PCS",
-//         price: 400,
-//         unit: "1 PKT",
-//       ),
-//       Product(
-//         id: 7,
-//         name: "6\" Lakshmi/Jallikattu",
-//         image: "assets/1000003267.jpg",
-//         size: "5 PCS",
-//         price: 500,
-//         unit: "1 PKT",
-//       ),
-//       Product(
-//         id: 8,
-//         name: "1/4 Kg Adiyal",
-//         image: "assets/imgi_15_9.jpg",
-//         size: "1 PCE",
-//         price: 250,
-//         unit: "1 PKT",
-//       ),
-//       Product(
-//         id: 9,
-//         name: "1/2 Kg Adiyal",
-//         image: "assets/imgi_16_10.jpg",
-//         size: "1 PCE",
-//         price: 500,
-//         unit: "1 PKT",
-//       ),
-//       Product(
-//         id: 10,
-//         name: "1 Kg Adiyal",
-//         image: "assets/imgi_17_11.jpg",
-//         size: "1 PCE",
-//         price: 1000,
-//         unit: "1 PKT",
-//       ),
-//     ],
-//   ),
-//   ProductCategory(
-//     id: 2,
-//     name: "Garland",
-//     image: "assets/5000-walas-crackers-500x500.webp",
-//     products: [
-//       Product(
-//         id: 11,
-//         name: "1K Digital",
-//         image: "assets/imgi_19_17.jpg",
-//         size: "1 STRING",
-//         price: 2000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 12,
-//         name: "2K Digital",
-//         image: "assets/imgi_20_18.jpg",
-//         size: "1 STRING",
-//         price: 4000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 13,
-//         name: "5K Digital",
-//         image: "assets/imgi_21_19.jpg",
-//         size: "1 STRING",
-//         price: 10000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 14,
-//         name: "Mega Deluxe Special 50",
-//         image: "assets/50-Deluxe-Cracker.webp",
-//         size: "1 STRING",
-//         price: 1700,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 15,
-//         name: "Mega Deluxe Special 100",
-//         image: "assets/50-Deluxe-Cracker.webp",
-//         size: "1 STRING",
-//         price: 3400,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
-//   ProductCategory(
-//     id: 3,
-//     name: "Bijili - Loose Crackers",
-//     image: "assets/imgi_22_20.jpg",
-//     products: [
-//       Product(
-//         id: 16,
-//         name: "Red Bijili 50",
-//         image: "assets/imgi_22_20.jpg",
-//         size: "1 PKT",
-//         price: 200,
-//         unit: "1 BAG",
-//       ),
-//       Product(
-//         id: 17,
-//         name: "Red Bijili 100",
-//         image: "assets/imgi_23_21.jpg",
-//         size: "1 PKT",
-//         price: 300,
-//         unit: "1 BAG",
-//       ),
-//       Product(
-//         id: 18,
-//         name: "Stripped Bijili 100",
-//         image: "assets/imgi_23_21.jpg",
-//         size: "1 PKT",
-//         price: 400,
-//         unit: "1 BAG",
-//       ),
-//     ],
-//   ),
-//   ProductCategory(
-//     id: 4,
-//     name: "Atom Bomb",
-//     image: "assets/imgi_25_24.jpg",
-//     products: [
-//       Product(
-//         id: 19,
-//         name: "Hydro Bomb",
-//         image: "assets/imgi_24_23.jpg",
-//         size: "10 PCS",
-//         price: 550,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 20,
-//         name: "Classic Green 5 Ply",
-//         image: "assets/imgi_25_24.jpg",
-//         size: "10 PCS",
-//         price: 1300,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 21,
-//         name: "Jurassic Bomb Special",
-//         image: "assets/imgi_26_169.jpg",
-//         size: "10 PCS",
-//         price: 2000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 22,
-//         name: "Animal Bomb 7 Ply",
-//         image: "assets/ef0c0b158e54ad1c59dcabae1ca5ad2e.webp",
-//         size: "10 PCS",
-//         price: 2100,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
-//   ProductCategory(
-//     id: 5,
-//     name: "Twinkling Star",
-//     image: "assets/45cm_Twinkling_Star_Crackersshope.com_.jpg",
-//     products: [
-//       Product(
-//         id: 23,
-//         name: "Twinkling Star 1 Feet",
-//         image: "assets/imgi_43_39.jpg",
-//         size: "10 PCS",
-//         price: 250,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 24,
-//         name: "Twinkling Star 4 Feet",
-//         image: "assets/imgi_44_40.jpg",
-//         size: "10 PCS",
-//         price: 700,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
-//   ProductCategory(
-//     id: 6,
-//     name: "Ground Chakkar",
-//     image: "assets/Ground Chakkar Big 25Pcs.jpg.webp",
-//     products: [
-//       Product(
-//         id: 25,
-//         name: "Chakkar Big",
-//         image: "assets/imgi_34_34.jpg",
-//         size: "10 PCS",
-//         price: 370,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 26,
-//         name: "Chakkar Special",
-//         image: "assets/imgi_35_35.jpg",
-//         size: "10 PCS",
-//         price: 810,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 27,
-//         name: "Chakkar Deluxe",
-//         image: "assets/imgi_36_36.jpg",
-//         size: "10 PCS",
-//         price: 1550,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 28,
-//         name: "Digital Wheel Big",
-//         image: "assets/imgi_34_34.jpg",
-//         size: "10 PCS",
-//         price: 550,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 29,
-//         name: "Digital Wheel Ashoka",
-//         image: "assets/imgi_37_161.jpg",
-//         size: "10 PCS",
-//         price: 900,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 30,
-//         name: "Digital Wheel Special",
-//         image: "assets/imgi_38_162.jpg",
-//         size: "10 PCS",
-//         price: 1300,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 31,
-//         name: "Digital Wheel Deluxe",
-//         image: "assets/imgi_39_163.jpg",
-//         size: "10 PCS",
-//         price: 2300,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 32,
-//         name: "Ring Ring Wheel",
-//         image: "assets/imgi_40_37.jpg",
-//         size: "5 PCS",
-//         price: 1800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 33,
-//         name: "Hot Wheel",
-//         image: "assets/imgi_42_38.jpg",
-//         size: "5 PCS",
-//         price: 2800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 34,
-//         name: "Whistling Wheel",
-//         image: "assets/imgi_41_132.jpg",
-//         size: "5 PCS",
-//         price: 1500,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
+import 'dart:io';
+import 'dart:typed_data';
 
-//   ProductCategory(
-//     id: 7,
-//     name: "Flower Pots",
-//     image: "assets/DSC0063-scaled.jpg",
-//     products: [
-//       Product(
-//         id: 35,
-//         name: "Flower Pots Big",
-//         image: "assets/imgi_27_27.jpg",
-//         size: "10 PCS",
-//         price: 600,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 36,
-//         name: "Flower Pots Special",
-//         image: "assets/imgi_28_28.jpg",
-//         size: "10 PCS",
-//         price: 900,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 37,
-//         name: "Flower Pots Ashoka",
-//         image: "assets/imgi_29_29.jpg",
-//         size: "10 PCS",
-//         price: 1100,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 38,
-//         name: "Colour Koti XL",
-//         image: "assets/imgi_30_31.jpg",
-//         size: "10 PCS",
-//         price: 1950,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 39,
-//         name: "Colour Koti Red & Green Balls",
-//         image: "assets/imgi_33_167.jpg",
-//         size: "5 PCS",
-//         price: 2500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 40,
-//         name: "Colour Koti Deluxe Special",
-//         image: "assets/imgi_31_32.jpg",
-//         size: "10 PCS",
-//         price: 2850,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 41,
-//         name: "Splatoon",
-//         image: "assets/imgi_32_33.jpg",
-//         size: "5 PCS",
-//         price: 2850,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
+import 'package:common_user/app_colors.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:open_filex/open_filex.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 
-//   ProductCategory(
-//     id: 8,
-//     name: "Awesome Fancy Fountains",
-//     image: "assets/imgi_52_45.jpg",
-//     products: [
-//       Product(
-//         id: 42,
-//         name: "Jolly Ranger",
-//         image: "assets/imgi_52_45.jpg",
-//         size: "5 PCS",
-//         price: 1500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 43,
-//         name: "Small Angry Bird Yellow",
-//         image: "assets/imgi_53_46.jpg",
-//         size: "5 PCS",
-//         price: 1500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 44,
-//         name: "Small Angry Bird Red",
-//         image: "assets/imgi_54_47.jpg",
-//         size: "5 PCS",
-//         price: 1500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 45,
-//         name: "Small Angry Bird Green",
-//         image: "assets/imgi_55_48.jpg",
-//         size: "5 PCS",
-//         price: 1500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 46,
-//         name: "Small Angry Bird Silver",
-//         image: "assets/imgi_56_49.jpg",
-//         size: "5 PCS",
-//         price: 1500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 47,
-//         name: "Small Angry Bird Red & Green",
-//         image: "assets/imgi_57_50.jpg",
-//         size: "5 PCS",
-//         price: 1500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 48,
-//         name: "Holly Nite",
-//         image: "assets/imgi_58_53.jpg",
-//         size: "5 PCS",
-//         price: 2500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 49,
-//         name: "6000 Crackling",
-//         image: "assets/imgi_67_158.jpg",
-//         size: "1 PCE",
-//         price: 1500,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
-//   ProductCategory(
-//     id: 9,
-//     name: "Awesome Special Fountains",
-//     image: "assets/imgi_59_54.jpg",
-//     products: [
-//       Product(
-//         id: 50,
-//         name: "Mega Peacock Colour",
-//         image: "assets/imgi_59_54.jpg",
-//         size: "1 PCE",
-//         price: 2100,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 51,
-//         name: "Special Bada Peacock Cuckoo",
-//         image: "assets/imgi_61_56.jpg",
-//         size: "1 PCE",
-//         price: 4100,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 52,
-//         name: "Bada Peacock Tripple Function",
-//         image: "assets/imgi_62_159.jpg",
-//         size: "1 PCE",
-//         price: 4500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 53,
-//         name: "Fountain with Shot Mottu Patlu",
-//         image: "assets/imgi_63_57.jpg",
-//         size: "1 PCE",
-//         price: 2300,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 54,
-//         name: "Fountain with Shot Jelly & Belly",
-//         image: "assets/imgi_66_60.jpg",
-//         size: "1 PCE",
-//         price: 2300,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 55,
-//         name: "Fountain with Shot Rock & Pop",
-//         image: "assets/imgi_65_59.jpg",
-//         size: "1 PCE",
-//         price: 2300,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 56,
-//         name: "Fountain with Shot Fire & Ice",
-//         image: "assets/imgi_64_58.jpg",
-//         size: "1 PCE",
-//         price: 2300,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 57,
-//         name: "6000 Special Fountain",
-//         image: "assets/imgi_67_158.jpg",
-//         size: "1 PCE",
-//         price: 1500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 58,
-//         name: "Wonder Three",
-//         image: "assets/imgi_69_62.jpg",
-//         size: "1 PCE",
-//         price: 2100,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 59,
-//         name: "Siren",
-//         image: "assets/imgi_86_63.jpg",
-//         size: "3 PCS",
-//         price: 1700,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 60,
-//         name: "Holly Nite",
-//         image: "assets/imgi_58_53.jpg",
-//         size: "6 PCS",
-//         price: 2500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 61,
-//         name: "Peacock Feather",
-//         image: "assets/imgi_68_177.jpg",
-//         size: "5 PCS",
-//         price: 1300,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 62,
-//         name: "Nestle",
-//         image: "assets/imgi_70_174.jpg",
-//         size: "5 PCS",
-//         price: 2100,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
+/// GiftLogger
+/// - Responsive across mobile (<600), tablet (600-1024), desktop (>=1024)
+/// - Smooth progress animation
+/// - Grid/List switch based on width
+/// - Robust PDF export with summary + table (auto-pagination)
+class GiftLogger extends StatefulWidget {
+  final List<Map<String, String>> items;
+  final VoidCallback onAddPressed;
 
-//   ProductCategory(
-//     id: 10,
-//     name: "Dancing and Flying",
-//     image: "assets/imgi_72_68.jpg",
-//     products: [
-//       Product(
-//         id: 63,
-//         name: "Butterfly",
-//         image: "assets/imgi_72_68.jpg",
-//         size: "10 PCS",
-//         price: 1000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 64,
-//         name: "Bambara",
-//         image: "assets/imgi_73_69.jpg",
-//         size: "10 PCS",
-//         price: 1200,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 65,
-//         name: "Helicopter",
-//         image: "assets/imgi_74_70.jpg",
-//         size: "5 PCS",
-//         price: 1200,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 66,
-//         name: "Photo Flash",
-//         image: "assets/imgi_75_71.jpg",
-//         size: "5 PCS",
-//         price: 750,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 67,
-//         name: "Insta Slfie",
-//         image: "assets/imgi_49_44.jpg",
-//         size: "3 PCS",
-//         price: 1800,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
+  const GiftLogger({
+    super.key,
+    required this.items,
+    required this.onAddPressed,
+  });
 
-//   ProductCategory(
-//     id: 11,
-//     name: "Kids Special",
-//     image: "assets/imgi_78_74.jpg",
-//     products: [
-//       Product(
-//         id: 68,
-//         name: "Lollipop",
-//         image: "assets/imgi_77_73.jpg",
-//         size: "5 PCS",
-//         price: 2100,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 69,
-//         name: "Kit Kat",
-//         image: "assets/imgi_78_74.jpg",
-//         size: "10 PCS",
-//         price: 350,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 70,
-//         name: "Money Heist",
-//         image: "assets/imgi_79_75.jpg",
-//         size: "2 PCS",
-//         price: 2500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 71,
-//         name: "Serpent (Pambu Mahtira)",
-//         image: "assets/imgi_80_76.jpg",
-//         size: "BUNDLE",
-//         price: 300,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 72,
-//         name: "Bada Match Box 5 Star",
-//         image: "assets/imgi_83_79.jpg",
-//         size: "5 BOXES",
-//         price: 1400,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 73,
-//         name: "Bada Match Box Laptop",
-//         image: "assets/imgi_84_80.jpg",
-//         size: "10 BOXES",
-//         price: 2800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 74,
-//         name: "Roll Cap",
-//         image: "assets/imgi_81_77.jpg",
-//         size: "BUNDLE",
-//         price: 350,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 75,
-//         name: "Ring Cap (Sonny)",
-//         image: "assets/imgi_82_78.jpg",
-//         size: "POCKET",
-//         price: 120,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 76,
-//         name: "Cartoon",
-//         image: "assets/imgi_32_33.jpg",
-//         size: "5 PCS",
-//         price: 400,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
-//   ProductCategory(
-//     id: 12,
-//     name: "Rocket",
-//     image: "assets/imgi_135_128.jpg",
-//     products: [
-//       Product(
-//         id: 77,
-//         name: "Lunic Rocket",
-//         image: "assets/imgi_135_128.jpg",
-//         size: "10 PCS",
-//         price: 1300,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 78,
-//         name: "Whistling Rocket",
-//         image: "assets/129.jpg",
-//         size: "10 PCS",
-//         price: 1800,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
+  @override
+  State<GiftLogger> createState() => _GiftLoggerState();
+}
 
-//   ProductCategory(
-//     id: 13,
-//     name: "Sizzling Series",
-//     image: "assets/imgi_88_126.jpg",
-//     products: [
-//       Product(
-//         id: 79,
-//         name: "Pentagon",
-//         image: "assets/imgi_88_126.jpg",
-//         size: "5 PCS",
-//         price: 1200,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 80,
-//         name: "White House",
-//         image: "assets/imgi_89_127.jpg",
-//         size: "5 PCS",
-//         price: 1200,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 81,
-//         name: "Holly Nite",
-//         image: "assets/imgi_58_53.jpg",
-//         size: "6 PCS",
-//         price: 1200,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
+class _GiftLoggerState extends State<GiftLogger> with TickerProviderStateMixin {
+  late final AnimationController _progressController;
 
-//   ProductCategory(
-//     id: 14,
-//     name: "New Arrivals",
-//     image: "assets/imgi_32_33.jpg",
-//     products: [
-//       Product(
-//         id: 82,
-//         name: "Lovely Sparklers (Heart Shape)",
-//         image: "assets/Lovely-Sparklers-12.jpg",
-//         size: "3 PCS",
-//         price: 1200,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 83,
-//         name: "Singing Doll (Whistling Shots)",
-//         image: "assets/IMG_20230906_153505-removebg-preview.png",
-//         size: "1 PCE",
-//         price: 3000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 84,
-//         name: "Wire Chakkar",
-//         image: "assets/imgi_41_132.jpg",
-//         size: "10 PCS",
-//         price: 1900,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 85,
-//         name: "Hot Wheel",
-//         image: "assets/hot-wheels-5pcs-box-.jpg",
-//         size: "5 PCS",
-//         price: 2800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 86,
-//         name: "Angry Bird Mega",
-//         image: "assets/imgi_54_47.jpg",
-//         size: "5 PCS",
-//         price: 2900,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 87,
-//         name: "Rolling Sparklers",
-//         image: "assets/roll-cap-box-diwali-fireworks-sale.webp",
-//         size: "1 PCE",
-//         price: 1900,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 88,
-//         name: "Lion Fountain",
-//         image: "assets/imgi_32_33.jpg",
-//         size: "1 PCE",
-//         price: 1800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 89,
-//         name: "Elephant Fountain",
-//         image: "assets/imgi_32_33.jpg",
-//         size: "1 PCE",
-//         price: 1800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 90,
-//         name: "Fire Egg",
-//         image: "assets/imgi_76_72.jpg",
-//         size: "1 PCE",
-//         price: 1800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 91,
-//         name: "Fire & Feather",
-//         image: "assets/imgi_32_33.jpg",
-//         size: "5 PCS",
-//         price: 1400,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 92,
-//         name: "Pink Fountain",
-//         image: "assets/imgi_32_33.jpg",
-//         size: "1 PCE",
-//         price: 1800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 93,
-//         name: "Violet Sparklers",
-//         image: "assets/imgi_32_33.jpg",
-//         size: "10 PCS",
-//         price: 500,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
-//   ProductCategory(
-//     id: 15,
-//     name: "Continuous Shots",
-//     image: "assets/imgi_127_122.jpg",
-//     products: [
-//       Product(
-//         id: 94,
-//         name: "12 Shots",
-//         image: "assets/imgi_125_117.jpg",
-//         size: "1 PCE",
-//         price: 1450,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 95,
-//         name: "12 Whistling Shots",
-//         image: "assets/imgi_32_33.jpg",
-//         size: "1 PCE",
-//         price: 3000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 96,
-//         name: "30 Shots",
-//         image: "assets/imgi_127_122.jpg",
-//         size: "1 PCE",
-//         price: 3800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 97,
-//         name: "60 Shots",
-//         image: "assets/imgi_128_123.jpg",
-//         size: "1 PCE",
-//         price: 8000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 98,
-//         name: "120 Shots",
-//         image: "assets/imgi_129_124.jpg",
-//         size: "1 PCE",
-//         price: 16000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 99,
-//         name: "240 Shots",
-//         image: "assets/imgi_130_125.jpg",
-//         size: "1 PCE",
-//         price: 32000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 100,
-//         name: "520 Shots",
-//         image: "assets/imgi_131_178.png",
-//         size: "1 PCE",
-//         price: 80000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 101,
-//         name: "10x10",
-//         image: "assets/imgi_132_175.png",
-//         size: "1 PCE",
-//         price: 35000,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
+  // Responsive breakpoints
+  static const double _mobileBreakpoint = 600;
+  static const double _tabletBreakpoint = 1024;
 
-//   ProductCategory(
-//     id: 16,
-//     name: "Aerial Fancy",
-//     image: "assets/imgi_90_81.jpg",
-//     products: [
-//       Product(
-//         id: 104,
-//         name: '2" Inch Pipe (3PCS)',
-//         image: "assets/imgi_90_81.jpg",
-//         size: "3 PCS",
-//         price: 2300,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
+  @override
+  void initState() {
+    super.initState();
+    _progressController =
+        AnimationController(duration: const Duration(seconds: 2), vsync: this)
+          ..forward();
+  }
 
-//   ProductCategory(
-//     id: 17,
-//     name: '2 1/2" Inch Pipe',
-//     image: "assets/imgi_91_82.jpg",
-//     products: [
-//       Product(
-//         id: 105,
-//         name: "Egg Change",
-//         image: "assets/imgi_91_82.jpg",
-//         size: "1 PCE",
-//         price: 1500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 106,
-//         name: "Bingo Dance",
-//         image: "assets/imgi_92_83.jpg",
-//         size: "1 PCE",
-//         price: 1500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 107,
-//         name: "Columbus Chio",
-//         image: "assets/imgi_93_84.jpg",
-//         size: "1 PCE",
-//         price: 1500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 108,
-//         name: "Center Point",
-//         image: "assets/imgi_94_85.jpg",
-//         size: "1 PCE",
-//         price: 1700,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 109,
-//         name: "Password",
-//         image: "assets/imgi_95_86.jpg",
-//         size: "1 PCE",
-//         price: 1900,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 110,
-//         name: "Digital Sound",
-//         image: "assets/imgi_96_87.jpg",
-//         size: "1 PCE",
-//         price: 1500,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
+  @override
+  void dispose() {
+    _progressController.dispose();
+    super.dispose();
+  }
 
-//   ProductCategory(
-//     id: 18,
-//     name: '3 1/2" Inch Fancy Pipes',
-//     image: "assets/imgi_97_88.jpg",
-//     products: [
-//       Product(
-//         id: 111,
-//         name: "Mazta",
-//         image: "assets/imgi_97_88.jpg",
-//         size: "1 PCE",
-//         price: 2500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 112,
-//         name: "Red Tails",
-//         image: "assets/imgi_98_89.jpg",
-//         size: "1 PCE",
-//         price: 2500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 113,
-//         name: "Jodi No.1",
-//         image: "assets/imgi_99_90.jpg",
-//         size: "1 PCE",
-//         price: 2500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 114,
-//         name: "Bollywood",
-//         image: "assets/imgi_100_91.jpg",
-//         size: "1 PCE",
-//         price: 2500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 115,
-//         name: "Bluetooth",
-//         image: "assets/imgi_101_92.jpg",
-//         size: "1 PCE",
-//         price: 2500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 116,
-//         name: "Twitter",
-//         image: "assets/imgi_102_93.jpg",
-//         size: "1 PCE",
-//         price: 2500,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // remove this line if you want to inherit page theme background
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        title: const Text('Gift Transaction Log'),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black87,
+        centerTitle: false,
+      ),
+      body: LayoutBuilder(
+        builder: (_, constraints) {
+          final screenWidth = constraints.maxWidth;
+          final isSmall = screenWidth < _mobileBreakpoint;
+          final isTablet = screenWidth >= _mobileBreakpoint &&
+              screenWidth < _tabletBreakpoint;
 
-//   ProductCategory(
-//     id: 19,
-//     name: '4" Inch Fancy Pipes',
-//     image: "assets/imgi_103_94.jpg",
-//     products: [
-//       Product(
-//         id: 117,
-//         name: "Pinkpearls",
-//         image: "assets/imgi_103_94.jpg",
-//         size: "1 PCE",
-//         price: 3500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 118,
-//         name: "Green Shower",
-//         image: "assets/imgi_104_95.jpg",
-//         size: "1 PCE",
-//         price: 2800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 119,
-//         name: "Golden Attack",
-//         image: "assets/imgi_105_96.jpg",
-//         size: "1 PCE",
-//         price: 2800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 120,
-//         name: "Mercury",
-//         image: "assets/imgi_106_97.jpg",
-//         size: "1 PCE",
-//         price: 2800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 121,
-//         name: "Kashmer Chilly",
-//         image: "assets/imgi_107_98.jpg",
-//         size: "1 PCE",
-//         price: 2800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 122,
-//         name: "Silver Line",
-//         image: "assets/imgi_108_99.jpg",
-//         size: "1 PCE",
-//         price: 2800,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
-//   ProductCategory(
-//     id: 123,
-//     name: "4 1/2 Inch Fancy Pipes",
-//     image: "assets/imgi_109_100.jpg",
-//     products: [
-//       Product(
-//         id: 123,
-//         name: "Navaygra Falls",
-//         image: "assets/imgi_110_182.jpg",
-//         size: "1 PCE",
-//         price: 3200,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 124,
-//         name: "King Fisher",
-//         image: "assets/imgi_112_103.jpg",
-//         size: "1 PCE",
-//         price: 3200,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 125,
-//         name: "XXX Seven",
-//         image: "assets/imgi_111_102.jpg",
-//         size: "1 PCE",
-//         price: 3500,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
-//   ProductCategory(
-//     id: 124,
-//     name: "5\" INCH COMBO FANCY PIPES",
-//     image: "assets/imgi_119_109.jpg",
-//     products: [
-//       Product(
-//         id: 126,
-//         name: "SAMSUNG",
-//         image: "assets/imgi_119_109.jpg",
-//         size: "2 PCS",
-//         price: 9000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 127,
-//         name: "NIKON",
-//         image: "assets/imgi_120_110.jpg",
-//         size: "2 PCS",
-//         price: 9000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 128,
-//         name: "VIVO",
-//         image: "assets/imgi_122_112.png",
-//         size: "2 PCS",
-//         price: 9000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 129,
-//         name: "SONY",
-//         image: "assets/imgi_121_111.jpg",
-//         size: "2 PCS",
-//         price: 9000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 130,
-//         name: "AMAZON",
-//         image: "assets/imgi_123_113.png",
-//         size: "2 PCS",
-//         price: 9000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 131,
-//         name: "WALMART",
-//         image: "assets/imgi_124_114.jpg",
-//         size: "2 PCS",
-//         price: 9000,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
-//   ProductCategory(
-//     id: 125,
-//     name: "DOUBLE BALL FANCY PIPE",
-//     image: "assets/imgi_116_106.jpg",
-//     products: [
-//       Product(
-//         id: 132,
-//         name: "SPICEJET (WHITE & RED)",
-//         image: "assets/imgi_116_106.jpg",
-//         size: "1 PCE",
-//         price: 4800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 133,
-//         name: "NESTLE (RED & GREEN)",
-//         image: "assets/imgi_117_107.jpg",
-//         size: "1 PCE",
-//         price: 4800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 134,
-//         name: "ACTION JACKION (RED & BLUE)",
-//         image: "assets/imgi_115_105.jpg",
-//         size: "1 PCE",
-//         price: 4800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 135,
-//         name: "ONCE MORE (YELLOW & GREEN)",
-//         image: "assets/imgi_114_104.jpg",
-//         size: "1 PCE",
-//         price: 4800,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 136,
-//         name: "ACTION REPLY (YELLOW & WHITE)",
-//         image: "assets/imgi_113_176.jpg",
-//         size: "1 PCE",
-//         price: 4800,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
-//   ProductCategory(
-//     id: 126,
-//     name: "Sparklers",
-//     image: "assets/imgi_144_135.jpg",
-//     products: [
-//       Product(
-//         id: 137,
-//         name: "ELECTRIC 10",
-//         image: "assets/imgi_144_135.jpg",
-//         size: "10 CM",
-//         price: 150,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 138,
-//         name: "COLOUR CRACKLING 10",
-//         image: "assets/imgi_145_136.jpg",
-//         size: "10 CM",
-//         price: 170,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 139,
-//         name: "GREEN 10",
-//         image: "assets/imgi_146_137.jpg",
-//         size: "10 CM",
-//         price: 190,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 140,
-//         name: "RED 10",
-//         image: "assets/imgi_147_138.jpg",
-//         size: "10 CM",
-//         price: 200,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 141,
-//         name: "ELECTRIC 12",
-//         image: "assets/imgi_148_139.jpg",
-//         size: "12 CM",
-//         price: 210,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 142,
-//         name: "COLOUR CRACKLING 12",
-//         image: "assets/imgi_149_140.jpg",
-//         size: "12 CM",
-//         price: 240,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 143,
-//         name: "GREEN 12",
-//         image: "assets/imgi_150_141.jpg",
-//         size: "12 CM",
-//         price: 260,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 144,
-//         name: "RED 12",
-//         image: "assets/imgi_151_142.jpg",
-//         size: "12 CM",
-//         price: 270,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 145,
-//         name: "ELECTRIC 15",
-//         image: "assets/imgi_152_143.jpg",
-//         size: "15 CM",
-//         price: 350,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 146,
-//         name: "COLOUR CRACKLING 15",
-//         image: "assets/imgi_153_144.jpg",
-//         size: "15 CM",
-//         price: 370,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 147,
-//         name: "GREEN 15",
-//         image: "assets/imgi_154_145.jpg",
-//         size: "15 CM",
-//         price: 390,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 148,
-//         name: "RED 15",
-//         image: "assets/imgi_155_146.jpg",
-//         size: "15 CM",
-//         price: 420,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 149,
-//         name: "ELECTRIC 30",
-//         image: "assets/imgi_156_147.jpg",
-//         size: "30 CM",
-//         price: 350,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 150,
-//         name: "COLOUR CRACKLING 30",
-//         image: "assets/imgi_157_148.jpg",
-//         size: "30 CM",
-//         price: 370,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 151,
-//         name: "GREEN 30",
-//         image: "assets/imgi_158_149.jpg",
-//         size: "30 CM",
-//         price: 390,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 152,
-//         name: "RED 30",
-//         image: "assets/imgi_159_150.jpg",
-//         size: "30 CM",
-//         price: 420,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 153,
-//         name: "ELECTRIC 50",
-//         image: "assets/imgi_160_151.jpg",
-//         size: "50 CM",
-//         price: 1550,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 154,
-//         name: "COLOUR CRACKLING 50",
-//         image: "assets/imgi_161_152.jpg",
-//         size: "50 CM",
-//         price: 1700,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 155,
-//         name: "ROLLING SPARKLERS",
-//         image: "assets/imgi_160_151.jpg",
-//         size: "1 PCE",
-//         price: 1900,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
-//   ProductCategory(
-//     id: 127,
-//     name: "Candles",
-//     image: "assets/imgi_45_41.jpg",
-//     products: [
-//       Product(
-//         id: 156,
-//         name: "HITECH PENCIL YELLOW",
-//         image: "assets/imgi_45_41.jpg",
-//         size: "3 PCS",
-//         price: 1450,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 157,
-//         name: "HITECH PENCIL SILVER",
-//         image: "assets/imgi_46_42.jpg",
-//         size: "3 PCS",
-//         price: 1450,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 158,
-//         name: "HITECH PENCIL RED & GREEN",
-//         image: "assets/imgi_47_43.jpg",
-//         size: "3 PCS",
-//         price: 1450,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 159,
-//         name: "SMOKE (DOUBLE EFFECT)",
-//         image: "assets/imgi_48_164.jpg",
-//         size: "3 PCS",
-//         price: 160,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 160,
-//         name: "LALA CANDLE",
-//         image: "assets/imgi_51_172.jpg",
-//         size: "3 PCS",
-//         price: 1450,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 161,
-//         name: "GOODLY CANDLE",
-//         image: "assets/imgi_50_171.jpg",
-//         size: "3 PCS",
-//         price: 1450,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 162,
-//         name: "MINIONS CANDLE",
-//         image: "assets/imgi_49_44.jpg",
-//         size: "3 PCS",
-//         price: 1450,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
-//   ProductCategory(
-//     id: 128,
-//     name: "Gift Boxes",
-//     image: "assets/imgi_165_1004.jpg",
-//     products: [
-//       Product(
-//         id: 163,
-//         name: "21 items Gift box",
-//         image: "assets/imgi_162_1001.jpg",
-//         size: "21 items",
-//         price: 1750,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 164,
-//         name: "30 items Gift box",
-//         image: "assets/imgi_163_1002.jpg",
-//         size: "30 items",
-//         price: 2500,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 165,
-//         name: "40 items Gift box",
-//         image: "assets/imgi_164_1003.jpg",
-//         size: "40 items",
-//         price: 4000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 166,
-//         name: "50 items Gift box",
-//         image: "assets/imgi_165_1004.jpg",
-//         size: "50 items",
-//         price: 6000,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
-//   ProductCategory(
-//     id: 129,
-//     name: "Awesome Special Package",
-//     image: "assets/Screenshot 2025-09-24 182237.png",
-//     products: [
-//       Product(
-//         id: 167,
-//         name: "Budget Package",
-//         image: "assets/Screenshot 2025-09-24 182200.png",
-//         size: "25 shot free",
-//         price: 15010,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 168,
-//         name: "Family Package (30 shot free)",
-//         image: "assets/Screenshot 2025-09-24 182229.png",
-//         size: "30 shot free",
-//         price: 25000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 169,
-//         name: "Premium Package",
-//         image: "assets/Screenshot 2025-09-24 182237.png",
-//         size: "30 + 25 shot fre",
-//         price: 35000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 170,
-//         name: "Awesome Package",
-//         image: "assets/Screenshot 2025-09-24 182245.png",
-//         size: "60 shot free",
-//         price: 50000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 171,
-//         name: "Awesome Thala Diwali Pack",
-//         image: "assets/Screenshot 2025-09-24 182311.png",
-//         size: "",
-//         price: 40000,
-//         unit: "1 BOX",
-//       ),
-//       Product(
-//         id: 172,
-//         name: "Awesome Premium Thala Diwali Pack",
-//         image: "assets/Screenshot 2025-09-24 182319.png",
-//         size: "",
-//         price: 16000,
-//         unit: "1 BOX",
-//       ),
-//     ],
-//   ),
-// ];
+          return SafeArea(
+            top: false, // appBar already handles status bar
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: _hPad(screenWidth)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _header(isSmall),
+                  SizedBox(height: isSmall ? 8 : 12),
+                  _transactionCard(
+                    screenWidth: screenWidth,
+                    isSmall: isSmall,
+                    isTablet: isTablet,
+                  ),
+                  SizedBox(height: isSmall ? 16 : 20),
+                  _actionButtons(isSmall),
+                  SizedBox(height: isSmall ? 16 : 20),
+                  _giftListBlock(screenWidth, isSmall),
+                  SizedBox(height: isSmall ? 24 : 32),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  // ---------- Helpers ----------
+
+  double _hPad(double w) {
+    if (w < _mobileBreakpoint) return 16.0;
+    if (w < _tabletBreakpoint) return 24.0;
+    return 32.0;
+  }
+
+  String _today() {
+    final now = DateTime.now();
+    final d = now.day.toString().padLeft(2, '0');
+    final m = now.month.toString().padLeft(2, '0');
+    final y = now.year;
+    return '$y-$m-$d';
+  }
+
+  // ---------- UI Sections ----------
+
+  Widget _header(bool isSmall) {
+    return Padding(
+      padding: EdgeInsets.only(top: isSmall ? 16 : 24, bottom: isSmall ? 4 : 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Gift Transaction Overview',
+            style: TextStyle(
+              fontSize: isSmall ? 16 : 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+          SizedBox(height: isSmall ? 4 : 8),
+          Text(
+            'Track and manage all gifts received from your guests in one place. '
+            'Monitor transactions with real-time updates and export reports.',
+            style: TextStyle(
+              fontSize: isSmall ? 12 : 14,
+              color: Colors.black54,
+              height: 1.45,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _transactionCard({
+    required double screenWidth,
+    required bool isSmall,
+    required bool isTablet,
+  }) {
+    final pad = EdgeInsets.all(isSmall ? 12 : 16);
+    final totalCount = widget.items.length;
+
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(isSmall ? 12 : 16),
+      ),
+      child: Container(
+        width: double.infinity,
+        padding: pad,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(isSmall ? 12 : 16),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 1,
+              blurRadius: 8,
+              color: Colors.black.withOpacity(0.07),
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(isSmall ? 8 : 10),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.primary.withOpacity(0.12),
+                    border: Border.all(
+                      color: AppColors.primary.withOpacity(0.3),
+                      width: 1.5,
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.card_giftcard_rounded,
+                    color: AppColors.primary,
+                    size: isSmall ? 18 : 22,
+                  ),
+                ),
+                SizedBox(width: screenWidth * 0.04),
+                Expanded(
+                    child: _transactionInfo(isSmall, isTablet, totalCount)),
+              ],
+            ),
+            SizedBox(height: isSmall ? 10 : 12),
+            _animatedProgressBar(
+              progressColor: Colors.green.shade600,
+              backgroundColor: Colors.grey.shade200,
+              height: isSmall ? 8 : 10,
+              progress: totalCount == 0
+                  ? 0.0
+                  : 0.8, // replace with (current/target) if needed
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _transactionInfo(bool isSmall, bool isTablet, int totalCount) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Title + Subtitle
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              flex: isTablet ? 3 : 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Gift Log',
+                    style: TextStyle(
+                      fontSize: isSmall ? 14 : 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  Text(
+                    'Total transactions',
+                    style: TextStyle(
+                      fontSize: isSmall ? 11 : 13,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 12),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                // You can change this to sum of amounts if you add monetary fields later.
+                RichText(
+                  textAlign: TextAlign.right,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '₹${_calculateTotalAmount()}',
+                        style: TextStyle(
+                          fontSize: isSmall ? 14 : 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green.shade700,
+                        ),
+                      ),
+                      TextSpan(
+                        text: '  •  ',
+                        style: TextStyle(
+                          fontSize: isSmall ? 12 : 14,
+                          color: Colors.black45,
+                        ),
+                      ),
+                      TextSpan(
+                        text: '$totalCount gifts',
+                        style: TextStyle(
+                          fontSize: isSmall ? 12 : 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '$totalCount gifts received',
+                  style: TextStyle(
+                    fontSize: isSmall ? 10 : 12,
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  String _calculateTotalAmount() {
+    // Placeholder: returns count; replace with real sum if you add an "amount" key.
+    return widget.items.length.toString();
+  }
+
+  Widget _animatedProgressBar({
+    required Color progressColor,
+    required Color backgroundColor,
+    required double height,
+    required double progress,
+  }) {
+    return Container(
+      height: height,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(height / 2),
+        color: backgroundColor,
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(height / 2),
+        child: AnimatedBuilder(
+          animation: _progressController,
+          builder: (_, __) {
+            return LinearProgressIndicator(
+              value: progress * _progressController.value,
+              valueColor: AlwaysStoppedAnimation<Color>(progressColor),
+              backgroundColor: Colors.transparent,
+              minHeight: height,
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _actionButtons(bool isSmall) {
+    final isDisabled = widget.items.isEmpty;
+
+    return Row(
+      children: [
+        // Download PDF
+        Expanded(
+          child: ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              disabledBackgroundColor: Colors.white,
+              elevation: 3,
+              padding: EdgeInsets.symmetric(
+                vertical: isSmall ? 12 : 16,
+                horizontal: isSmall ? 16 : 20,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(
+                  color: isDisabled ? Colors.grey.shade300 : Colors.black12,
+                ),
+              ),
+            ),
+            onPressed: isDisabled ? null : _downloadPdf,
+            icon: Icon(
+              Icons.file_download_outlined,
+              size: isSmall ? 18 : 22,
+              color: isDisabled ? Colors.grey : Colors.black87,
+            ),
+            label: Text(
+              'Download PDF',
+              style: TextStyle(
+                fontSize: isSmall ? 12 : 14,
+                fontWeight: FontWeight.bold,
+                color: isDisabled ? Colors.grey : AppColors.black,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(width: isSmall ? 12 : 20),
+        // Add Gift
+        Expanded(
+          child: ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.white,
+              elevation: 3,
+              padding: EdgeInsets.symmetric(
+                vertical: isSmall ? 12 : 16,
+                horizontal: isSmall ? 16 : 20,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            onPressed: widget.onAddPressed,
+            icon: Icon(Icons.add_rounded, size: isSmall ? 18 : 22),
+            label: Text(
+              'Add Gift',
+              style: TextStyle(
+                fontSize: isSmall ? 12 : 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _giftListBlock(double screenWidth, bool isSmall) {
+    if (widget.items.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: isSmall ? 32 : 48),
+          child: Column(
+            children: [
+              Icon(Icons.card_giftcard_outlined,
+                  size: isSmall ? 52 : 64, color: Colors.grey.shade400),
+              SizedBox(height: isSmall ? 14 : 20),
+              Text(
+                'No gift data available',
+                style: TextStyle(
+                  fontSize: isSmall ? 16 : 18,
+                  color: Colors.grey.shade700,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: isSmall ? 8 : 10),
+              Text(
+                'Start adding gifts to see them here',
+                style: TextStyle(
+                  fontSize: isSmall ? 12 : 14,
+                  color: Colors.grey.shade500,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Container(
+      padding: EdgeInsets.all(isSmall ? 12 : 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            spreadRadius: 1,
+            blurRadius: 6,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header Row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Gift Transaction Log',
+                style: TextStyle(
+                  fontSize: isSmall ? 18 : 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                _today(),
+                style: TextStyle(
+                  fontSize: isSmall ? 12 : 14,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: isSmall ? 12 : 16),
+          // Summary
+          Container(
+            padding: EdgeInsets.all(isSmall ? 10 : 12),
+            decoration: BoxDecoration(
+              color: Colors.blue.shade50,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.blue.shade200),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Total Gifts Received:',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: isSmall ? 13 : 14,
+                  ),
+                ),
+                Text(
+                  '${widget.items.length}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: isSmall ? 15 : 16,
+                    color: Colors.blue.shade700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: isSmall ? 12 : 16),
+          // List/Grid
+          _responsiveList(screenWidth, isSmall),
+        ],
+      ),
+    );
+  }
+
+  Widget _responsiveList(double screenWidth, bool isSmall) {
+    // Two columns on desktop; one on mobile/tablet
+    final useGrid = screenWidth >= _tabletBreakpoint;
+
+    if (useGrid) {
+      return GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          childAspectRatio: 2.6,
+        ),
+        itemCount: widget.items.length,
+        itemBuilder: (_, i) => _giftCard(i, widget.items[i], isSmall),
+      );
+    }
+
+    // List for mobile & tablet
+    return ListView.separated(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      separatorBuilder: (_, __) => SizedBox(height: isSmall ? 8 : 10),
+      itemCount: widget.items.length,
+      itemBuilder: (_, i) => _giftCard(i, widget.items[i], isSmall),
+    );
+  }
+
+  Widget _giftCard(int index, Map<String, String> item, bool isSmall) {
+    final hasDetails = _hasGiftDetails(item);
+
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 200 + (index * 40)),
+      curve: Curves.easeOutBack,
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: EdgeInsets.all(isSmall ? 10 : 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Row 1: Image + main details
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _giftImage(index, isSmall),
+                  SizedBox(width: isSmall ? 10 : 12),
+                  Expanded(child: _mainDetails(index, item, isSmall)),
+                ],
+              ),
+              if (hasDetails) ...[
+                SizedBox(height: isSmall ? 8 : 12),
+                _giftDetails(item, isSmall),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _giftImage(int index, bool isSmall) {
+    final size = isSmall ? 54.0 : 64.0;
+
+    return Hero(
+      tag: 'gift_image_$index',
+      child: GestureDetector(
+        onTap: () => _showImagePopup(context, 'assets/images/gift.jpg', index),
+        child: Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade300, width: 1),
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.08),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(7),
+            child: Stack(
+              children: [
+                Image.asset(
+                  'assets/images/gift.jpg',
+                  fit: BoxFit.cover,
+                  width: size,
+                  height: size,
+                  errorBuilder: (_, __, ___) =>
+                      _imageFallback(index, size, isSmall),
+                ),
+                Positioned.fill(
+                  child: IgnorePointer(
+                    ignoring: true,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(7),
+                        color: Colors.black.withOpacity(0.08),
+                      ),
+                      child: const Center(
+                        child:
+                            Icon(Icons.zoom_in, color: Colors.white, size: 16),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _imageFallback(int index, double size, bool isSmall) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.blue.shade100, Colors.blue.shade200],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(7),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.card_giftcard_rounded,
+              color: Colors.blue.shade700, size: isSmall ? 18 : 22),
+          SizedBox(height: isSmall ? 2 : 4),
+          Text(
+            '${index + 1}',
+            style: TextStyle(
+              fontSize: isSmall ? 10 : 12,
+              fontWeight: FontWeight.bold,
+              color: Colors.blue.shade700,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _mainDetails(int index, Map<String, String> item, bool isSmall) {
+    final name = (item['name'] ?? '').trim();
+    final phone = (item['mobileno'] ?? '').trim();
+    final address = (item['address'] ?? '').trim();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '${index + 1}. ${name.isEmpty ? 'Unknown Guest' : name}',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: isSmall ? 14 : 16,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        SizedBox(height: isSmall ? 4 : 6),
+        if (phone.isNotEmpty) ...[
+          Row(
+            children: [
+              Icon(Icons.phone,
+                  size: isSmall ? 12 : 14, color: Colors.grey.shade600),
+              const SizedBox(width: 4),
+              Expanded(
+                child: Text(
+                  phone,
+                  style: TextStyle(fontSize: isSmall ? 12 : 14),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: isSmall ? 3 : 4),
+        ],
+        if (address.isNotEmpty)
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(Icons.location_on,
+                  size: isSmall ? 12 : 14, color: Colors.grey.shade600),
+              const SizedBox(width: 4),
+              Expanded(
+                child: Text(
+                  address,
+                  style: TextStyle(
+                    fontSize: isSmall ? 11 : 13,
+                    color: Colors.grey.shade700,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+      ],
+    );
+  }
+
+  Widget _giftDetails(Map<String, String> item, bool isSmall) {
+    final gift = (item['giftname'] ?? '').trim();
+    final forWhom = (item['forWhom'] ?? '').trim();
+    final giftType = (item['giftType'] ?? '').trim();
+
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(isSmall ? 8 : 10),
+      decoration: BoxDecoration(
+        color: Colors.green.shade50,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.green.shade200),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header
+          Row(
+            children: [
+              Icon(Icons.card_giftcard,
+                  size: isSmall ? 14 : 16, color: Colors.green.shade700),
+              const SizedBox(width: 6),
+              Text(
+                'Gift Details',
+                style: TextStyle(
+                  fontSize: isSmall ? 12 : 13,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.green.shade700,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: isSmall ? 6 : 8),
+          // Content
+          if (gift.isNotEmpty)
+            _detailLine(
+              icon: Icons.redeem,
+              label: 'Gift Name',
+              value: gift,
+              color: Colors.green.shade700,
+              isSmall: isSmall,
+            ),
+          if (forWhom.isNotEmpty) ...[
+            if (gift.isNotEmpty) SizedBox(height: isSmall ? 4 : 6),
+            _detailLine(
+              icon: Icons.person,
+              label: 'For',
+              value: forWhom,
+              color: Colors.green.shade700,
+              isSmall: isSmall,
+            ),
+          ],
+          if (giftType.isNotEmpty) ...[
+            if (gift.isNotEmpty || forWhom.isNotEmpty)
+              SizedBox(height: isSmall ? 4 : 6),
+            _detailLine(
+              icon: Icons.category,
+              label: 'Type',
+              value: giftType,
+              color: Colors.green.shade700,
+              isSmall: isSmall,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _detailLine({
+    required IconData icon,
+    required String label,
+    required String value,
+    required Color color,
+    required bool isSmall,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: isSmall ? 12 : 14, color: color),
+        const SizedBox(width: 8),
+        Expanded(
+          child: RichText(
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            text: TextSpan(
+              style: TextStyle(
+                fontSize: isSmall ? 11 : 12,
+                color: Colors.black87,
+              ),
+              children: [
+                TextSpan(
+                  text: '$label: ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: color,
+                  ),
+                ),
+                TextSpan(text: value),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  bool _hasGiftDetails(Map<String, String> item) {
+    return ((item['giftname'] ?? '').trim().isNotEmpty) ||
+        ((item['forWhom'] ?? '').trim().isNotEmpty) ||
+        ((item['giftType'] ?? '').trim().isNotEmpty);
+  }
+
+  // ---------- Image Popup ----------
+
+  void _showImagePopup(BuildContext context, String imagePath, int index) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierColor: Colors.black87,
+      builder: (_) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: EdgeInsets.zero,
+          child: Stack(
+            children: [
+              GestureDetector(
+                onTap: () => Navigator.of(context).pop(),
+                child: const SizedBox.expand(),
+              ),
+              Center(
+                child: Container(
+                  margin: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        blurRadius: 20,
+                        spreadRadius: 5,
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: InteractiveViewer(
+                      minScale: 0.5,
+                      maxScale: 3.0,
+                      child: Image.asset(
+                        imagePath,
+                        fit: BoxFit.contain,
+                        errorBuilder: (_, __, ___) => Container(
+                          width: 300,
+                          height: 300,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.image_not_supported,
+                                  size: 60, color: Colors.grey.shade400),
+                              const SizedBox(height: 16),
+                              Text(
+                                'Image not found',
+                                style: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Gift #${index + 1}',
+                                style: TextStyle(
+                                  color: Colors.grey.shade500,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: MediaQuery.of(context).padding.top + 20,
+                right: 20,
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.6),
+                      shape: BoxShape.circle,
+                    ),
+                    child:
+                        const Icon(Icons.close, color: Colors.white, size: 24),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 40,
+                left: 20,
+                right: 20,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Text(
+                    'Pinch to zoom • Tap outside to close',
+                    style: TextStyle(color: Colors.white, fontSize: 13),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // ---------- PDF (Summary + Details Table) ----------
+
+  Future<void> _downloadPdf() async {
+    try {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Generating PDF...'), duration: Duration(seconds: 1)),
+      );
+
+      // Attempt to load an image; it's optional
+      Uint8List? giftImageBytes;
+      var imageLoaded = false;
+      try {
+        final bd = await rootBundle.load('assets/images/gift.jpg');
+        giftImageBytes = bd.buffer.asUint8List();
+        imageLoaded = true;
+      } catch (_) {
+        imageLoaded = false;
+      }
+
+      final pdf = pw.Document();
+      final dateStr = _today();
+
+      pdf.addPage(
+        pw.MultiPage(
+          pageFormat: PdfPageFormat.a4,
+          margin: const pw.EdgeInsets.all(28),
+          build: (_) => [
+            // Header
+            pw.Row(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text('Gift Transaction Log',
+                        style: pw.TextStyle(
+                          fontSize: 22,
+                          fontWeight: pw.FontWeight.bold,
+                        )),
+                    pw.SizedBox(height: 2),
+                    pw.Text(
+                      'Generated on $dateStr',
+                      style: pw.TextStyle(
+                        fontSize: 10,
+                        color: PdfColors.grey700,
+                      ),
+                    ),
+                    pw.SizedBox(height: 4),
+                    pw.Text(
+                      'Image Status: ${imageLoaded ? 'Loaded' : 'Not Found'}',
+                      style: pw.TextStyle(
+                        fontSize: 8,
+                        color: PdfColors.grey600,
+                      ),
+                    ),
+                  ],
+                ),
+                if (imageLoaded && giftImageBytes != null)
+                  pw.Container(
+                    width: 48,
+                    height: 48,
+                    decoration: pw.BoxDecoration(
+                      borderRadius: pw.BorderRadius.circular(6),
+                      border: pw.Border.all(color: PdfColors.grey300),
+                    ),
+                    child: pw.ClipRRect(
+                      horizontalRadius: 6,
+                      verticalRadius: 6,
+                      child: pw.Image(pw.MemoryImage(giftImageBytes),
+                          fit: pw.BoxFit.cover),
+                    ),
+                  ),
+              ],
+            ),
+            pw.SizedBox(height: 16),
+
+            // Summary Box
+            pw.Container(
+              padding: const pw.EdgeInsets.all(12),
+              decoration: pw.BoxDecoration(
+                borderRadius: pw.BorderRadius.circular(8),
+                border: pw.Border.all(color: PdfColors.blue),
+                color: PdfColors.blue50,
+              ),
+              child: pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Text('Total Gifts Received:',
+                      style: pw.TextStyle(
+                        fontSize: 14,
+                        fontWeight: pw.FontWeight.bold,
+                      )),
+                  pw.Text('${widget.items.length}',
+                      style: pw.TextStyle(
+                        fontSize: 16,
+                        fontWeight: pw.FontWeight.bold,
+                      )),
+                ],
+              ),
+            ),
+            pw.SizedBox(height: 16),
+
+            // Details Table
+            _pdfDetailsTable(widget.items),
+          ],
+        ),
+      );
+
+      final bytes = await pdf.save();
+      final dir = await getApplicationDocumentsDirectory();
+      final fileName = 'gift_log_${DateTime.now().millisecondsSinceEpoch}.pdf';
+      final file = File('${dir.path}/$fileName');
+      await file.writeAsBytes(bytes);
+
+      final result = await OpenFilex.open(file.path);
+      _showPdfSnack(result, fileName, imageLoaded);
+    } catch (e) {
+      _errorSnack('Error generating PDF: $e');
+    }
+  }
+
+  pw.Widget _pdfDetailsTable(List<Map<String, String>> items) {
+    // Table headers
+    final headers = [
+      'S.No',
+      'Name',
+      'Phone',
+      'Gift',
+      'For',
+      'Type',
+      'Address',
+    ];
+
+    // Table rows
+    final dataRows = <List<String>>[];
+    for (var i = 0; i < items.length; i++) {
+      final m = items[i];
+      dataRows.add([
+        '${i + 1}',
+        (m['name'] ?? '').trim().isEmpty ? 'Unknown Guest' : (m['name'] ?? ''),
+        (m['mobileno'] ?? '').trim(),
+        (m['giftname'] ?? '').trim(),
+        (m['forWhom'] ?? '').trim(),
+        (m['giftType'] ?? '').trim(),
+        (m['address'] ?? '').trim(),
+      ]);
+    }
+
+    return pw.Table.fromTextArray(
+      headers: headers,
+      data: dataRows,
+      headerStyle: pw.TextStyle(
+        fontWeight: pw.FontWeight.bold,
+        color: PdfColors.white,
+      ),
+      headerDecoration: const pw.BoxDecoration(color: PdfColors.blue700),
+      cellAlignment: pw.Alignment.centerLeft,
+      headerAlignment: pw.Alignment.centerLeft,
+      cellStyle: const pw.TextStyle(fontSize: 9),
+      headerHeight: 24,
+      cellHeight: 22,
+      border: pw.TableBorder(
+        horizontalInside: pw.BorderSide(color: PdfColors.grey300, width: 0.5),
+        verticalInside: pw.BorderSide(color: PdfColors.grey300, width: 0.5),
+        top: pw.BorderSide(color: PdfColors.grey300, width: 0.7),
+        bottom: pw.BorderSide(color: PdfColors.grey300, width: 0.7),
+        left: pw.BorderSide(color: PdfColors.grey300, width: 0.7),
+        right: pw.BorderSide(color: PdfColors.grey300, width: 0.7),
+      ),
+      columnWidths: const {
+        0: pw.FixedColumnWidth(34),
+        1: pw.FlexColumnWidth(2),
+        2: pw.FlexColumnWidth(2),
+        3: pw.FlexColumnWidth(2),
+        4: pw.FlexColumnWidth(1.6),
+        5: pw.FlexColumnWidth(1.6),
+        6: pw.FlexColumnWidth(3),
+      },
+      oddRowDecoration:
+          const pw.BoxDecoration(color: PdfColor.fromInt(0xFFF8FAFF)),
+    );
+  }
+
+  void _showPdfSnack(OpenResult result, String fileName, bool imageLoaded) {
+    if (result.type == ResultType.done) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(imageLoaded
+              ? 'PDF (with image) created successfully!'
+              : 'PDF created successfully (image not found)'),
+          backgroundColor: Colors.green,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('PDF saved as: $fileName'),
+          backgroundColor: Colors.blue,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  void _errorSnack(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
+}

@@ -6,6 +6,7 @@ import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.d
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/subdomain/sub_domain.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/videoinvitation/videoinvitation.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/common/timer.dart';
+import 'package:common_user/summa.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -326,8 +327,8 @@ class _singleventdashboardState extends State<singleventdashboard> {
         '1/10',
         Colors.lightBlueAccent,
         ontappee: () {
-          // Navigator.push(
-          //     context, MaterialPageRoute(builder: (_) => const GiftLog([])));
+          //   Navigator.push(
+          //       context, MaterialPageRoute(builder: (_) => ));
         },
       ),
       FeatureItem(
@@ -338,7 +339,7 @@ class _singleventdashboardState extends State<singleventdashboard> {
         Colors.green,
         ontappee: () {
           // Navigator.push(
-          //     context, MaterialPageRoute(builder: (_) => GiftLog([])));
+          //     context, MaterialPageRoute(builder: (_) => GiftLogger(items: [], onAddPressed: )));
         },
       ),
       FeatureItem(
