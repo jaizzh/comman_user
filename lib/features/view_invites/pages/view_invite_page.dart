@@ -6,8 +6,15 @@ import 'package:common_user/features/product/model/product_model.dart';
 import 'package:common_user/features/product/pages/product_details.dart';
 import 'package:common_user/features/vendor/widgets/navigation.dart';
 import 'package:common_user/features/venue/presentation/widgets/map_widget.dart';
+import 'package:common_user/features/view_invites/widgets/fullscreenimagegallery.dart';
+import 'package:common_user/features/view_invites/widgets/invitation_flipbook_page.dart';
+import 'package:common_user/features/view_invites/widgets/videoPlayerdialog.dart';
+import 'package:common_user/features/view_invites/widgets/videothumbnail.dart';
+import 'package:common_user/features/view_invites/widgets/youtube.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ViewInvitePage extends StatefulWidget {
   const ViewInvitePage({super.key});
@@ -18,6 +25,17 @@ class ViewInvitePage extends StatefulWidget {
 
 class _ViewInvitePageState extends State<ViewInvitePage> {
   int selectedDayIndex = 0;
+
+  Future<void> downloadFile(String url, String filename) async {
+    await FlutterDownloader.enqueue(
+      url: url,
+      savedDir:
+          '/storage/emulated/0/Download', // or use a directory from path_provider
+      fileName: filename,
+      showNotification: true,
+      openFileFromNotification: true,
+    );
+  }
 
   final List<DayEvent> timelineEvents = [
     DayEvent(
@@ -112,6 +130,8 @@ class _ViewInvitePageState extends State<ViewInvitePage> {
               children: [
                 eventholderDetails(screenWidth),
                 SizedBox(height: screenHeight * 0.02),
+                viewInvite(context),
+                SizedBox(height: screenHeight * 0.02),
                 eventDetails(screenWidth, screenHeight),
                 SizedBox(height: screenHeight * 0.03),
                 Row(
@@ -159,7 +179,7 @@ class _ViewInvitePageState extends State<ViewInvitePage> {
                   elevation: 5,
                   child: SizedBox(
                     width: double.infinity,
-                    height: screenHeight * 0.10,
+                    height: screenHeight * 0.15,
                     child: const MapWidget(),
                   ),
                 ),
@@ -172,7 +192,50 @@ class _ViewInvitePageState extends State<ViewInvitePage> {
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.02),
-                giftRegistry(screenWidth, screenHeight, productcategories[1])
+                giftRegistry(screenWidth, screenHeight, productcategories[1]),
+                SizedBox(height: screenHeight * 0.02),
+                Text(
+                  "Cash log",
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.02),
+                casLog(),
+                SizedBox(height: screenHeight * 0.02),
+                Text(
+                  "Photo Gallery",
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.02),
+                photoGallery(context),
+                SizedBox(height: screenHeight * 0.02),
+                Text(
+                  "Video Gallery",
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.02),
+                videoGallery(),
+                SizedBox(height: screenHeight * 0.02),
+                Text(
+                  "Youtube Videos",
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.02),
+                youtubeVideosSection(),
+                SizedBox(height: screenHeight * 0.02),
+                liveStreamingSection(),
+                SizedBox(height: screenHeight * 0.1),
               ],
             ),
           ),
@@ -485,6 +548,39 @@ class _ViewInvitePageState extends State<ViewInvitePage> {
     );
   }
 
+  Widget viewInvite(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => InvitationFlipBookPage()),
+        );
+      },
+      child: Card(
+        elevation: 5,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.white,
+          ),
+          child: Row(
+            children: [
+              const Icon(Icons.card_giftcard, color: AppColors.primary),
+              const SizedBox(width: 10),
+              Text(
+                "View Invitation",
+                style: GoogleFonts.poppins(
+                    fontSize: 14, fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget eventholderDetails(double width) {
     return Row(
       children: [
@@ -620,7 +716,7 @@ Widget giftRegistry(
 ) {
   final furnitures = categories.products;
   return SizedBox(
-    height: screenHeight / 4.5,
+    height: screenHeight / 3.7,
     child: ListView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: furnitures.length,
@@ -628,20 +724,17 @@ Widget giftRegistry(
         final product = furnitures[index];
         return GestureDetector(
           onTap: () {
-            navigateWithSlide(
-                context,
-                ProductDetails(
-                  product: product,
-                  categories: categories,
-                ));
+            navigateWithSlide(context,
+                ProductDetails(product: product, categories: categories));
           },
-          child: Container(
-            width: 140,
+          child: Card(
+            color: AppColors.white,
             margin: const EdgeInsets.only(right: 12),
-            child: Card(
-              color: AppColors.white,
-              elevation: 2,
+            elevation: 2,
+            child: SizedBox(
+              width: 160,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     height: screenHeight / 8,
@@ -655,39 +748,6 @@ Widget giftRegistry(
                         fit: BoxFit.cover,
                       ),
                     ),
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: Container(
-                        margin: const EdgeInsets.all(5),
-                        padding: const EdgeInsets.all(2),
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                          ),
-                          color: AppColors.paper,
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.star,
-                              color: Colors.orange,
-                              size: 12,
-                            ),
-                            const SizedBox(width: 2),
-                            Text(
-                              product.id.toString(),
-                              style: GoogleFonts.poppins(
-                                color: Colors.orange,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                   ),
                   Expanded(
                     child: Padding(
@@ -698,45 +758,175 @@ Widget giftRegistry(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            product.name,
-                            style: GoogleFonts.poppins(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          ),
+                          Text(product.name,
+                              style: GoogleFonts.poppins(
+                                  fontSize: 13, fontWeight: FontWeight.w600),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis),
                           SizedBox(height: screenHeight * 0.005),
-                          Text(
-                            product.price.toString(),
-                            style: GoogleFonts.poppins(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.primary,
+                          Text('₹${product.price}',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.primary)),
+                          SizedBox(height: screenHeight * 0.005),
+                          Text(product.description,
+                              style: GoogleFonts.poppins(
+                                  fontSize: 10, color: AppColors.black),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1),
+                          const Spacer(),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Full-width bottom Participate button with merged curved styling
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
                             ),
                           ),
-                          SizedBox(height: screenHeight * 0.005),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.location_city,
-                                size: 10,
+                          elevation: 0,
+                          padding: const EdgeInsets.symmetric(vertical: 13),
+                        ),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (_) => Dialog(
+                              insetPadding: const EdgeInsets.symmetric(
+                                  horizontal: 26, vertical: 24),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(24),
                               ),
-                              const SizedBox(width: 2),
-                              Expanded(
-                                child: Text(
-                                  product.description,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 10,
-                                    color: AppColors.black,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Center(
+                                      child: Icon(Icons.card_giftcard,
+                                          color: AppColors.primary, size: 38),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Center(
+                                      child: Text(
+                                        "Participate in Gift Registry",
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                            color: AppColors.primary),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 14),
+                                    const Divider(),
+                                    const SizedBox(height: 6),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.shopping_bag,
+                                            color: Colors.orange, size: 18),
+                                        const SizedBox(width: 5),
+                                        Expanded(
+                                          child: Text(product.name,
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600)),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.currency_rupee,
+                                            color: Colors.red, size: 18),
+                                        const SizedBox(width: 5),
+                                        Text('₹${product.price}',
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 13,
+                                                color: Colors.red)),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      "Are you sure you want to participate and add this product?",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 13, color: Colors.black54),
+                                    ),
+                                    const SizedBox(height: 18),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        TextButton(
+                                          child: Text('Cancel',
+                                              style: GoogleFonts.poppins()),
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: AppColors.primary,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(16)),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 18, vertical: 10),
+                                          ),
+                                          child: Text('Yes',
+                                              style: GoogleFonts.poppins(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold)),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    'Successfully participated!',
+                                                    style: GoogleFonts.poppins(
+                                                        fontWeight:
+                                                            FontWeight.w600)),
+                                                backgroundColor: Colors.green,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                duration:
+                                                    const Duration(seconds: 2),
+                                                behavior:
+                                                    SnackBarBehavior.floating,
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    )
+                                  ],
                                 ),
                               ),
-                            ],
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Participate',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
@@ -747,6 +937,244 @@ Widget giftRegistry(
         );
       },
     ),
+  );
+}
+
+Widget casLog() {
+  return Card(
+    elevation: 2,
+    child: Container(
+      padding: const EdgeInsets.all(15),
+      width: double.infinity,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10), color: AppColors.white),
+      child: Column(
+        children: [
+          Text(
+            "Enter the amount here before sending payment to the event holder.",
+            style:
+                GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w400),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: AppColors.paper),
+            child: const TextField(
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  suffixIcon: Icon(Icons.money),
+                  hintText: "Enter the amount"),
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+              padding: const EdgeInsets.all(15),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: AppColors.primary),
+              child: Center(
+                child: Text(
+                  "Pay",
+                  style: GoogleFonts.poppins(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.white),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    ),
+  );
+}
+
+Widget photoGallery(BuildContext context) {
+  final List<String> images = [
+    "assets/images/inviter5.jpg",
+    "assets/images/inviter2.jpg",
+    "assets/images/inviter3.jpg",
+    "assets/images/inviter4.jpg",
+    "assets/images/inviter6.jpg",
+    // Add your image assets
+  ];
+  return SizedBox(
+    height: 100,
+    child: ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: images.length,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => FullScreenImageGallery(
+                  imageUrls: images,
+                  initialIndex: index,
+                ),
+              ),
+            );
+          },
+          child: Card(
+            elevation: 5,
+            margin: const EdgeInsets.symmetric(horizontal: 5),
+            child: Container(
+              width: 100,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage(images[index]), fit: BoxFit.cover)),
+            ),
+          ),
+        );
+      },
+    ),
+  );
+}
+
+Widget videoGallery() {
+  // Replace with your actual video asset list
+  final List<String> videoAssets = [
+    "assets/images/video.mp4",
+    "assets/images/video.mp4",
+    "assets/images/video.mp4",
+  ];
+
+  return SizedBox(
+    height: 100,
+    child: ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: videoAssets.length,
+      itemBuilder: (context, index) {
+        String videoPath = videoAssets[index];
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => FullScreenVideoPlayer(videoPath: videoPath),
+              ),
+            );
+          },
+          child: Stack(
+            children: [
+              Container(
+                width: 150,
+                margin: const EdgeInsets.symmetric(horizontal: 5),
+                child: VideoThumbnail(videoPath: videoPath),
+              ),
+              Positioned(
+                bottom: 8,
+                right: 8,
+                child: IconButton(
+                  icon: const Icon(Icons.download, color: Colors.white),
+                  onPressed: () async {
+                    // Implement download logic here
+                    // Example: Call a custom download function
+                    // await (videoPath);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Download started!",
+                            style: GoogleFonts.poppins()),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    ),
+  );
+}
+
+Widget youtubeVideosSection() {
+  final List<String> youtubeUrls = [
+    "https://www.youtube.com/watch?v=5qap5aO4i9A",
+    "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+    "https://www.youtube.com/watch?v=2Vv-BfVoq4g",
+    "https://www.youtube.com/watch?v=VbfpW0pbvaU",
+  ];
+
+  return SizedBox(
+    height: 120,
+    child: ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: youtubeUrls.length,
+      itemBuilder: (context, index) {
+        final videoId = YoutubePlayer.convertUrlToId(youtubeUrls[index]);
+        final controller = YoutubePlayerController(
+          initialVideoId: videoId!,
+          flags: const YoutubePlayerFlags(autoPlay: false, mute: false),
+        );
+
+        return Container(
+          width: 180,
+          margin: const EdgeInsets.symmetric(horizontal: 6),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) =>
+                      YoutubeVideoPlayerPage(controller: controller),
+                ),
+              );
+            },
+            child: Stack(
+              children: [
+                YoutubePlayer(
+                    controller: controller, showVideoProgressIndicator: true),
+              ],
+            ),
+          ),
+        );
+      },
+    ),
+  );
+}
+
+Widget liveStreamingSection() {
+  const liveUrl =
+      "https://www.youtube.com/watch?v=aqz-KE-bpKQ"; // example NASA live
+  final liveVideoId = YoutubePlayer.convertUrlToId(liveUrl);
+  final liveController = YoutubePlayerController(
+    initialVideoId: liveVideoId!,
+    flags: const YoutubePlayerFlags(autoPlay: false, mute: false),
+  );
+
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        "Live Streaming",
+        style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600),
+      ),
+      const SizedBox(height: 10),
+      Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: YoutubePlayer(
+            controller: liveController,
+            showVideoProgressIndicator: true,
+          ),
+        ),
+      ),
+    ],
   );
 }
 

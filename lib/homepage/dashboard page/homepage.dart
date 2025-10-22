@@ -1,5 +1,6 @@
 import 'package:common_user/common/colors.dart';
 import 'package:common_user/common/razorpay/razorbool.dart';
+import 'package:common_user/features/profile/pages/profile_page.dart';
 import 'package:common_user/homepage/New%20Event/1st%20screen/eventplan.dart';
 import 'package:common_user/homepage/New%20Event/3rd%20screen/maineventpage.dart';
 import 'package:common_user/homepage/dashboard%20page/neweventcard.dart';
@@ -91,8 +92,8 @@ class _homepageState extends State<homepage> {
             padding: const EdgeInsets.only(right: 12.0),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => ProfileDemo()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const ProfilePage()));
               },
               child: Container(
                 width: 27.5,
