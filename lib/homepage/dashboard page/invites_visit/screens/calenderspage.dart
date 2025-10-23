@@ -568,23 +568,28 @@ class _calendermainState extends ConsumerState<calendermain> {
                   ),
 
                 if (invitecon.address != "Manual")
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 0.0),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: const Center(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 6.0),
-                        child: Text(
-                          "VIEW",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.bold,
+                  GestureDetector(
+                    onTap: () {
+                      navigateWithSlide(context, ViewInvitePage());
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 0.0),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      child: const Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 6.0),
+                          child: Text(
+                            "VIEW",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),

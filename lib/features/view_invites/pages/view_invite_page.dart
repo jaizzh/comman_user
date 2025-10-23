@@ -11,6 +11,7 @@ import 'package:common_user/features/view_invites/widgets/invitation_flipbook_pa
 import 'package:common_user/features/view_invites/widgets/videoPlayerdialog.dart';
 import 'package:common_user/features/view_invites/widgets/videothumbnail.dart';
 import 'package:common_user/features/view_invites/widgets/youtube.dart';
+import 'package:common_user/homepage/dashboard%20page/invites_visit/screens/ourimage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -131,6 +132,7 @@ class _ViewInvitePageState extends State<ViewInvitePage> {
                 eventholderDetails(screenWidth),
                 SizedBox(height: screenHeight * 0.02),
                 viewInvite(context),
+                shareImages(context),
                 SizedBox(height: screenHeight * 0.02),
                 eventDetails(screenWidth, screenHeight),
                 SizedBox(height: screenHeight * 0.03),
@@ -577,10 +579,7 @@ class _ViewInvitePageState extends State<ViewInvitePage> {
   Widget viewInvite(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => InvitationFlipBookPage()),
-        );
+        navigateWithSlide(context, const InvitationViewPage());
       },
       child: Card(
         elevation: 5,
@@ -597,6 +596,36 @@ class _ViewInvitePageState extends State<ViewInvitePage> {
               const SizedBox(width: 10),
               Text(
                 "View Invitation",
+                style: GoogleFonts.poppins(
+                    fontSize: 14, fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget shareImages(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        navigateWithSlide(context, ourimagepage());
+      },
+      child: Card(
+        elevation: 5,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.white,
+          ),
+          child: Row(
+            children: [
+              const Icon(Icons.image, color: AppColors.primary),
+              const SizedBox(width: 10),
+              Text(
+                "Share Your Image",
                 style: GoogleFonts.poppins(
                     fontSize: 14, fontWeight: FontWeight.w500),
               ),
