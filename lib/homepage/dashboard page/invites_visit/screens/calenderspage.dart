@@ -8,6 +8,7 @@ import 'package:common_user/features/view_invites/pages/view_invite_page.dart';
 import 'package:common_user/homepage/dashboard%20page/invites_visit/model/model.dart';
 import 'package:common_user/homepage/dashboard%20page/invites_visit/screens/fullimagescreen.dart';
 import 'package:common_user/homepage/dashboard%20page/invites_visit/screens/manualevent.dart';
+import 'package:common_user/homepage/dashboard%20page/invites_visit/screens/ourimage.dart';
 import 'package:common_user/homepage/dashboard%20page/invites_visit/widgets/bottomscreen.dart';
 import 'package:common_user/homepage/dashboard%20page/invites_visit/widgets/riverpod.dart';
 import 'package:flutter/material.dart';
@@ -567,28 +568,23 @@ class _calendermainState extends ConsumerState<calendermain> {
                   ),
 
                 if (invitecon.address != "Manual")
-                  GestureDetector(
-                    onTap: () {
-                      navigateWithSlide(context, ViewInvitePage());
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 0.0),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      child: const Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 6.0),
-                          child: Text(
-                            "VIEW",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 0.0),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: const Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 6.0),
+                        child: Text(
+                          "VIEW",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),

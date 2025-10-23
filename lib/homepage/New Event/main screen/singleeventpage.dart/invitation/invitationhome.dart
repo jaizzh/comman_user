@@ -3,8 +3,6 @@ import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.d
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/videoinvitation/videoinvitation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:ui';
-
 import 'package:widget_zoom/widget_zoom.dart';
 
 class InvitationHome extends StatefulWidget {

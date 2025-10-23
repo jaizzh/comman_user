@@ -246,6 +246,13 @@ class _homepageState extends State<homepage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          choosecreate(
+              onTapper: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => eventplan()));
+              },
+              pather: 'assets/images/chat1.png',
+              name: 'Create New Event'),
           Stack(
             children: [
               choosecreate(
@@ -278,16 +285,9 @@ class _homepageState extends State<homepage> {
             ],
           ),
           choosecreate(
-              onTapper: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => eventplan()));
-              },
-              pather: 'assets/images/chat1.png',
-              name: 'Create New Event'),
-          // choosecreate(
-          //     onTapper: () {},
-          //     pather: 'assets/images/chat3.png',
-          //     name: 'Gift Purchases'),
+              onTapper: () {},
+              pather: 'assets/images/chat3.png',
+              name: 'Gift Purchases'),
           choosecreate(
               onTapper: () {
                 Navigator.push(context,
