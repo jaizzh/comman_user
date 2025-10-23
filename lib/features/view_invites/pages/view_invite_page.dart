@@ -254,7 +254,7 @@ class _ViewInvitePageState extends State<ViewInvitePage> {
               color: AppColors.primary,
               borderRadius: BorderRadius.circular(10)),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 timelineEvents[selectedDayIndex].dayName,
@@ -263,6 +263,32 @@ class _ViewInvitePageState extends State<ViewInvitePage> {
                   fontWeight: FontWeight.w600,
                   color: AppColors.white,
                 ),
+              ),
+              const Spacer(),
+              if (selectedDayIndex >= 1)
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      // Navigate to next day, loop back to first if at the end
+                      selectedDayIndex =
+                          (selectedDayIndex - 1) % timelineEvents.length;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Icon(
+                      Icons.arrow_back_ios,
+                      color: AppColors.primary,
+                      size: 16,
+                    ),
+                  ),
+                ),
+              const SizedBox(
+                width: 20,
               ),
               GestureDetector(
                 onTap: () {
@@ -716,7 +742,7 @@ Widget giftRegistry(
 ) {
   final furnitures = categories.products;
   return SizedBox(
-    height: screenHeight / 3.7,
+    height: screenHeight / 3.5,
     child: ListView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: furnitures.length,

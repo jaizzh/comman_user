@@ -1,7 +1,7 @@
 import 'package:common_user/homepage/dashboard%20page/invites_visit/data/invitecompleted.dart';
 import 'package:common_user/homepage/dashboard%20page/invites_visit/data/invitecontact.dart';
 import 'package:common_user/homepage/dashboard%20page/invites_visit/model/model.dart';
-import 'package:flutter_riverpod/legacy.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final inviteecontact = StateProvider<List<InviteModel>>(
     (ref) => List<InviteModel>.from(invitescontact, growable: true));

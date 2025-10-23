@@ -72,6 +72,7 @@ dependencies:
   photo_view: ^0.15.0
   book_flip: ^1.0.0
   flutter_pdf_flipbook: ^0.0.3
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:

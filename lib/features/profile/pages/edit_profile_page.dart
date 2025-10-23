@@ -49,44 +49,46 @@ class _EditProfilePageState extends State<EditProfilePage> {
           IconButton(onPressed: () {}, icon: const Icon(Icons.settings))
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          children: [
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage("assets/images/jega.png"),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            textfiled("Name", Icons.person, _nameController),
-            const SizedBox(
-              height: 12,
-            ),
-            textfiled("Email", Icons.email, _emailController),
-            const SizedBox(
-              height: 12,
-            ),
-            textfiled("Mobile No", Icons.phone, _noController),
-            const SizedBox(
-              height: 32,
-            ),
-            GestureDetector(
-                onTap: () {
-                  provider.updateName(_nameController.text,
-                      _emailController.text, _noController.text);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Name updated!")),
-                  );
-                },
-                child: editButton())
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            children: [
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundImage: AssetImage("assets/images/jega.png"),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              textfiled("Name", Icons.person, _nameController),
+              const SizedBox(
+                height: 12,
+              ),
+              textfiled("Email", Icons.email, _emailController),
+              const SizedBox(
+                height: 12,
+              ),
+              textfiled("Mobile No", Icons.phone, _noController),
+              const SizedBox(
+                height: 32,
+              ),
+              GestureDetector(
+                  onTap: () {
+                    provider.updateName(_nameController.text,
+                        _emailController.text, _noController.text);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Name updated!")),
+                    );
+                  },
+                  child: editButton())
+            ],
+          ),
         ),
       ),
     );
