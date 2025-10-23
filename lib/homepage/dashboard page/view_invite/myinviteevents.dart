@@ -1,10 +1,6 @@
-// ignore_for_file: avoid_print
-
 import 'dart:async';
-import 'package:common_user/homepage/dashboard%20page/view_invite/invitehistorypage.dart';
 import 'package:flutter/material.dart';
 import 'package:common_user/app_colors.dart';
-import 'package:common_user/homepage/dashboard%20page/view_invite/manualadd.dart';
 
 class MyInviteEvents extends StatefulWidget {
   final List<Map<dynamic, dynamic>> completelistinvite;
@@ -47,29 +43,6 @@ class _MyInviteEventsState extends State<MyInviteEvents> {
     final mm = (d.inMinutes % 60).toString().padLeft(2, '0');
     final ss = (d.inSeconds % 60).toString().padLeft(2, '0');
     return '${days > 0 ? '${days}d ' : ''}$hh:$mm:$ss';
-  }
-
-  void _openManualSheet() {
-    manualinvitesheet(
-      context,
-      onEventAdded: (Map<dynamic, dynamic> newEvent) {
-        setState(() {
-          _invites.add(newEvent);
-        });
-        // Also call the parent callback if provided
-        if (widget.onEventAdded != null) {
-          widget.onEventAdded!(newEvent);
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content:
-                Text('Event "${newEvent['eventname']}" added successfully!'),
-            backgroundColor: AppColors.primary,
-            duration: Duration(seconds: 2),
-          ),
-        );
-      },
-    );
   }
 
   // Debug helper method to check what values are actually stored

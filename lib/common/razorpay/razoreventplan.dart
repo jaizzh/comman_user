@@ -10,7 +10,6 @@ class RazorpayServiceevent {
   bool _inited = false;
 
   BuildContext? _lastContext;
-  int _lastAmountPaise = 0;
 
   void init() {
     if (_inited) return;
@@ -105,7 +104,6 @@ class RazorpayServiceevent {
     print('Order ID: $orderId');
 
     _lastContext = context;
-    _lastAmountPaise = amountPaise;
 
     final options = {
       'key': keyId,
