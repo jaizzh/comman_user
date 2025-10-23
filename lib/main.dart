@@ -3,7 +3,6 @@ import 'package:common_user/common/razorpay/razorpay.dart';
 import 'package:common_user/features/venue/presentation/model/location_provider.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/plannn/notification.dart';
 import 'package:common_user/homepage/dashboard%20page/mainpage.dart';
-import 'package:common_user/summa.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,
-        home: GiftLogger(items: [], onAddPressed: () {}),
+        home: MainPage(),
       ),
     );
   }

@@ -6,7 +6,7 @@ import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.d
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/subdomain/sub_domain.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/invitation/videoinvitation/videoinvitation.dart';
 import 'package:common_user/homepage/New%20Event/main%20screen/singleeventpage.dart/common/timer.dart';
-import 'package:common_user/summa.dart';
+import 'package:common_user/homepage/dashboard%20page/invites_visit/screens/ourimageview.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -327,8 +327,8 @@ class _singleventdashboardState extends State<singleventdashboard> {
         '1/10',
         Colors.lightBlueAccent,
         ontappee: () {
-          //   Navigator.push(
-          //       context, MaterialPageRoute(builder: (_) => ));
+          // Navigator.push(
+          //     context, MaterialPageRoute(builder: (_) => const GiftLog([])));
         },
       ),
       FeatureItem(
@@ -339,7 +339,7 @@ class _singleventdashboardState extends State<singleventdashboard> {
         Colors.green,
         ontappee: () {
           // Navigator.push(
-          //     context, MaterialPageRoute(builder: (_) => GiftLogger(items: [], onAddPressed: )));
+          //     context, MaterialPageRoute(builder: (_) => GiftLog([])));
         },
       ),
       FeatureItem(
@@ -485,7 +485,10 @@ class _singleventdashboardState extends State<singleventdashboard> {
     final tools = [
       ToolItem('Money/Task Report', Icons.analytics_rounded, () {}),
       ToolItem('Chat To The Guest', Icons.chat_rounded, () {}),
-      ToolItem('Manual Contact Entry', Icons.contact_phone_rounded, () {}),
+      ToolItem('Your Guest Moments', Icons.contact_phone_rounded, () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => ourimageview()));
+      }),
     ];
 
     return Container(
