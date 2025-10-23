@@ -330,8 +330,8 @@ class _singleventdashboardState extends State<singleventdashboard> {
         '1/10',
         Colors.lightBlueAccent,
         ontappee: () {
-          // Navigator.push(
-          //     context, MaterialPageRoute(builder: (_) => GiftLog([])));
+          //   Navigator.push(
+          //       context, MaterialPageRoute(builder: (_) => ));
         },
       ),
       FeatureItem(
@@ -342,7 +342,7 @@ class _singleventdashboardState extends State<singleventdashboard> {
         Colors.green,
         ontappee: () {
           // Navigator.push(
-          //     context, MaterialPageRoute(builder: (_) => GiftLog([])));
+          //     context, MaterialPageRoute(builder: (_) => GiftLogger(items: [], onAddPressed: )));
         },
       ),
       FeatureItem(
